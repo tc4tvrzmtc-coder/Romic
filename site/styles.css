@@ -142,7 +142,7 @@ html[dir=rtl] .doc{text-align:right}html[dir=rtl] .site-header{direction:ltr}htm
 .hero-intro{white-space:nowrap;font-family:inherit;font-weight:620;letter-spacing:-.025em}
 .hero-reel{background:#f3b1bc}
 .hero-reel:before{display:none}
-.hero-conveyor-window{position:absolute;inset:clamp(18px,3vw,42px);bottom:clamp(92px,8vw,120px);display:flex;align-items:center;overflow:hidden;border-radius:var(--radius);cursor:grab;overscroll-behavior:contain;touch-action:pan-y}
+.hero-conveyor-window{position:absolute;inset:clamp(18px,3vw,42px);bottom:clamp(92px,8vw,120px);display:flex;align-items:center;overflow:hidden;border-radius:var(--radius);cursor:grab;overscroll-behavior:contain;touch-action:pan-y;direction:ltr}
 .hero-conveyor-window::-webkit-scrollbar{display:none}
 .hero-conveyor-window.is-dragging{cursor:grabbing}
 .hero-conveyor-track{display:flex;width:max-content;gap:14px;will-change:transform;contain:layout style}
