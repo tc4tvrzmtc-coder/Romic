@@ -1,1 +1,123 @@
-<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Romic — Choose language</title><link rel="stylesheet" href="language.css"><link rel="prefetch" href="styles.css" as="style"><link rel="prefetch" href="data.js" as="script"><link rel="prefetch" href="app.js" as="script"></head><body class="language-page"><main class="language-choice" aria-labelledby="language-title"><div class="language-brand"><span class="brand-name">ROMIC</span><span class="brand-sub">HANDMADE BAGS</span></div><div><p>HANDMADE IN ISRAEL</p><h1 id="language-title">CHOOSE YOUR<br>LANGUAGE.</h1></div><nav aria-label="Choose language"><a href="he/" lang="he" dir="rtl" data-language-choice="he">עברית</a><a href="en/" data-language-choice="en">English</a></nav></main><script>(()=>{let saved='';try{saved=localStorage.getItem('romic:language')||''}catch{}if(saved==='he'||saved==='en'){location.replace(`./${saved}/`);return}document.querySelectorAll('[data-language-choice]').forEach(link=>link.addEventListener('click',()=>{document.querySelector('.language-choice')?.setAttribute('aria-busy','true');link.classList.add('is-selected');try{localStorage.setItem('romic:language',link.dataset.languageChoice)}catch{}}))})();</script></body></html>
+<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Romic — Choose language</title><style data-language-critical>
+:root {
+  color-scheme: light;
+  --ink: #121112;
+  --focus: #173cff;
+  --control-radius: 7px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #e8a3b7;
+  color: var(--ink);
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  background: #e8a3b7;
+  color: var(--ink);
+}
+
+.language-page {
+  min-height: 100dvh;
+  background: #e8a3b7;
+}
+
+.language-choice {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 40px;
+  padding: clamp(28px, 6vw, 80px);
+}
+
+.language-brand {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: max-content;
+}
+
+.brand-name {
+  font-family: Didot, "Bodoni MT", "Times New Roman", serif;
+  font-size: 2.15rem;
+  line-height: 1;
+  letter-spacing: .22em;
+  margin-left: .22em;
+}
+
+.brand-sub {
+  margin-top: 5px;
+  margin-left: .36em;
+  font-size: .5rem;
+  font-weight: 700;
+  letter-spacing: .36em;
+}
+
+.language-choice > div:nth-child(2) { align-self: center; }
+
+.language-choice p {
+  margin: 0 0 18px;
+  font-size: .72rem;
+  font-weight: 820;
+  letter-spacing: .15em;
+}
+
+.language-choice h1 {
+  margin: 0;
+  font-size: clamp(4rem, 11vw, 10rem);
+  font-weight: 880;
+  line-height: .82;
+  letter-spacing: -.085em;
+}
+
+.language-choice nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 720px;
+}
+
+.language-choice a {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border: 1px solid var(--ink);
+  border-radius: var(--control-radius);
+  color: inherit;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 800;
+  touch-action: manipulation;
+  transition: background-color 140ms ease, color 140ms ease, opacity 140ms ease;
+}
+
+.language-choice a:hover,
+.language-choice a:focus-visible,
+.language-choice a.is-selected {
+  background: #11100f;
+  color: #fff;
+}
+
+.language-choice a:focus-visible {
+  outline: 3px solid #11100f;
+  outline-offset: 4px;
+}
+
+.language-choice[aria-busy='true'] a:not(.is-selected) { opacity: .42; }
+
+@media (max-width: 600px) {
+  .language-choice { min-height: 100dvh; padding: 24px 18px; }
+  .language-choice h1 { font-size: clamp(3.5rem, 18vw, 5rem); }
+  .language-choice nav { grid-template-columns: 1fr; }
+  .language-choice a { min-height: 58px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .language-choice a { transition: none; }
+}
+
+</style></head><body class="language-page"><main class="language-choice" aria-labelledby="language-title"><div class="language-brand"><span class="brand-name">ROMIC</span><span class="brand-sub">HANDMADE BAGS</span></div><div><p>HANDMADE IN ISRAEL</p><h1 id="language-title">CHOOSE YOUR<br>LANGUAGE.</h1></div><nav aria-label="Choose language"><a href="he/" lang="he" dir="rtl" data-language-choice="he">עברית</a><a href="en/" data-language-choice="en">English</a></nav></main><script>(()=>{let saved='';try{saved=localStorage.getItem('romic:language')||''}catch{}if(saved==='he'||saved==='en'){location.replace(`./${saved}/`);return}document.querySelectorAll('[data-language-choice]').forEach(link=>link.addEventListener('click',()=>{document.querySelector('.language-choice')?.setAttribute('aria-busy','true');link.classList.add('is-selected');try{localStorage.setItem('romic:language',link.dataset.languageChoice)}catch{}}))})();</script></body></html>
