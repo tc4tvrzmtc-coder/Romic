@@ -11,28 +11,28 @@ const COPY = {
   en: {
     skip:'Skip to content', collection:'Collection', craft:'Make It Yours', service:'Delivery', faq:'FAQ', instagram:'Instagram', menu:'Menu', close:'Close menu', language:'עברית',
     heroKicker:'HANDMADE IN ISRAEL · BY ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'DISCOVER THE COLLECTION', scroll:'SCROLL TO FIND YOURS',
-    collectionTitle:'FIND YOUR ROMIC.', inStock:'Limited availability', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Featured', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
+    collectionTitle:'FIND YOUR ROMIC.', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Featured', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
     readyTitle:'READY TO GO', readyCopy:'Ready-made bags ship within up to 7 business days.', customTitle:'YOUR ROMIC. YOUR WAY.', customCopy:'Choose a model and colour. Handmade within up to 10 days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪35 delivery · free pickup in central Israel.',
     privacy:'Privacy', accessibility:'Accessibility', terms:'Terms', rights:'© 2026 Romic. All rights reserved.', handmade:'Handmade bags · Israel', email:'Email',
-    back:'BACK TO COLLECTION', size:'SIZE', dimensions:'BAG BODY', availabilityLabel:'AVAILABILITY', readyMade:'Ready-made', order:'MESSAGE ROMIC ON INSTAGRAM', save:'SAVE', saved:'SAVED',
+    back:'BACK TO COLLECTION', size:'SIZE', dimensions:'BAG BODY', order:'MESSAGE ROMIC ON INSTAGRAM', save:'SAVE', saved:'SAVED',
     dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Ready-made orders ship within up to 7 business days · Israel delivery ₪35 · free pickup in central Israel.', dmNote:'Your message is copied for Instagram. Paste it in the chat and send.',
-    personalTitle:'WANT IT IN ANOTHER COLOUR?', personalCopy:'Choose a Romic model, then make it yours.', personalLink:'EXPLORE MAKE IT YOURS', invalid:'Bag not found', invalidCopy:'This design may no longer be available.',
-    finderHint:'NOT SURE?', finderOpen:'FIND MY ROMIC', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
+    personalTitle:'WANT A DIFFERENT COLOUR?', personalCopy:'Choose a Romic model, then make it yours.', personalLink:'EXPLORE MAKE IT YOURS', invalid:'Bag not found', invalidCopy:'This design may no longer be available.',
+    finderHint:'NEED HELP CHOOSING?', finderOpen:'FIND YOUR BAG', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
     model:'CHOOSE A MODEL', colour:'CHOOSE A COLOUR', basePrice:'BASE PRICE', bagBody:'BAG BODY', messageRomic:'MESSAGE ROMIC', customLead:'Choose a model. Choose a colour.', customNote:'Base price: one solid colour with the standard handle and hardware. Straps, colour combinations, extra handles and accessories cost extra.', customVisual:'Visualisation for reference. Handmade colour and measurements may vary slightly.',
-    copied:'Message copied — paste and send it in Instagram.', picksCopied:'Your picks were copied for Instagram.', picksLabel:'SAVED · ASK ROMIC', viewImage:'View', remove:'Remove', openInstagram:'open Romic on Instagram', pauseMotion:'Pause moving collection', playMotion:'Play moving collection'
+    copied:'Message copied — paste and send it in Instagram.', picksCopied:'Your picks were copied for Instagram.', picksLabel:'SAVED · ASK ROMIC', viewImage:'View', remove:'Remove', openInstagram:'open Romic on Instagram'
   },
   he: {
     skip:'דילוג לתוכן', collection:'קולקציה', craft:'עיצוב אישי', service:'משלוחים', faq:'שאלות נפוצות', instagram:'אינסטגרם', menu:'תפריט', close:'סגירת התפריט', language:'EN',
-    heroKicker:'עבודת יד ישראלית · ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'לצפייה בקולקציה', scroll:'גלו את התיק שלכן',
-    collectionTitle:'FIND YOUR ROMIC.', inStock:'מלאי מוגבל', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'מומלצים', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
-    readyTitle:'מוכנים למשלוח', readyCopy:'תיקים מוכנים נשלחים בתוך עד 7 ימי עסקים.', customTitle:'ה־ROMIC שלכן', customCopy:'בחרו דגם וצבע. הכנה אישית בתוך עד 10 ימים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪35 · איסוף ללא עלות מאזור המרכז.',
+    heroKicker:'עבודת יד ישראלית · ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'לצפייה בקולקציה', scroll:'גלי את התיק שלך',
+    collectionTitle:'FIND YOUR ROMIC.', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'מומלצים', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
+    readyTitle:'מוכן למשלוח', readyCopy:'תיק מוכן נשלח בתוך עד 7 ימי עסקים.', customTitle:'ה־ROMIC שלך', customCopy:'בחרי דגם וצבע. הכנה אישית בתוך עד 10 ימים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪35 · איסוף ללא עלות מאזור המרכז.',
     privacy:'מדיניות פרטיות', accessibility:'הצהרת נגישות', terms:'תנאי שימוש', rights:'© 2026 Romic. כל הזכויות שמורות.', handmade:'תיקים בעבודת יד · ישראל', email:'אימייל',
-    back:'חזרה לקולקציה', size:'מידה', dimensions:'מידות גוף התיק', availabilityLabel:'זמינות', readyMade:'מוכן למשלוח', order:'שליחת הודעה ל־ROMIC באינסטגרם', save:'שמירה', saved:'נשמר',
-    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'תיקים מוכנים נשלחים בתוך עד 7 ימי עסקים · משלוח בישראל ₪35 · איסוף ללא עלות מאזור המרכז.', dmNote:'ההודעה הועתקה. הדביקו אותה בצ׳אט באינסטגרם ושלחו.',
-    personalTitle:'רוצות אותו בצבע אחר?', personalCopy:'בחרו דגם וצבע וצרו את ה־Romic שלכן.', personalLink:'לעיצוב אישי', invalid:'התיק לא נמצא', invalidCopy:'ייתכן שהדגם כבר אינו זמין.',
-    finderHint:'לא בטוחות?', finderOpen:'מצאו את ה־ROMIC שלכן', finderClose:'סגירת שאלון התאמה', finderCarry:'איך תרצו לשאת את התיק?', finderSize:'איזה גודל תרצו?', finderDetail:'איזה גימור אתן אוהבות?', hand:'ביד', onShoulder:'על הכתף', clutch:'קלאץ׳', small:'קטן', medium:'בינוני', large:'גדול', clean:'נקי', chain:'שרשרת', pearls:'פנינים', matches:'ההתאמות שלכן', yourRomic:'YOUR ROMIC.', noExact:'אין כרגע התאמה מדויקת בקולקציה המוכנה.', makeYours:'לעיצוב אישי',
+    back:'חזרה לקולקציה', size:'מידה', dimensions:'מידות גוף התיק', order:'שלחי הודעה ל־ROMIC באינסטגרם', save:'שמירה', saved:'נשמר',
+    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'תיק מוכן נשלח בתוך עד 7 ימי עסקים · משלוח בישראל ₪35 · איסוף ללא עלות מאזור המרכז.', dmNote:'ההודעה הועתקה. הדביקי אותה בצ׳אט באינסטגרם ושלחי.',
+    personalTitle:'רוצה את התיק בצבע אחר?', personalCopy:'בחרי דגם וצבע ועצבי את ה־Romic שלך.', personalLink:'לעיצוב אישי', invalid:'התיק לא נמצא', invalidCopy:'ייתכן שהדגם כבר אינו זמין.',
+    finderHint:'לא בטוחה איזה תיק לבחור?', finderOpen:'מצאי את התיק שלך', finderClose:'סגירת שאלון התאמה', finderCarry:'איך תרצי לשאת את התיק?', finderSize:'איזה גודל תרצי?', finderDetail:'איזה גימור את אוהבת?', hand:'ביד', onShoulder:'על הכתף', clutch:'קלאץ׳', small:'קטן', medium:'בינוני', large:'גדול', clean:'נקי', chain:'שרשרת', pearls:'פנינים', matches:'התיקים שמתאימים לך', yourRomic:'YOUR ROMIC.', noExact:'לא מצאנו התאמה מדויקת. אולי תמצאי את התיק שלך בעיצוב האישי.', makeYours:'לעיצוב אישי',
     model:'בחירת דגם', colour:'בחירת צבע', basePrice:'מחיר בסיס', bagBody:'מידות גוף התיק', messageRomic:'שליחת הודעה ל־ROMIC', customLead:'בחרי דגם. בחרי צבע.', customNote:'מחיר הבסיס כולל צבע אחיד, ידית ואבזור סטנדרטיים. רצועות, שילובי צבעים, ידיות נוספות ואביזרים מתומחרים בנפרד.', customVisual:'ההדמיה להמחשה. בעבודת יד ייתכנו הבדלים קטנים בגוון ובמידות.',
-    copied:'ההודעה הועתקה — הדביקו ושלחו באינסטגרם.', picksCopied:'הבחירות הועתקו לאינסטגרם.', picksLabel:'נשמרו · דברו עם ROMIC', viewImage:'תמונה', remove:'הסרה', openInstagram:'פתיחת Romic באינסטגרם', pauseMotion:'עצירת הקולקציה הנעה', playMotion:'הפעלת הקולקציה הנעה'
+    copied:'ההודעה הועתקה — הדביקי ושלחי באינסטגרם.', picksCopied:'הבחירות הועתקו לאינסטגרם.', picksLabel:'נשמר · דברי עם ROMIC', viewImage:'תמונה', remove:'הסרה', openInstagram:'פתיחת Romic באינסטגרם'
   }
 };
 let copy = COPY[language];
@@ -41,47 +41,47 @@ let menuEscapeHandler;
 const HOME_LOCALE = {
   en: {
     title:'Romic — Handmade Bags',
-    description:'A limited collection of handmade crochet bags by Romi Cohen. View current availability and speak with Romic directly on Instagram.',
+    description:'A collection of hand-crocheted bags made in Israel. Explore each design, see its measurements and message Romic on Instagram.',
     conveyorLabel:'Moving Romic collection. Swipe or drag left and right to explore.',
     searchLabel:'Search bags', toolsLabel:'Find and sort bags', categoriesLabel:'Filter by bag type',
     categories:['All','Clutches','Top handle','Shoulder'], sortLabel:'Sort', sorts:['Featured','Price: low to high','Price: high to low'],
     faqKicker:'ROMIC FAQ', faqTitle:'GOOD TO<br>KNOW.', faqIntro:'A few useful details before you choose your Romic.',
     faqs:[
-      ['How do I order a bag?','Choose your bag and tap the Instagram button. Your message will be copied, so you can check availability and complete the order directly with Romic.'],
-      ['Are all Romic bags handmade?','Yes. Every Romic bag is hand-crocheted in Israel by Romi Cohen. Small variations are part of what makes each piece unique.'],
-      ['How do I check availability?','Availability is limited and changes quickly. Message Romic on Instagram for the latest update on the bag you love.'],
+      ['How do I order a bag?','Choose a design and tap the Instagram button. A message is copied for you to paste into the chat and send to Romic.'],
+      ['Are Romic bags handmade in Israel?','Yes. Every Romic bag is hand-crocheted in Israel.'],
+      ['How do I choose the right size?','Each product page shows the bag size and body measurements. Handles and straps are not included in the measurements.'],
       ['Can I choose a model and colour?','Yes. In Romic Your Way, choose from the available models and colours. Straps, colour combinations and extra details may cost more.'],
-      ['What do the measurements include?','Measurements refer to the bag body only, without handles or straps. As every bag is handmade, small differences may occur.'],
+      ['Can I see more photos?','Each product page includes a photo gallery. Select a thumbnail below the main image to view another photo.'],
       ['When will my bag arrive?','Ready-made bags ship within up to 7 business days. Delivery in Israel is ₪35, or you can arrange free pickup from central Israel. Custom-order timing is confirmed before you order.']
     ],
-    faqContact:'STILL CURIOUS? MESSAGE ROMIC ON INSTAGRAM', faqMessage:'Hi Romic! I have a question about the bags on your website.',
+    faqContact:'HAVE A QUESTION? MESSAGE ROMIC ON INSTAGRAM', faqMessage:'Hi Romic! I have a question about the bags on your website.',
     instagramKicker:'THE LATEST FROM ROMIC', instagramTitle:'FOLLOW THE<br>MAKING.', instagramButton:'OPEN @ROMIC_BRAND'
   },
   he: {
     title:'Romic — תיקים בעבודת יד',
-    description:'קולקציה מוגבלת של תיקי Romic הנסרגים בעבודת יד בישראל. צפייה בדגמים, במידות ובזמינות ופנייה ישירה באינסטגרם.',
-    conveyorLabel:'קולקציית Romic בתנועה. ניתן להחליק לצדדים כדי לגלות את כל הדגמים.',
+    description:'תיקי Romic נסרגים בעבודת יד בישראל. כאן אפשר להכיר כל דגם, לראות את המידות ולכתוב ל־Romic באינסטגרם.',
+    conveyorLabel:'קולקציית Romic בתנועה. החליקי לצדדים כדי לגלות את הדגמים.',
     searchLabel:'חיפוש תיקים', toolsLabel:'חיפוש ומיון תיקים', categoriesLabel:'סינון לפי סוג תיק',
     categories:['הכול','קלאצ׳ים','תיקי יד','תיקי כתף'], sortLabel:'מיון', sorts:['מומלצים','מחיר: מהנמוך לגבוה','מחיר: מהגבוה לנמוך'],
-    faqKicker:'ROMIC FAQ', faqTitle:'טוב<br>לדעת.', faqIntro:'כמה תשובות קצרות לפני שבוחרות Romic.',
+    faqKicker:'שאלות נפוצות', faqTitle:'טוב<br>לדעת.', faqIntro:'כמה תשובות קצרות לפני שתבחרי תיק.',
     faqs:[
-      ['איך מזמינים תיק?','בוחרות תיק ולוחצות על כפתור האינסטגרם. ההודעה מועתקת אוטומטית, ומשם אפשר לבדוק זמינות ולהשלים את ההזמנה מול Romic.'],
-      ['כל התיקים מיוצרים בעבודת יד בישראל?','כן. כל תיק של Romic נסרג בעבודת יד בישראל על ידי רומי כהן. הבדלים קטנים הם חלק מהאופי הייחודי של כל תיק.'],
-      ['איך בודקים זמינות?','המלאי מוגבל ומשתנה. שלחו ל־Romic הודעה באינסטגרם ותקבלו עדכון על הדגם שאהבתן.'],
-      ['אפשר לבחור דגם וצבע?','כן. באזור העיצוב האישי בוחרות דגם וצבע מתוך האפשרויות הקיימות. רצועות, שילובי צבעים ותוספות עשויים להיות בתוספת תשלום.'],
-      ['מה כוללות המידות?','המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. בגלל עבודת היד ייתכנו הבדלים קטנים.'],
-      ['מתי התיק יגיע?','תיקים מוכנים נשלחים בתוך עד 7 ימי עסקים. משלוח בישראל עולה ₪35, וניתן לתאם איסוף ללא עלות מאזור המרכז. זמן הכנת תיק אישי יימסר לפני ההזמנה.']
+      ['איך מזמינים תיק?','בחרי דגם ולחצי על כפתור האינסטגרם. ההודעה מוכנה להעתקה לצ׳אט ולשליחה ל־Romic.'],
+      ['כל התיקים של Romic נסרגים בעבודת יד בישראל?','כן. כל תיק של Romic נסרג בעבודת יד בישראל.'],
+      ['איך לבחור את המידה המתאימה?','בעמוד של כל תיק תמצאי את המידה ואת מידות גוף התיק. המידות אינן כוללות ידיות ורצועות.'],
+      ['אפשר לבחור דגם וצבע?','כן. בעיצוב האישי בחרי דגם וצבע מתוך האפשרויות הקיימות. רצועות, שילובי צבעים ותוספות עשויים להיות בתוספת תשלום.'],
+      ['אפשר לראות עוד תמונות?','בעמוד של כל תיק יש גלריית תמונות. לחצי על תמונה ממוזערת מתחת לתמונה הראשית כדי לראות תמונה נוספת.'],
+      ['מתי התיק יגיע?','תיק מוכן נשלח בתוך עד 7 ימי עסקים. משלוח בישראל עולה ₪35, ואפשר לתאם איסוף ללא עלות מאזור המרכז. זמן ההכנה של תיק בעיצוב אישי יימסר לפני ההזמנה.']
     ],
-    faqContact:'יש לכן שאלה נוספת? כתבו ל־ROMIC באינסטגרם', faqMessage:'היי Romic! יש לי שאלה לגבי התיקים באתר.',
-    instagramKicker:'THE LATEST FROM ROMIC', instagramTitle:'BEHIND THE<br>CRAFT.', instagramButton:'OPEN @ROMIC_BRAND'
+    faqContact:'יש לך שאלה? כתבי ל־ROMIC באינסטגרם', faqMessage:'היי Romic! יש לי שאלה לגבי התיקים באתר.',
+    instagramKicker:'מה חדש ב־ROMIC', instagramTitle:'הצצה<br>לתהליך.', instagramButton:'ל־@ROMIC_BRAND באינסטגרם'
   }
 };
 
 const productDesign = {
-  rio: ['coral', '#fda67a'], paris: ['berry', '#dca2a3'], monaco: ['mauve', '#bb8694'], miami: ['berry', '#eb91a2'],
-  bali: ['lime', '#a6ac6d'], sahara: ['sand', '#b17d5c'], tokyo: ['lime', '#a2ce6d'], madrid: ['red', '#d20b22'], ibiza: ['coral', '#ff8b45'], porto: ['wine', '#9d2037'],
-  maldives: ['sky', '#a6cdf0'], corfu: ['sky', '#b0d2f0'], lisbon: ['sun', '#f7ce66'], tulum: ['sand', '#ceb298'],
-  mykonos: ['stone', '#eee9e4'], milan: ['stone', '#f4f1f1'], venice: ['wine', '#8b202e'], dubai: ['charcoal', '#5a5552']
+  rio: ['coral', '#fda476'], paris: ['berry', '#da9d9e'], monaco: ['mauve', '#c18a99'], miami: ['berry', '#ed93a4'],
+  bali: ['lime', '#a7af6c'], sahara: ['sand', '#a6795b'], tokyo: ['lime', '#a6d270'], madrid: ['red', '#bf1320'], ibiza: ['coral', '#fc9444'], porto: ['wine', '#9b1c34'],
+  maldives: ['sky', '#a9cdef'], corfu: ['sky', '#b4d8f5'], lisbon: ['sun', '#f8d063'], tulum: ['sand', '#d1b399'],
+  mykonos: ['stone', '#eee9e4'], milan: ['stone', '#f5f4f3'], venice: ['wine', '#8e1d2b'], dubai: ['charcoal', '#423d3c']
 };
 
 const catalogOrder = ['rio','ibiza','porto','paris','miami','monaco','madrid','venice','dubai','sahara','tulum','mykonos','milan','lisbon','bali','tokyo','corfu','maldives'];
@@ -94,9 +94,7 @@ function icon(name) {
     close:'<path d="m6 6 12 12M18 6 6 18"/>',
     arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
     down:'<path d="M12 5v14M6 13l6 6 6-6"/>',
-    instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
-    pause:'<path d="M9 6v12M15 6v12"/>',
-    play:'<path d="m9 6 9 6-9 6Z"/>'
+    instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>'
   };
   return `<svg class="icon icon-${name}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ''}</svg>`;
 }
@@ -287,13 +285,6 @@ function applyHomeCopy() {
     const image = card.querySelector('img');
     if (product && image) image.alt = `${product.name} — ${isHebrew ? product.he : product.en}`;
   });
-  const motionToggle = document.querySelector('[data-conveyor-toggle]');
-  if (motionToggle) {
-    const paused = motionToggle.getAttribute('aria-pressed') === 'true';
-    const label = paused ? copy.playMotion : copy.pauseMotion;
-    motionToggle.setAttribute('aria-label', label);
-    motionToggle.querySelector('.visually-hidden').textContent = label;
-  }
 }
 
 function setLanguage(nextLanguage, historyMode = 'replace') {
@@ -352,14 +343,14 @@ function header() {
   const otherLanguage = `${isHebrew ? '../en/' : '../he/'}${isProductPage ? `product.html${location.search}` : isDocumentPage ? `${document.body.dataset.doc}.html` : ''}`;
   const navigation = `<a href="${siteRoot}#collection">${copy.collection}</a><a href="${siteRoot}#craft">${copy.craft}</a><a href="${siteRoot}#faq">${copy.faq}</a>`;
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
-    <a class="brand" href="${siteRoot}" aria-label="Romic home"><span class="brand-name">ROMIC</span><span class="brand-sub">HANDMADE BAGS</span></a>
+    <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-transparent.png" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
     <div class="header-actions"><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
-    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><span>ROMIC</span><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}</nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
+    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-transparent.png" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}</nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
 function footer() {
-  return `<footer class="site-footer"><div class="footer-wordmark">ROMIC</div><div class="footer-grid">
+  return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-transparent.png" alt="Romic — Handmade Bags" width="300" height="110"><div class="footer-grid">
     <div><p>${copy.handmade}</p><p>${copy.rights}</p></div>
     <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}</nav>
   </div></footer>`;
@@ -424,9 +415,9 @@ function productCard(product) {
     : '';
   return `<article class="product-card" data-tone="${tone}" data-product-id="${product.id}" style="--card-bg:${background}">
     <button class="save-pick" type="button" data-save-pick="${product.id}" aria-label="${saved ? copy.remove : copy.save} ${product.name}" aria-pressed="${saved}">${heartIcon(saved)}</button>
-    <a class="product-card-link" data-quick-product="${product.id}" href="product.html?id=${product.id}" aria-label="${product.name}, ${formatPrice(product.price)}, ${copy.inStock}">
+    <a class="product-card-link" data-quick-product="${product.id}" href="product.html?id=${product.id}" aria-label="${product.name}, ${formatPrice(product.price)}, ${product.size}, ${product.width} × ${product.height} cm">
       <div class="product-image"><img class="product-image-primary" src="../assets/cards/600/${product.image}" srcset="../assets/cards/600/${product.image} 600w, ../assets/cards/900/${product.image} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.image}" alt="${product.name} — ${isHebrew ? product.he : product.en}" loading="lazy" decoding="async" width="900" height="1050">${alternateImage}</div>
-      <div class="product-meta"><h3>${product.name}</h3><span class="price">${formatPrice(product.price)}</span><span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span><span class="availability">${copy.inStock}</span></div>
+      <div class="product-meta"><h3>${product.name}</h3><span class="price">${formatPrice(product.price)}</span><span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
     </a></article>`;
 }
 
@@ -604,8 +595,8 @@ function renderSavedPicks() {
       const products = getSavedPicks().map(id => ROMIC_PRODUCTS.find(product => product.id === id)).filter(Boolean);
       if (!products.length) return;
       const message = isHebrew
-        ? `היי! שמרתי באתר את הדגמים: ${products.map(product => product.name).join(', ')}. אשמח לבדוק זמינות.`
-        : `Hi Romic! I saved these bags on the website: ${products.map(product => product.name).join(', ')}. I'd love to check availability.`;
+        ? `היי! שמרתי באתר את הדגמים: ${products.map(product => product.name).join(', ')}. אשמח לקבל פרטים.`
+      : `Hi Romic! I saved these bags on the website: ${products.map(product => product.name).join(', ')}. I'd love to know more.`;
       window.open(dmUrl(message), '_blank', 'noopener');
       copyToClipboard(message); toast(copy.picksCopied);
     });
@@ -690,8 +681,8 @@ function renderCustomizer() {
     live.textContent = `${displayModel(selectedModel)} · ${displayColor(selectedColor)}`; price.textContent = formatPrice(selectedModel.price); size.textContent = `${selectedModel.measure} cm`;
     const cta = root.querySelector('.customizer-cta');
     const message = isHebrew
-      ? `היי! הרכבתי תיק באתר: דגם ${displayModel(selectedModel)}, צבע ${displayColor(selectedColor)}. אשמח לבדוק זמינות ולהזמין!`
-      : `Hi Romic! I created a custom bag on the website: ${displayModel(selectedModel)} in ${displayColor(selectedColor)}. I'd love to check availability and order.`;
+      ? `היי! הרכבתי תיק באתר: דגם ${displayModel(selectedModel)}, צבע ${displayColor(selectedColor)}. אשמח להזמין!`
+      : `Hi Romic! I created a custom bag on the website: ${displayModel(selectedModel)} in ${displayColor(selectedColor)}. I'd love to order.`;
     cta.href = dmUrl(message); cta.dataset.message = message;
     root.dataset.selectedModel = selectedModel.id;
     root.dataset.selectedColor = selectedColor.id;
@@ -713,9 +704,8 @@ function renderHeroConveyor() {
   const viewport = root.closest('.hero-conveyor-window');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const duplicateCount = Math.min(5, products.length);
-  const conservativeDevice = navigator.connection?.saveData === true || (navigator.deviceMemory && navigator.deviceMemory <= 2);
-  let offset = 0, segmentWidth = 0, lastPaint = performance.now(), resumeAt = 0, frameId = 0;
-  let pointerActive = false, hoverPaused = false, focusPaused = false, userPaused = Boolean(conservativeDevice), heroVisible = true;
+  let offset = 0, segmentWidth = 0, lastPaint = performance.now(), frameId = 0;
+  let pointerActive = false, focusPaused = false, heroVisible = true;
   let pointerId = null, startX = 0, startY = 0, lastPointerX = 0, moved = false, suppressClick = false;
 
   function cardMarkup(product, index, duplicate = false) {
@@ -725,9 +715,6 @@ function renderHeroConveyor() {
     return `<a class="conveyor-card" href="product.html?id=${product.id}" data-conveyor-product="${product.id}" draggable="false" style="--conveyor-bg:${background}"${duplicateAttributes}><span class="conveyor-image"><img data-conveyor-src="../assets/conveyor/480/${product.id}.webp" data-conveyor-srcset="../assets/conveyor/480/${product.id}.webp 480w, ../assets/conveyor/720/${product.id}.webp 720w" sizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" data-fallback-src="../assets/products/${product.image}" alt="${duplicate ? '' : `${product.name} — ${isHebrew ? product.he : product.en}`}" draggable="false" loading="lazy" fetchpriority="${priority}" decoding="async" width="720" height="840"></span><span class="conveyor-label"><strong>${product.name}</strong><span aria-hidden="true">·</span><small>${formatPrice(product.price)}</small></span></a>`;
   }
   root.innerHTML = products.map((product, index) => cardMarkup(product, index)).join('') + products.slice(0, duplicateCount).map((product, index) => cardMarkup(product, index, true)).join('');
-  reel.querySelector('[data-conveyor-toggle]')?.remove();
-  reel.insertAdjacentHTML('beforeend', `<button class="conveyor-motion-toggle" type="button" data-conveyor-toggle aria-label="${userPaused ? copy.playMotion : copy.pauseMotion}" aria-pressed="${userPaused}">${icon(userPaused ? 'play' : 'pause')}<span class="visually-hidden">${userPaused ? copy.playMotion : copy.pauseMotion}</span></button>`);
-  const motionToggle = reel.querySelector('[data-conveyor-toggle]');
 
   function loadConveyorImage(image) {
     if (!image?.dataset.conveyorSrc) return;
@@ -782,14 +769,14 @@ function renderHeroConveyor() {
     normalizePosition();
     applyTransform();
   }
-  function shouldAnimate(now = performance.now()) {
-    return !reducedMotion.matches && !userPaused && !pointerActive && !hoverPaused && !focusPaused && heroVisible && !document.hidden && now >= resumeAt;
+  function shouldAnimate() {
+    return !reducedMotion.matches && !pointerActive && !focusPaused && heroVisible && !document.hidden;
   }
   function animate(now) {
     frameId = 0;
     if (!heroVisible || document.hidden) return;
     if (shouldAnimate(now) && segmentWidth) {
-      const speed = matchMedia('(max-width:600px)').matches ? 130 : 165;
+      const speed = matchMedia('(max-width:600px)').matches ? 165 : 200;
       const elapsed = Math.min(now - lastPaint, 50);
       offset += speed * elapsed / 1000;
       normalizePosition();
@@ -799,7 +786,7 @@ function renderHeroConveyor() {
     frameId = requestAnimationFrame(animate);
   }
   function ensureAnimation() {
-    if (frameId || userPaused || reducedMotion.matches || !heroVisible || document.hidden) return;
+    if (frameId || reducedMotion.matches || !heroVisible || document.hidden) return;
     lastPaint = performance.now();
     frameId = requestAnimationFrame(animate);
   }
@@ -833,27 +820,21 @@ function renderHeroConveyor() {
     suppressClick = moved;
     if (suppressClick) setTimeout(() => { suppressClick = false; }, 160);
     if (viewport.hasPointerCapture?.(pointerId)) viewport.releasePointerCapture(pointerId);
-    pointerActive = false; pointerId = null; resumeAt = performance.now() + 1100;
+    pointerActive = false; pointerId = null;
     viewport.classList.remove('is-dragging'); reel.classList.remove('is-interacting');
     ensureAnimation();
   };
   viewport.addEventListener('pointerup', finishPointer);
   viewport.addEventListener('pointercancel', finishPointer);
-  viewport.addEventListener('mouseenter', () => { hoverPaused = true; stopAnimation(); });
-  viewport.addEventListener('mouseleave', () => { hoverPaused = false; ensureAnimation(); });
+  viewport.addEventListener('pointerleave', event => {
+    if (pointerActive && event.pointerId === pointerId && event.buttons === 0) finishPointer(event);
+  });
   root.addEventListener('focusin', () => { focusPaused = true; stopAnimation(); });
   root.addEventListener('focusout', () => { focusPaused = root.contains(document.activeElement); ensureAnimation(); });
   root.addEventListener('click', event => {
     if (suppressClick) { event.preventDefault(); event.stopPropagation(); return; }
     if (event.target.closest('[data-conveyor-product]')) rememberHomePosition();
   }, true);
-  motionToggle.addEventListener('click', () => {
-    userPaused = !userPaused;
-    motionToggle.setAttribute('aria-pressed', String(userPaused));
-    motionToggle.setAttribute('aria-label', userPaused ? copy.playMotion : copy.pauseMotion);
-    motionToggle.innerHTML = `${icon(userPaused ? 'play' : 'pause')}<span class="visually-hidden">${userPaused ? copy.playMotion : copy.pauseMotion}</span>`;
-    if (userPaused) stopAnimation(); else ensureAnimation();
-  });
   const visibilityObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     heroVisible = entries[0]?.isIntersecting ?? true;
     if (heroVisible) ensureAnimation(); else stopAnimation();
@@ -926,7 +907,7 @@ function renderProduct() {
   updateAlternateLinks();
   const structuredData = document.createElement('script'); structuredData.type = 'application/ld+json';
   structuredData.dataset.romicStructured = '';
-  structuredData.textContent = JSON.stringify({ '@context':'https://schema.org', '@type':'Product', name:`Romic ${product.name}`, description:isHebrew ? product.he : product.en, image:(product.gallery || [product.image]).map(image => `${location.origin}${siteBasePath}/assets/products/${image}`), brand:{ '@type':'Brand', name:'Romic' }, offers:{ '@type':'Offer', priceCurrency:'ILS', price:product.price, availability:'https://schema.org/LimitedAvailability', url:location.href } });
+  structuredData.textContent = JSON.stringify({ '@context':'https://schema.org', '@type':'Product', name:`Romic ${product.name}`, description:isHebrew ? product.he : product.en, image:(product.gallery || [product.image]).map(image => `${location.origin}${siteBasePath}/assets/products/${image}`), brand:{ '@type':'Brand', name:'Romic' }, offers:{ '@type':'Offer', priceCurrency:'ILS', price:product.price, availability:'https://schema.org/InStock', url:location.href } });
   document.head.append(structuredData);
   document.body.style.setProperty('--product-bg', (productDesign[product.id] || ['stone', '#e5ded5'])[1]);
   const gallery = product.gallery || [product.image];
@@ -936,9 +917,9 @@ function renderProduct() {
   </div>`;
   main.innerHTML = `<div class="product-page"><a class="back-link" href="./#collection">${icon('arrow')} ${copy.back}</a><div class="product-layout">
     ${galleryMarkup}
-    <section class="product-info" aria-labelledby="product-name"><p class="product-status">${copy.inStock}</p><h1 class="product-name" id="product-name">${product.name}</h1><p class="product-description">${isHebrew ? product.he : product.en}</p><p class="product-price">${formatPrice(product.price)}</p>
-    <dl class="product-specs"><div><dt>${copy.size}</dt><dd>${product.size}</dd></div><div><dt>${copy.dimensions}</dt><dd>${product.width} × ${product.height} cm</dd></div><div><dt>${copy.availabilityLabel}</dt><dd>${copy.readyMade}</dd></div></dl>
-    <div class="product-actions">${dmAnchor(`${icon('instagram')} ${copy.order}`, isHebrew ? `היי! אהבתי מאוד את ${product.name}. אשמח לבדוק זמינות ולהזמין!` : `Hi Romic! I love the ${product.name} bag. I'd like to check availability and order.`, 'button product-cta')}<button class="quick-save product-save" type="button" data-product-save="${product.id}" aria-pressed="${getSavedPicks().includes(product.id)}">${heartIcon(getSavedPicks().includes(product.id))}<span>${getSavedPicks().includes(product.id) ? copy.saved : copy.save}</span></button></div><p class="dm-note">${copy.dmNote}</p><p class="product-note">${copy.dimsNote}</p><p class="delivery-note">${copy.deliveryNote}</p></section></div>
+    <section class="product-info" aria-labelledby="product-name"><h1 class="product-name" id="product-name">${product.name}</h1><p class="product-description">${isHebrew ? product.he : product.en}</p><p class="product-price">${formatPrice(product.price)}</p>
+    <dl class="product-specs"><div><dt>${copy.size}</dt><dd>${product.size}</dd></div><div><dt>${copy.dimensions}</dt><dd>${product.width} × ${product.height} cm</dd></div></dl>
+    <div class="product-actions">${dmAnchor(`${icon('instagram')} ${copy.order}`, isHebrew ? `היי! אהבתי מאוד את ${product.name}. אשמח להזמין!` : `Hi Romic! I love the ${product.name} bag. I'd love to order.`, 'button product-cta')}<button class="quick-save product-save" type="button" data-product-save="${product.id}" aria-pressed="${getSavedPicks().includes(product.id)}">${heartIcon(getSavedPicks().includes(product.id))}<span>${getSavedPicks().includes(product.id) ? copy.saved : copy.save}</span></button></div><p class="dm-note">${copy.dmNote}</p><p class="product-note">${copy.dimsNote}</p><p class="delivery-note">${copy.deliveryNote}</p></section></div>
     <a class="product-custom-link" href="./#craft"><span>${copy.personalTitle}</span><strong>${copy.personalCopy}</strong><em>${copy.personalLink} ${icon('arrow')}</em></a></div>`;
   const mainImage = main.querySelector('[data-gallery-main]');
   const productSave = main.querySelector('[data-product-save]');
