@@ -57,6 +57,8 @@ button,a{touch-action:manipulation}
 .product-meta h3{margin:0;font-size:clamp(1.45rem,2.3vw,2.4rem);font-weight:800;letter-spacing:-.055em;line-height:1}
 .price{font-size:.95rem;font-weight:750;font-variant-numeric:tabular-nums}
 .product-card[data-tone=berry]{--card-bg:#f4a7bd}.product-card[data-tone=mauve]{--card-bg:#cda6cf}.product-card[data-tone=coral]{--card-bg:#ff806e}.product-card[data-tone=lime]{--card-bg:#cce65b}.product-card[data-tone=ocean]{--card-bg:#63c6ca}.product-card[data-tone=sky]{--card-bg:#a8dff2}.product-card[data-tone=ice]{--card-bg:#d0ecee}.product-card[data-tone=sun]{--card-bg:#f4d94f}.product-card[data-tone=sand]{--card-bg:#d7b38d}.product-card[data-tone=stone]{--card-bg:#e1d9cf}.product-card[data-tone=wine]{--card-bg:#c77a8f}
+.product-card[data-tone=charcoal] .product-meta{color:#fff}
+.product-card[data-tone=charcoal] .product-card-size{color:rgba(255,255,255,.82)}
 .collection-actions{display:flex;justify-content:center;margin-top:clamp(34px,5vw,64px)}
 .collection-button{appearance:none;cursor:pointer;font:inherit;font-size:.78rem;font-weight:800;letter-spacing:.05em}
 .customizer{padding:clamp(80px,10vw,150px) var(--gutter);background:#151416;color:#fff}
@@ -321,8 +323,13 @@ html[lang=en] .customizer-head{direction:ltr;text-align:left}
 @media(max-width:600px){.product-info{padding:22px 18px}}
 
 /* Cart, promotion and ordering */
-.promo-strip{position:relative;z-index:101;display:flex;align-items:center;justify-content:center;gap:12px;min-height:38px;padding:6px var(--gutter);background:#e3b5c1;color:var(--ink);text-align:center;font-size:.66rem;font-weight:780;letter-spacing:.035em;line-height:1.25}
-.promo-strip a{text-underline-offset:3px;white-space:nowrap}
+.promo-strip{position:relative;z-index:101;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:70px;padding:10px var(--gutter);background:var(--pink);color:var(--ink);line-height:1.25}
+.promo-message{display:grid;gap:3px;min-width:0;text-decoration:none;text-align:start}
+.promo-title{font-size:clamp(.94rem,1.3vw,1.1rem);font-weight:850;letter-spacing:.01em}
+.promo-title strong{font-size:1.28em;font-variant-numeric:tabular-nums}
+.promo-details{font-size:.78rem;font-weight:650}
+.promo-action{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border:1px solid currentColor;text-decoration:none;font-size:.73rem;font-weight:850;letter-spacing:.035em;white-space:nowrap}
+.promo-action:hover{background:var(--ink);color:#fff}
 .bag-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 11px;border:1px solid var(--ink);border-radius:var(--control-radius);background:transparent;color:var(--ink);font:inherit;font-size:.74rem;font-weight:780;cursor:pointer}
 .bag-link .icon{width:18px;height:18px}.bag-count{display:inline-grid;min-width:19px;height:19px;place-items:center;padding:0 4px;border-radius:50%;background:var(--ink);color:white;font-size:.62rem;font-variant-numeric:tabular-nums}
 .bag-link:not(.has-items) .bag-count{background:transparent;color:var(--ink);border:1px solid var(--line)}
@@ -360,7 +367,7 @@ html[dir=rtl] .cart-coupon span{text-align:start}
 html[dir=rtl] .cart-totals dd{text-align:left}
 .site-toast{border-radius:var(--control-radius)}
 @media(max-width:700px){
-  .promo-strip{justify-content:space-between;gap:8px;font-size:.59rem;text-align:start}.promo-strip span{max-width:calc(100% - 66px)}
+  .promo-strip{gap:10px;min-height:72px;padding:9px 14px}.promo-message{gap:4px}.promo-title{font-size:.94rem;line-height:1.15}.promo-title strong{font-size:1.3em}.promo-details{font-size:.72rem;line-height:1.25}.promo-action{min-height:44px;padding:0 9px;font-size:.66rem;letter-spacing:0}
   .bag-link{width:42px;min-width:42px;padding:0;gap:3px}.bag-link [data-cart-label]{display:none}.bag-count{min-width:17px;height:17px}
   .cart-dialog{inset:auto 0 0;margin:0;width:100%;max-width:none;max-height:88dvh;border-radius:12px 12px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}
   .cart-panel{padding:20px 18px calc(20px + env(safe-area-inset-bottom))}.cart-line{grid-template-columns:62px minmax(0,1fr) auto;gap:10px}.cart-thumb{width:62px}
