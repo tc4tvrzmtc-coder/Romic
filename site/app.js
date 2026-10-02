@@ -25,7 +25,7 @@ const COPY = {
     model:'CHOOSE A MODEL', colour:'CHOOSE A COLOUR', basePrice:'BASE PRICE', bagBody:'BAG BODY', messageRomic:'MESSAGE ROMIC', customLead:'Choose a model. Choose a colour.', customNote:'Base price: one solid colour with the standard handle and hardware. Straps, colour combinations, extra handles and accessories cost extra.', customVisual:'Visualisation for reference. Handmade colour and measurements may vary slightly.',
     copied:'Your message is ready in WhatsApp. Tap Send when you’re ready.', picksCopied:'Your bag is ready in WhatsApp. Tap Send when you’re ready.', picksLabel:'IN YOUR BAG', viewImage:'View', remove:'Remove', openInstagram:'open Romic on Instagram',
     bag:'My bag', bagTitle:'Your bag', bagEmpty:'Your bag is empty.', keepBrowsing:'KEEP BROWSING', subtotal:'Subtotal', discount:'Launch offer · 20%', total:'Bag total', shipping:'Delivery is ₪35. Added separately.', couponLabel:'Launch offer code', couponApplied:'20% applied to ready-made bags', couponExpired:'The launch offer has ended.', whatsapp:'CONTINUE TO WHATSAPP', launchOffer:'LAUNCH OFFER · 20% OFF READY-MADE BAGS · CODE ROMIC2026 · THROUGH 16 OCT 2026',
-    addConfirmation:'Added to your bag.', removeConfirmation:'Removed from your bag.', openWhatsapp:'Open WhatsApp to message Romic', promoMessage:'Launch offer: 20% off ready-made collection bags with ROMIC2026. Excludes custom designs and delivery. Through 16 October 2026.'
+    addConfirmation:'Added to your bag.', removeConfirmation:'Removed from your bag.', openWhatsapp:'Open WhatsApp to message Romic', couponUsed:'Coupon code ROMIC2026 applied.', promoMessage:'Launch offer: 20% off ready-made collection bags with ROMIC2026. Excludes custom designs and delivery. Through 16 October 2026.'
   },
   he: {
     skip:'דילוג לתוכן', collection:'קולקציה', craft:'עיצוב אישי', service:'משלוחים', faq:'שאלות נפוצות', instagram:'אינסטגרם', menu:'תפריט', close:'סגירת התפריט', language:'EN',
@@ -40,7 +40,7 @@ const COPY = {
     model:'בחירת דגם', colour:'בחירת צבע', basePrice:'מחיר בסיס', bagBody:'מידות גוף התיק', messageRomic:'שליחת הודעה ל־ROMIC', customLead:'בחרי דגם. בחרי צבע.', customNote:'מחיר הבסיס כולל צבע אחיד, ידית ואבזור סטנדרטיים. רצועות, שילובי צבעים, ידיות נוספות ואביזרים מתומחרים בנפרד.', customVisual:'ההדמיה להמחשה. בעבודת יד ייתכנו הבדלים קטנים בגוון ובמידות.',
     copied:'ההודעה מוכנה בוואטסאפ. כשתרצי, לחצי על שליחה.', picksCopied:'הסל שלך מוכן בוואטסאפ. כשתרצי, לחצי על שליחה.', picksLabel:'בסל שלי', viewImage:'תמונה', remove:'הסרה', openInstagram:'פתיחת Romic באינסטגרם',
     bag:'הסל שלי', bagTitle:'הבחירות שלך', bagEmpty:'עוד לא הוספת תיק לסל.', keepBrowsing:'חזרה לקולקציה', subtotal:'סכום ביניים', discount:'הטבת השקה · 20%', total:'סך הכול לתיקים', shipping:'משלוח ₪35 מתווסף בנפרד.', couponLabel:'קוד הטבת השקה', couponApplied:'20% הנחה על תיקי הקולקציה הקיימים', couponExpired:'הטבת ההשקה הסתיימה.', whatsapp:'ממשיכות לוואטסאפ', launchOffer:'הטבת השקה · 20% הנחה על תיקי הקולקציה הקיימים · קוד ROMIC2026 · עד 16.10.2026 כולל',
-    addConfirmation:'נוסף לסל שלך.', removeConfirmation:'הוסר מהסל.', openWhatsapp:'פתיחת וואטסאפ ושליחת הודעה ל־Romic', promoMessage:'הטבת השקה: 20% הנחה על תיקי הקולקציה הקיימים בקוד ROMIC2026. לא כולל עיצוב אישי ומשלוח. בתוקף עד 16.10.2026.'
+    addConfirmation:'נוסף לסל שלך.', removeConfirmation:'הוסר מהסל.', openWhatsapp:'פתיחת וואטסאפ ושליחת הודעה ל־Romic', couponUsed:'קוד הקופון ROMIC2026 הופעל.', promoMessage:'הטבת השקה: 20% הנחה על תיקי הקולקציה הקיימים בקוד ROMIC2026. לא כולל עיצוב אישי ומשלוח. בתוקף עד 16.10.2026.'
   }
 };
 let copy = COPY[language];
@@ -172,15 +172,14 @@ function setSavedPicks(ids) {
 
 function makeWhatsappMessage(products, isPromotionActive = promoIsActive()) {
   const lines = products.map(product => {
-    const price = currentPrice(product);
-    return `${product.name} · ${product.size} · ${product.width} × ${product.height} cm · ${formatPrice(price)}${isPromotionActive ? ` (was ${formatPrice(product.price)})` : ''}`;
+    return `${product.name} · ${product.size} · ${formatPrice(currentPrice(product))}`;
   });
-  const intro = isHebrew ? 'היי Romic! אשמח לקבל פרטים ולהמשיך עם הבחירות שלי:' : 'Hi Romic! I’d love to ask about these bags and continue with my selection:';
-  const offer = isPromotionActive ? `\n${isHebrew ? `הטבת השקה ${promoCode} כלולה (20% הנחה).` : `Launch offer ${promoCode} included (20% off).`}` : '';
+  const intro = isHebrew ? 'היי, אשמח להזמין:' : 'Hi, I’d like to order:';
+  const offer = isPromotionActive ? `\n${copy.couponUsed}` : '';
   const total = products.reduce((sum, product) => sum + currentPrice(product), 0);
-  const shipping = isHebrew ? 'משלוח ₪35 או איסוף ללא עלות מאזור המרכז, לפי בחירה.' : 'Delivery is ₪35, or free pickup in central Israel.';
-  const customNote = isHebrew ? 'ידוע לי שעיצוב אישי אינו כלול בהטבה.' : 'I understand custom designs are not included in the offer.';
-  return `${intro}\n\n${lines.join('\n')}\n\n${isHebrew ? 'סך הכול לתיקים' : 'Bag total'}: ${formatPrice(total)}${offer}\n${shipping}\n${customNote}`;
+  const totalLabel = isHebrew ? 'סך הכול' : 'Total';
+  const shippingChoice = isHebrew ? 'משלוח או איסוף?' : 'Delivery or pickup?';
+  return `${intro}\n${lines.join('\n')}\n${totalLabel}: ${formatPrice(total)}${offer}\n${shippingChoice}`;
 }
 
 function openCart() {
@@ -739,8 +738,8 @@ function renderCustomizer() {
     live.textContent = `${displayModel(selectedModel)} · ${displayColor(selectedColor)}`; price.textContent = formatPrice(selectedModel.price); size.textContent = `${selectedModel.measure} cm`;
     const cta = root.querySelector('.customizer-cta');
     const message = isHebrew
-      ? `היי! הרכבתי תיק באתר: דגם ${displayModel(selectedModel)}, צבע ${displayColor(selectedColor)}. אשמח לקבל פרטים ולהזמין. לידיעתי, הטבת ROMIC2026 תקפה לתיקי הקולקציה הקיימים בלבד ואינה חלה על עיצוב אישי.`
-      : `Hi Romic! I created a custom bag on the website: ${displayModel(selectedModel)} in ${displayColor(selectedColor)}. I’d love to ask about ordering. I understand the ROMIC2026 offer applies to ready-made collection bags only, not custom designs.`;
+      ? `היי, אשמח להזמין תיק בעיצוב אישי: ${displayModel(selectedModel)} בצבע ${displayColor(selectedColor)}.`
+      : `Hi, I’d like to order a custom ${displayModel(selectedModel)} in ${displayColor(selectedColor)}.`;
     cta.href = whatsappUrl(message);
     root.dataset.selectedModel = selectedModel.id;
     root.dataset.selectedColor = selectedColor.id;
