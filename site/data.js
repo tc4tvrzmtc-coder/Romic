@@ -16,7 +16,9 @@ const ROMIC_PRODUCTS=[
 {id:'mykonos',name:'Mykonos',price:350,size:'M',width:25,height:12,image:'mykonos.webp',gallery:['mykonos.webp','mykonos-worn.webp','mykonos-detail.webp'],types:['clutch'],he:'קלאץ׳ לבן אלגנטי בגימור נקי.',en:'An elegant white clutch with a clean finish.'},
 {id:'milan',name:'Milano',price:370,size:'L',width:25,height:15,image:'milan.webp',gallery:['milan.webp','milan-styled.webp'],types:['shoulder'],he:'תיק כתף לבן עם שרשרת בגוון זהב ורצועה סרוגה.',en:'A white shoulder bag with a gold-tone chain and crochet strap.'},
 {id:'venice',name:'Venice',price:400,size:'M',width:25,height:13,image:'venice.webp',gallery:['venice.webp','venice-worn.webp'],types:['shoulder'],he:'תיק כתף בורדו עם חוליות בגוון זהב.',en:'A burgundy shoulder bag finished with gold-tone links.'},
-{id:'dubai',name:'Dubai',price:400,size:'M',width:25,height:12,image:'dubai-corrected.webp',gallery:['dubai-corrected.webp','dubai-real.webp','dubai-worn.webp','dubai-stairs.webp'],types:['top-handle','shoulder'],detail:'chain',he:'תיק שחור בגזרה יציבה, עם ידיות ושרשרת בגוון זהב.',en:'A structured black handbag with handles and a gold-tone chain.'}
+{id:'dubai',name:'Dubai',price:400,size:'M',width:25,height:12,image:'dubai-corrected.webp',gallery:['dubai-corrected.webp','dubai-real.webp','dubai-worn.webp','dubai-stairs.webp'],types:['top-handle','shoulder'],detail:'chain',he:'תיק שחור בגזרה יציבה, עם ידיות ושרשרת בגוון זהב.',en:'A structured black handbag with handles and a gold-tone chain.'},
+{id:'florence',name:'Florence',price:350,size:'M',width:25,height:10,image:'florence.webp',gallery:['florence.webp','florence-held.webp'],types:['clutch'],detail:'clean',he:'קלאץ׳ בגוון חום מבריק, עשוי מחוט פוליאסטר איכותי.',en:'A glossy brown clutch, handcrafted from premium polyester yarn.'},
+{id:'marrakech',name:'Marrakech',price:400,size:'S',width:20,height:12,image:'marrakech.webp',gallery:['marrakech.webp','marrakech-held.webp','marrakech-detail.webp'],types:['clutch'],detail:'clean',he:'קלאץ׳ קטן בגוון זהב, לנשיאה ביד.',en:'A small gold-tone clutch, made to carry by hand.'}
 ];
 
 ROMIC_PRODUCTS.forEach(product => {
