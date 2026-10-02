@@ -558,7 +558,7 @@ function renderCollection() {
   const filterPanel = document.querySelector('[data-filter-panel]');
   const results = document.querySelector('[data-product-results]');
   const firstIds = ['marrakech', 'rio', 'ibiza', 'porto', 'florence', 'paris'];
-  const returning = sessionStorage.getItem(collectionReturnKey) === '1';
+  const returning = sessionStorage.getItem(collectionReturnKey) === '1' && location.hash !== '#craft';
   let state = { expanded: false, query: '', category: 'all', sort: 'featured', scrollY: 0 };
   if (returning) {
     try { state = { ...state, ...JSON.parse(sessionStorage.getItem(collectionStorageKey) || '{}') }; } catch (_) {}
@@ -1009,7 +1009,16 @@ function renderHome() {
   renderHeroConveyor();
   document.querySelector('[data-open-finder]')?.addEventListener('click', openFinder);
   document.addEventListener('romic:picks-changed', renderSavedPicks);
-  scheduleHomeBelowFold();
+  if (location.hash === '#craft') {
+    // Explicit custom-design navigation takes priority over a saved collection position.
+    sessionStorage.removeItem(collectionReturnKey);
+    renderHomeBelowFold();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.querySelector('#craft')?.scrollIntoView({ behavior:'auto', block:'start' });
+    }));
+  } else {
+    scheduleHomeBelowFold();
+  }
   setTimeout(showLaunchOfferOnce, 280);
 }
 
