@@ -17,10 +17,10 @@ const COPY = {
     skip:'Skip to content', collection:'Collection', craft:'Make It Yours', service:'Delivery', faq:'FAQ', instagram:'Instagram', menu:'Menu', close:'Close menu', language:'עברית',
     heroKicker:'HANDMADE IN ISRAEL · BY ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'DISCOVER THE COLLECTION', scroll:'SCROLL TO FIND YOURS',
     collectionTitle:'FIND YOUR ROMIC.', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Featured', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
-    readyTitle:'READY TO GO', readyCopy:'Ready-made bags ship within 7 business days.', customTitle:'YOUR ROMIC. YOUR WAY.', customCopy:'Choose a model and colour. Handmade in up to 10 business days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪35 delivery · free pickup in central Israel.',
+    readyTitle:'FROM THE COLLECTION', readyCopy:'Delivery within 7 business days.', customTitle:'MAKE IT YOURS', customCopy:'Choose a model and colour. Delivery within 7 business days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪35 delivery · free pickup in central Israel.',
     privacy:'Privacy', accessibility:'Accessibility', terms:'Terms & offers', rights:'© 2026 Romic. All rights reserved.', handmade:'Handmade bags · Israel', email:'Email',
     back:'BACK TO COLLECTION', size:'SIZE', dimensions:'BAG BODY', order:'ADD TO BAG', save:'ADD TO BAG', saved:'IN YOUR BAG',
-    dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Ready-made orders ship within 7 business days · Israel delivery ₪35 · free pickup in central Israel.', dmNote:'A message with your selection opens in WhatsApp. Review it and tap Send.',
+    dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Delivery within 7 business days · Israel delivery ₪35 · free pickup in central Israel.', dmNote:'A message with your selection opens in WhatsApp. Review it and tap Send.',
     personalTitle:'WANT A DIFFERENT COLOUR?', personalCopy:'Choose a Romic model, then make it yours.', personalLink:'EXPLORE MAKE IT YOURS', invalid:'Bag not found', invalidCopy:'This design may no longer be available.',
     finderHint:'NEED HELP CHOOSING?', finderOpen:'FIND YOUR BAG', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
     model:'CHOOSE A MODEL', colour:'CHOOSE A COLOUR', basePrice:'BASE PRICE', bagBody:'BAG BODY', messageRomic:'MESSAGE ROMIC', customLead:'Choose a model. Choose a colour.', customNote:'Base price: one solid colour with the standard handle and hardware. Straps, colour combinations, extra handles and accessories cost extra.', customVisual:'Visualisation for reference. Handmade colour and measurements may vary slightly.',
@@ -32,10 +32,10 @@ const COPY = {
     skip:'דילוג לתוכן', collection:'קולקציה', craft:'עיצוב אישי', service:'משלוחים', faq:'שאלות נפוצות', instagram:'אינסטגרם', menu:'תפריט', close:'סגירת התפריט', language:'EN',
     heroKicker:'עבודת יד ישראלית · ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'לצפייה בקולקציה', scroll:'גלי את התיק שלך',
     collectionTitle:'FIND YOUR ROMIC.', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'מומלצים', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
-    readyTitle:'מוכן למשלוח', readyCopy:'תיק מוכן נשלח עד 7 ימי עסקים.', customTitle:'ה־ROMIC שלך', customCopy:'בחרי דגם וצבע. הכנה עד 10 ימי עסקים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪35 · איסוף ללא עלות מאזור המרכז.',
+    readyTitle:'תיק מהקולקציה', readyCopy:'אספקה עד 7 ימי עסקים.', customTitle:'תיקים בעיצוב אישי', customCopy:'בחרי דגם וצבע. אספקה עד 7 ימי עסקים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪35 · איסוף ללא עלות מאזור המרכז.',
     privacy:'מדיניות פרטיות', accessibility:'הצהרת נגישות', terms:'תנאים ומבצעים', rights:'© 2026 Romic. כל הזכויות שמורות.', handmade:'תיקים בעבודת יד · ישראל', email:'אימייל',
     back:'חזרה לקולקציה', size:'מידה', dimensions:'מידות גוף התיק', order:'הוסיפי לסל שלי', save:'הוסיפי לסל שלי', saved:'נוסף לסל',
-    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'תיק מוכן נשלח עד 7 ימי עסקים · משלוח בישראל ₪35 · איסוף ללא עלות מאזור המרכז.', dmNote:'ההודעה עם הבחירות שלך תיפתח בוואטסאפ. בדקי אותה ולחצי על שליחה.',
+    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'אספקה עד 7 ימי עסקים · משלוח בישראל ₪35 · איסוף ללא עלות מאזור המרכז.', dmNote:'ההודעה עם הבחירות שלך תיפתח בוואטסאפ. בדקי אותה ולחצי על שליחה.',
     personalTitle:'רוצה את התיק בצבע אחר?', personalCopy:'בחרי דגם וצבע ועצבי את ה־Romic שלך.', personalLink:'לעיצוב אישי', invalid:'התיק לא נמצא', invalidCopy:'ייתכן שהדגם כבר אינו זמין.',
     finderHint:'לא בטוחה?', finderOpen:'מצאי את התיק שלך', finderClose:'סגירת שאלון התאמה', finderCarry:'איך תרצי לשאת את התיק?', finderSize:'איזה גודל תרצי?', finderDetail:'איזה גימור את אוהבת?', hand:'ביד', onShoulder:'על הכתף', clutch:'קלאץ׳', small:'קטן', medium:'בינוני', large:'גדול', clean:'נקי', chain:'שרשרת', pearls:'פנינים', matches:'התיקים שמתאימים לך', yourRomic:'YOUR ROMIC.', noExact:'לא מצאנו התאמה מדויקת. אולי תמצאי את התיק שלך בעיצוב האישי.', makeYours:'לעיצוב אישי',
     model:'בחירת דגם', colour:'בחירת צבע', basePrice:'מחיר בסיס', bagBody:'מידות גוף התיק', messageRomic:'שליחת הודעה ל־ROMIC', customLead:'בחרי דגם. בחרי צבע.', customNote:'מחיר הבסיס כולל צבע אחיד, ידית ואבזור סטנדרטיים. רצועות, שילובי צבעים, ידיות נוספות ואביזרים מתומחרים בנפרד.', customVisual:'ההדמיה להמחשה. בעבודת יד ייתכנו הבדלים קטנים בגוון ובמידות.',
@@ -60,8 +60,8 @@ const HOME_LOCALE = {
       ['Are Romic bags handmade in Israel?','Yes. Every Romic bag is hand-crocheted in Israel.'],
       ['How do I choose the right size?','Each product page shows the bag size and body measurements. Handles and straps are not included in the measurements.'],
       ['Can I choose a model and colour?','Yes. In Romic Your Way, choose from the available models and colours. Straps, colour combinations and extra details may cost more.'],
-      ['How long does a custom design take?','Preparation takes up to 10 business days. We’ll confirm the design, price and preparation time with you before you order. Delivery is arranged separately.'],
-      ['What are the delivery times and costs?','Ready-made bags are dispatched within 7 business days. Delivery in Israel costs ₪35; pickup in central Israel is free. We’ll confirm the estimated arrival date when arranging your order.'],
+      ['When will my bag arrive?','Delivery within 7 business days for both collection bags and custom designs.'],
+      ['What are the delivery and pickup options?','Delivery is available within Israel for ₪35. Pickup in central Israel is free.'],
       ['How does the launch offer work?','Enter ROMIC2026 in My bag for 20% off ready-made collection bags through 16 October 2026. It excludes custom designs and delivery, and can’t be combined with another offer.']
     ],
     faqContact:'HAVE A QUESTION? MESSAGE ROMIC ON WHATSAPP', faqMessage:'Hi Romic! I have a question about the bags on your website.',
@@ -79,8 +79,8 @@ const HOME_LOCALE = {
       ['כל התיקים של Romic נסרגים בעבודת יד בישראל?','כן. כל תיק של Romic נסרג בעבודת יד בישראל.'],
       ['איך לבחור את המידה המתאימה?','בעמוד של כל תיק תמצאי את המידה ואת מידות גוף התיק. המידות אינן כוללות ידיות ורצועות.'],
       ['אפשר לבחור דגם וצבע?','כן. בעיצוב האישי בחרי דגם וצבע מתוך האפשרויות הקיימות. רצועות, שילובי צבעים ותוספות עשויים להיות בתוספת תשלום.'],
-      ['כמה זמן נמשכת הכנה של תיק בעיצוב אישי?','זמן ההכנה הוא עד 10 ימי עסקים. לפני ההזמנה נתאם איתך את הדגם, המחיר וזמן ההכנה. המשלוח מתואם בנפרד.'],
-      ['מהם זמני המשלוח והעלויות?','תיק מהקולקציה נשלח עד 7 ימי עסקים. משלוח בישראל עולה ₪35, ואיסוף עצמי מאזור המרכז הוא ללא עלות. מועד ההגעה המשוער יתואם איתך בעת אישור ההזמנה.'],
+      ['מה זמן האספקה של התיקים?','אספקה עד 7 ימי עסקים, לתיקים מהקולקציה ולתיקים בעיצוב אישי.'],
+      ['מהן אפשרויות המשלוח והאיסוף?','משלוחים בישראל בלבד בעלות ₪35, או איסוף עצמי מאזור המרכז ללא עלות.'],
       ['איך מקבלים את הטבת ההשקה?','הזיני את הקוד ROMIC2026 בסל שלי וקבלי 20% הנחה על תיקי הקולקציה הקיימים, עד 16.10.2026. ההטבה לא כוללת עיצוב אישי או משלוח, ואינה מצטרפת למבצע אחר.']
     ],
     faqContact:'יש לך שאלה? כתבי ל־ROMIC בוואטסאפ', faqMessage:'היי Romic! יש לי שאלה לגבי התיקים באתר.',
@@ -521,14 +521,14 @@ function header() {
   const navigation = `<a href="${siteRoot}#collection">${copy.collection}</a><a href="${siteRoot}#customize">${copy.craft}</a><a href="${siteRoot}#faq">${copy.faq}</a>`;
   const cartButton = `<button class="bag-link" type="button" data-open-cart aria-label="${copy.bag}">${bagIcon()} <span data-cart-label>${copy.bag}</span><span class="bag-count" data-cart-count>0</span></button>`;
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
-    <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-transparent.png" alt="Romic — Handmade Bags" width="208" height="76"></a>
+    <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
     <div class="header-actions"><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
-    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-transparent.png" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}</nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
+    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}</nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
 function footer() {
-  return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-transparent.png" alt="Romic — Handmade Bags" width="300" height="110"><div class="footer-grid">
+  return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="300" height="110"><div class="footer-grid">
     <div><p>${copy.handmade}</p><p>${copy.rights}</p></div>
     <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}</nav>
   </div></footer>`;

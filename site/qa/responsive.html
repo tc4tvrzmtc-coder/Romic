@@ -17,11 +17,11 @@
     <label>רוחב <select id="width"><option>375</option><option>390</option><option>430</option><option>1280</option></select></label>
     <label>שפה <select id="language"><option value="he">עברית</option><option value="en">English</option></select></label>
   </header>
-  <iframe title="תצוגת האתר ברוחב שנבחר" src="../he/"></iframe>
+  <iframe title="תצוגת האתר ברוחב שנבחר" src="../he/?v=romic-delivery-logo-20261003"></iframe>
   <script>
     const preview=document.querySelector('iframe');
     document.querySelector('#width').addEventListener('change',event=>preview.style.width=event.target.value+'px');
-    document.querySelector('#language').addEventListener('change',event=>preview.src='../'+event.target.value+'/');
+    document.querySelector('#language').addEventListener('change',event=>preview.src='../'+event.target.value+'/?v='+Date.now());
   </script>
 </body>
 </html>
