@@ -1,0 +1,11 @@
+{
+  "name": "romic-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-images.mjs",
+    "check:images": "node scripts/build-images.mjs --check",
+    "review:images": "node scripts/build-images.mjs --review"
+  },
+  "dependencies": { "sharp": "0.35.4" }
+}

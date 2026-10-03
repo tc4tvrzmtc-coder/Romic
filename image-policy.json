@@ -1,0 +1,7 @@
+{
+  "margin": 0.08,
+  "customModels": ["clutch", "maldives", "dubai"],
+  "colorBackgrounds": { "black": "#423d3c", "ivory": "#eee9e4", "sky": "#a9cdef", "lime": "#a7af6c", "berry": "#8e1d2b", "fuchsia": "#ec91ad", "coral": "#fda476", "sand": "#d1b399" },
+  "productBackgrounds": { "rio": "#fda476", "paris": "#da9d9e", "monaco": "#c18a99", "miami": "#ed93a4", "bali": "#a7af6c", "sahara": "#a6795b", "tokyo": "#a6d270", "madrid": "#bf1320", "ibiza": "#fc9444", "porto": "#9b1c34", "maldives": "#a9cdef", "corfu": "#b4d8f5", "lisbon": "#f8d063", "tulum": "#d1b399", "mykonos": "#eee9e4", "milan": "#f5f4f3", "venice": "#8e1d2b", "dubai": "#423d3c", "florence": "#a57961", "marrakech": "#bd9c54" },
+  "derivatives": { "cards/600": 600, "cards/900": 900, "gallery-thumbs": 240, "conveyor/480": 480, "conveyor/720": 720 }
+}

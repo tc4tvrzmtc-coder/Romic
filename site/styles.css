@@ -462,3 +462,9 @@ html[dir=rtl] .cart-totals dd{text-align:left}
 .cart-whatsapp{margin-top:20px}
 .cart-coupon input{font-size:1rem}
 .cart-remove{min-height:44px}
+
+/* Canonical 4:5 product photography; full images stay visible. */
+.product-image img,.product-hero-image img{object-fit:contain}
+.customizer-visual{width:min(100%,480px);aspect-ratio:4/5;height:auto;justify-self:center;background:var(--custom-image-bg,#a7af6c)}
+.customizer-visual img{aspect-ratio:4/5;object-fit:contain}
+@media(max-width:700px){.customizer-visual{width:min(100%,300px);height:auto;aspect-ratio:4/5;max-height:none}}

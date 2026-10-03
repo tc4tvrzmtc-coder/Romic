@@ -132,7 +132,20 @@ function showLaunchOfferOnce(freshEntry = false) {
   </div>`;
   document.body.append(dialog);
   window.__romicLaunchOfferSeen = true;
-  dialog.querySelector('[data-offer-close]').addEventListener('click', () => dialog.close());
+  const dismissToOpening = () => {
+    if (document.body.dataset.page !== 'home') return;
+    window.__romicLaunchDismissedToTop = true;
+    sessionStorage.removeItem(collectionReturnKey);
+    if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+    const html = document.documentElement;
+    const previous = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    document.querySelector('.brand')?.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    requestAnimationFrame(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); html.style.scrollBehavior = previous; });
+  };
+  dialog.querySelector('[data-offer-close]').addEventListener('click', () => { dialog.close(); dismissToOpening(); });
+  dialog.addEventListener('cancel', () => requestAnimationFrame(dismissToOpening));
   dialog.querySelector('[data-offer-action]').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => dialog.remove(), { once:true });
   dialog.showModal();
@@ -556,12 +569,12 @@ function productCard(product) {
   const added = getSavedPicks().includes(product.id);
   const supportsHoverPreview = matchMedia('(hover:hover) and (pointer:fine)').matches;
   const alternateImage = supportsHoverPreview && product.gallery?.[1]
-    ? `<img class="product-image-alt" data-alt-src="../assets/cards/600/${product.gallery[1]}" data-alt-srcset="../assets/cards/600/${product.gallery[1]} 600w, ../assets/cards/900/${product.gallery[1]} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.gallery[1]}" alt="" decoding="async" width="900" height="1050">`
+    ? `<img class="product-image-alt" data-alt-src="../assets/cards/600/${product.gallery[1]}" data-alt-srcset="../assets/cards/600/${product.gallery[1]} 600w, ../assets/cards/900/${product.gallery[1]} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.gallery[1]}" alt="" decoding="async" width="900" height="1125">`
     : '';
   return `<article class="product-card" data-tone="${tone}" data-product-id="${product.id}" style="--card-bg:${background}">
     <button class="save-pick" type="button" data-add-to-bag="${product.id}" aria-label="${added ? copy.saved : copy.save} ${product.name}" aria-pressed="${added}">${bagIcon()}</button>
     <a class="product-card-link" data-quick-product="${product.id}" href="product.html?id=${product.id}" aria-label="${product.name}, ${formatPrice(product.price)}, ${product.size}, ${product.width} × ${product.height} cm">
-      <div class="product-image"><img class="product-image-primary" src="../assets/cards/600/${product.image}" srcset="../assets/cards/600/${product.image} 600w, ../assets/cards/900/${product.image} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.image}" alt="${product.name} — ${isHebrew ? product.he : product.en}" loading="lazy" decoding="async" width="900" height="1050">${alternateImage}</div>
+      <div class="product-image"><img class="product-image-primary" src="../assets/cards/600/${product.image}" srcset="../assets/cards/600/${product.image} 600w, ../assets/cards/900/${product.image} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.image}" alt="${product.name} — ${isHebrew ? product.he : product.en}" loading="lazy" decoding="async" width="900" height="1125">${alternateImage}</div>
       <div class="product-meta"><h3>${product.name}</h3>${priceMarkup(product)}<span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
     </a></article>`;
 }
@@ -674,7 +687,7 @@ function renderCollection() {
 
   if (returning) {
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      window.scrollTo({ top: Number(state.scrollY) || 0, behavior: 'auto' });
+      if (!window.__romicLaunchDismissedToTop) window.scrollTo({ top: Number(state.scrollY) || 0, behavior: 'auto' });
       sessionStorage.removeItem(collectionReturnKey);
     }));
   }
@@ -803,7 +816,7 @@ function renderCustomizer() {
   const displayModel = model => isHebrew ? model.he : model.name;
   const displayColor = color => isHebrew ? color.he : color.name;
   root.innerHTML = `<div class="customizer-head"><p class="eyebrow">ROMIC YOUR WAY</p><h2>MAKE IT<br>YOURS.</h2><p>${copy.customLead}</p></div><div class="customizer-grid" id="customize" tabindex="-1">
-    <div class="customizer-visual"><img data-custom-image src="" alt="" loading="lazy" decoding="async" width="443" height="443"><span class="customizer-live" aria-live="polite" data-custom-live></span></div>
+    <div class="customizer-visual"><img data-custom-image src="" alt="" loading="lazy" decoding="async" width="1200" height="1500"><span class="customizer-live" aria-live="polite" data-custom-live></span></div>
     <div class="customizer-controls"><fieldset><legend>01 · ${copy.model}</legend><div class="model-options" data-model-options></div></fieldset><fieldset><legend>02 · ${copy.colour}</legend><div class="color-options" data-color-options></div></fieldset>
     <div class="customizer-summary"><div><span>${copy.basePrice}</span><strong data-custom-price></strong></div><div><span>${copy.bagBody}</span><strong data-custom-size></strong></div></div>
     <a class="button button-light customizer-cta" href="${whatsappBase}" target="_blank" rel="external noopener" data-custom-whatsapp>${icon('whatsapp')} ${copy.messageRomic}</a><p class="customizer-note">${copy.customNote}</p><p class="customizer-visual-note">${copy.customVisual}</p></div></div>`;
@@ -849,7 +862,7 @@ function renderHeroConveyor() {
     const background = (productDesign[product.id] || ['', '#e5ded5'])[1];
     const priority = !duplicate && index === 0 ? 'high' : 'auto';
     const duplicateAttributes = duplicate ? ' aria-hidden="true" tabindex="-1"' : '';
-    return `<a class="conveyor-card" href="product.html?id=${product.id}" data-conveyor-product="${product.id}" draggable="false" style="--conveyor-bg:${background}"${duplicateAttributes}><span class="conveyor-image"><img data-conveyor-src="../assets/conveyor/480/${product.id}.webp" data-conveyor-srcset="../assets/conveyor/480/${product.id}.webp 480w, ../assets/conveyor/720/${product.id}.webp 720w" sizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" data-fallback-src="../assets/products/${product.image}" alt="${duplicate ? '' : `${product.name} — ${isHebrew ? product.he : product.en}`}" draggable="false" loading="lazy" fetchpriority="${priority}" decoding="async" width="720" height="840"></span><span class="conveyor-label"><strong>${product.name}</strong><span aria-hidden="true">·</span><small><b>${formatPrice(product.price)}</b></small></span></a>`;
+    return `<a class="conveyor-card" href="product.html?id=${product.id}" data-conveyor-product="${product.id}" draggable="false" style="--conveyor-bg:${background}"${duplicateAttributes}><span class="conveyor-image"><img data-conveyor-src="../assets/conveyor/480/${product.id}.webp" data-conveyor-srcset="../assets/conveyor/480/${product.id}.webp 480w, ../assets/conveyor/720/${product.id}.webp 720w" sizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" data-fallback-src="../assets/products/${product.image}" alt="${duplicate ? '' : `${product.name} — ${isHebrew ? product.he : product.en}`}" draggable="false" loading="lazy" fetchpriority="${priority}" decoding="async" width="720" height="900"></span><span class="conveyor-label"><strong>${product.name}</strong><span aria-hidden="true">·</span><small><b>${formatPrice(product.price)}</b></small></span></a>`;
   }
   root.innerHTML = products.map((product, index) => cardMarkup(product, index)).join('') + products.slice(0, duplicateCount).map((product, index) => cardMarkup(product, index, true)).join('');
 
