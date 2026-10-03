@@ -196,6 +196,10 @@ function openAbout(trigger) {
         <p class="about-signature">${isHebrew ? 'תכניסי קצת צבע לחיים שלך.' : 'Bring a little colour into your life.'}</p>
         <div class="about-actions"><a class="button button-dark" href="./#collection" data-about-destination="collection">${isHebrew ? 'גלי את הקולקציה' : 'DISCOVER THE COLLECTION'}${icon('arrow')}</a>
         <a class="about-custom" href="./#customize" data-about-destination="customize"><bdi dir="ltr">Make it yours</bdi>${isHebrew ? '<span>תיקים בעיצוב אישי</span>' : '<span>YOUR BAG, YOUR WAY</span>'}</a></div>
+        <nav class="about-social" aria-label="${isHebrew ? 'להכיר את רומי וליצור קשר' : 'Connect with Romi'}">
+          <a href="${instagramProfile}" target="_blank" rel="external noopener">${icon('instagram')}<span>${isHebrew ? 'בקרי אותי באינסטגרם' : 'Visit me on Instagram'}</span></a>
+          <a href="${whatsappUrl(isHebrew ? 'היי רומי! אשמח לשאול אותך לגבי התיקים של ROMIC.' : 'Hi Romi! I’d love to ask you about ROMIC bags.')}" target="_blank" rel="external noopener">${icon('whatsapp')}<span>${isHebrew ? 'כתבי לי בוואטסאפ' : 'Message me on WhatsApp'}</span></a>
+        </nav>
       </div>
       <figure class="about-photo"><img src="../assets/promo/bags-in-sun.webp" alt="${isHebrew ? 'ארבעה תיקים שרומי סרגה, בצילום המקורי באור טבעי' : 'Four bags crocheted by Romi, photographed in natural light'}" width="650" height="1140" decoding="async"></figure>
     </div>`;
