@@ -176,6 +176,63 @@ function showLaunchOfferOnce(freshEntry = false) {
   dialog.showModal();
 }
 function currentPrice(product) { return product.price; }
+function openAbout(trigger) {
+  if (document.querySelector('.about-dialog[open]')) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'about-dialog';
+  dialog.setAttribute('aria-labelledby', 'about-title');
+  const title = isHebrew ? 'הידיים שמאחורי ROMIC' : 'The hands behind ROMIC';
+  const story = isHebrew
+    ? 'אני רומי, המעצבת והידיים שמאחורי ROMIC. אני מעצבת וסורגת תיקים בעבודת יד בישראל, מחוטים שנבחרים בקפידה. שילובי צבעים, מרקמים ופרטים קטנים נותנים לכל תיק אופי משלו.'
+    : 'I’m Romi, the designer and hands behind ROMIC. I design and crochet bags by hand in Israel, using carefully chosen yarns. Colour, texture and thoughtful details give each bag its own character.';
+  const invitation = isHebrew
+    ? 'בחרי תיק מהקולקציה או צרי איתי אחד שהוא לגמרי שלך.'
+    : 'Find your bag in the collection, or create one with me that feels entirely yours.';
+  const closeLabel = isHebrew ? 'סגירת על ROMIC' : 'Close About ROMIC';
+  dialog.innerHTML = `<button class="about-close" type="button" aria-label="${closeLabel}" autofocus>${icon('close')}</button>
+    <div class="about-layout">
+      <div class="about-copy"><p class="about-kicker">${isHebrew ? 'נעים להכיר, אני רומי' : 'MEET ROMI'}</p>
+        <h2 id="about-title">${title}</h2><p class="about-story">${story}</p><p class="about-invitation">${invitation}</p>
+        <p class="about-signature">${isHebrew ? 'תכניסי קצת צבע לחיים שלך.' : 'Bring a little colour into your life.'}</p>
+        <div class="about-actions"><a class="button button-dark" href="./#collection" data-about-destination="collection">${isHebrew ? 'גלי את הקולקציה' : 'DISCOVER THE COLLECTION'}${icon('arrow')}</a>
+        <a class="about-custom" href="./#customize" data-about-destination="customize"><bdi dir="ltr">Make it yours</bdi>${isHebrew ? '<span>תיקים בעיצוב אישי</span>' : '<span>YOUR BAG, YOUR WAY</span>'}</a></div>
+      </div>
+      <figure class="about-photo"><img src="../assets/promo/bags-in-sun.webp" alt="${isHebrew ? 'ארבעה תיקים שרומי סרגה, בצילום המקורי באור טבעי' : 'Four bags crocheted by Romi, photographed in natural light'}" width="650" height="1140" decoding="async"></figure>
+    </div>`;
+  const returnTarget = trigger.closest('[data-mobile-menu]') ? document.querySelector('[data-menu-toggle]') : trigger;
+  let restoreFocus = true;
+  const dismiss = () => dialog.close();
+  dialog.querySelector('.about-close').addEventListener('click', dismiss);
+  dialog.addEventListener('click', event => { if (event.target === dialog) dismiss(); });
+  dialog.querySelectorAll('[data-about-destination]').forEach(link => link.addEventListener('click', event => {
+    restoreFocus = false;
+    dialog.close();
+    if (document.body.dataset.page !== 'home') return;
+    event.preventDefault();
+    if (link.dataset.aboutDestination === 'customize') navigateToCustomizer();
+    else {
+      renderHomeBelowFold();
+      document.querySelector('#collection')?.scrollIntoView({ behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+      document.querySelector('#collection h2')?.focus({ preventScroll:true });
+    }
+  }));
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('about-open');
+    if (restoreFocus && returnTarget?.isConnected) returnTarget.focus({ preventScroll:true });
+    dialog.remove();
+  }, { once:true });
+  document.body.append(dialog);
+  document.body.classList.add('about-open');
+  dialog.showModal();
+}
+
+function initAbout() {
+  document.querySelectorAll('[data-open-about]').forEach(link => link.addEventListener('click', event => {
+    event.preventDefault();
+    openAbout(link);
+  }));
+}
+
 function cartPrice(product, couponApplied) { return couponApplied ? Math.round(product.price * .8) : product.price; }
 function isCouponApplied() { try { return promoIsActive() && sessionStorage.getItem(appliedCouponStorageKey) === promoCode; } catch (_) { return false; } }
 function priceMarkup(product, className = 'price') {
@@ -519,18 +576,19 @@ function header() {
   const isDocumentPage = document.body.dataset.page === 'document';
   const otherLanguage = `${isHebrew ? '../en/' : '../he/'}${isProductPage ? `product.html${location.search}` : isDocumentPage ? `${document.body.dataset.doc}.html` : ''}`;
   const navigation = `<a href="${siteRoot}#collection">${copy.collection}</a><a href="${siteRoot}#customize">${copy.craft}</a><a href="${siteRoot}#faq">${copy.faq}</a>`;
+  const aboutLink = `<a href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'על ROMIC' : 'About ROMIC'}</a>`;
   const cartButton = `<button class="bag-link" type="button" data-open-cart aria-label="${copy.bag}">${bagIcon()} <span data-cart-label>${copy.bag}</span><span class="bag-count" data-cart-count>0</span></button>`;
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
     <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
     <div class="header-actions"><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
-    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}</nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
+    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}</nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
 function footer() {
   return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="300" height="110"><div class="footer-grid">
     <div><p>${copy.handmade}</p><p>${copy.rights}</p></div>
-    <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}</nav>
+    <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}<a href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'על ROMIC' : 'About ROMIC'}</a></nav>
   </div></footer>`;
 }
 
@@ -540,6 +598,7 @@ function renderShell() {
   try { localStorage.setItem('romic:language', language); } catch (_) {}
   enableImageFallbacks();
   initMenu();
+  initAbout();
   initCart();
 }
 
@@ -572,6 +631,7 @@ function localizeShellInPlace() {
   const footerLinks = document.querySelectorAll('.footer-links a');
   [copy.privacy, copy.accessibility, copy.terms, copy.email, copy.instagram].forEach((label, index) => { if (footerLinks[index]) footerLinks[index].textContent = label; });
   document.querySelector('.footer-links')?.setAttribute('aria-label', isHebrew ? 'קישורי מידע' : 'Information links');
+  document.querySelectorAll('[data-open-about]').forEach(link => { link.textContent = isHebrew ? 'על ROMIC' : 'About ROMIC'; });
 }
 
 function initMenu() {
