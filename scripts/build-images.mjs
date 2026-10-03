@@ -66,6 +66,9 @@ if (checkOnly) {
       for (const [folder, width] of Object.entries(policy.derivatives)) await validate(path.join(output, 'assets', folder, name), width, width * 5 / 4);
     }
   }
+  for (const product of products) for (const [folder, width] of Object.entries(policy.derivatives)) {
+    if (folder.startsWith('conveyor/')) await validate(path.join(output, 'assets', folder, `${product.id}.webp`), width, width * 5 / 4);
+  }
   console.log(`PASS: ${prepared.length} reviewed masters and all responsive derivatives are WebP at 4:5.`);
   process.exit(0);
 }
@@ -96,6 +99,14 @@ for (const entry of prepared) {
       await validate(derivative, width, width * 5 / 4);
     }
   }
+}
+// Conveyor paths use product IDs, which can differ from the source filename.
+for (const product of products) for (const [folder, width] of Object.entries(policy.derivatives)) {
+  if (!folder.startsWith('conveyor/')) continue;
+  const derivative = path.join(output, 'assets', folder, `${product.id}.webp`);
+  await fs.mkdir(path.dirname(derivative), { recursive: true });
+  await sharp(path.join(output, 'assets/products', webpName(product.image))).resize(width, width * 5 / 4).webp({ quality: 84, effort: 4 }).toFile(derivative);
+  await validate(derivative, width, width * 5 / 4);
 }
 // Keep runtime image names aligned with JPEG/PNG uploads converted into WebP.
 let compiledData = code;

@@ -1096,7 +1096,7 @@ function renderProduct() {
   document.body.style.setProperty('--product-bg', (productDesign[product.id] || ['stone', '#e5ded5'])[1]);
   const gallery = product.gallery || [product.image];
   const galleryMarkup = `<div class="product-gallery" data-product-gallery>
-    <div class="product-hero-image"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="1206" height="1508"></div>
+    <div class="product-hero-image"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="1200" height="1500"></div>
     ${gallery.length > 1 ? `<div class="product-thumbnails" aria-label="${isHebrew ? `גלריית תמונות של ${product.name}` : `${product.name} image gallery`}">${gallery.map((image, index) => `<button type="button" class="product-thumbnail" data-gallery-image="${image}" data-gallery-index="${index}" aria-label="${copy.viewImage} ${index + 1} / ${gallery.length}" aria-pressed="${index === 0}"><img src="../assets/gallery-thumbs/${image}" data-fallback-src="../assets/products/${image}" alt="" loading="lazy" decoding="async" width="240" height="300"></button>`).join('')}</div>` : ''}
   </div>`;
   main.innerHTML = `<div class="product-page"><a class="back-link" href="./#collection">${icon('arrow')} ${copy.back}</a><div class="product-layout">

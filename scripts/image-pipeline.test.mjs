@@ -11,8 +11,8 @@ test('publication gate converts source formats, preserves originals and rejects 
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'romic-image-test-'));
   try {
     await fs.mkdir(path.join(root, 'site/assets/products'), { recursive: true });
-    await fs.writeFile(path.join(root, 'site/data.js'), "const ROMIC_PRODUCTS=[{id:'test',image:'test.png',gallery:['test.png']}];");
-    await fs.writeFile(path.join(root, 'image-policy.json'), JSON.stringify({ margin:.08, customModels:[], colorBackgrounds:{}, productBackgrounds:{test:'#eee'}, derivatives:{'cards/600':600,'gallery-thumbs':240} }));
+    await fs.writeFile(path.join(root, 'site/data.js'), "const ROMIC_PRODUCTS=[{id:'bag',image:'test.png',gallery:['test.png']}];");
+    await fs.writeFile(path.join(root, 'image-policy.json'), JSON.stringify({ margin:.08, customModels:[], colorBackgrounds:{}, productBackgrounds:{bag:'#eee'}, derivatives:{'cards/600':600,'gallery-thumbs':240,'conveyor/480':480} }));
     const source = path.join(root, 'site/assets/products/test.png');
     await sharp({create:{width:100,height:100,channels:3,background:'#336699'}}).png().toFile(source);
     const original = await fs.readFile(source);
@@ -25,6 +25,8 @@ test('publication gate converts source formats, preserves originals and rejects 
     const meta = await sharp(published).metadata();
     assert.deepEqual([meta.format,meta.width,meta.height], ['webp',1200,1500]);
     assert.deepEqual(await fs.readFile(source),original);
+    const conveyor = await sharp(path.join(root, '_site/assets/conveyor/480/bag.webp')).metadata();
+    assert.deepEqual([conveyor.width,conveyor.height],[480,600]);
     assert.match(await fs.readFile(path.join(root,'_site/data.js'),'utf8'), /test.webp/);
     await sharp({create:{width:100,height:100,channels:3,background:'#fff'}}).webp().toFile(published);
     assert.match(run('--check').stderr, /Nonstandard image/);
