@@ -18,7 +18,7 @@ const ROMIC_PRODUCTS=[
 {id:'venice',name:'Venice',price:400,size:'M',width:25,height:13,image:'venice.webp',gallery:['venice.webp','venice-worn.webp'],types:['shoulder'],he:'תיק כתף בורדו עם חוליות בגוון זהב.',en:'A burgundy shoulder bag finished with gold-tone links.'},
 {id:'dubai',name:'Dubai',price:400,size:'M',width:25,height:12,image:'dubai-corrected.webp',gallery:['dubai-corrected.webp','dubai-real.webp','dubai-stairs.webp'],types:['top-handle','shoulder'],detail:'chain',he:'תיק שחור בגזרה יציבה, עם ידיות ושרשרת בגוון זהב.',en:'A structured black handbag with handles and a gold-tone chain.'},
 {id:'florence',name:'Florence',price:350,size:'M',width:25,height:10,image:'florence.webp',gallery:['florence.webp','florence-held.webp'],types:['clutch'],detail:'clean',he:'קלאץ׳ בגוון חום מבריק, עשוי מחוט פוליאסטר איכותי.',en:'A glossy brown clutch, handcrafted from premium polyester yarn.'},
-{id:'marrakech',name:'Marrakech',price:400,size:'S',width:20,height:12,image:'marrakech.webp',gallery:['marrakech.webp','marrakech-model-real.webp','marrakech-detail.webp'],types:['clutch'],detail:'clean',he:'קלאץ׳ קטן בגוון זהב, לנשיאה ביד.',en:'A small gold-tone clutch, made to carry by hand.'}
+{id:'marrakech',name:'Marrakech',price:400,size:'S',width:20,height:12,image:'marrakech.webp',gallery:['marrakech.webp','marrakech-model-real.webp','marrakech-detail.webp'],types:['top-handle'],detail:'clean',he:'תיק נשיאה קטן בגוון זהב.',en:'A small gold-tone handbag.'}
 ];
 
 ROMIC_PRODUCTS.forEach(product => {
