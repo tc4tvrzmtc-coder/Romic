@@ -1,0 +1,530 @@
+{
+  "assets/products/rio.webp": {
+    "mask": "image-masks/products/rio.png",
+    "sourceSha256": "47bb5e0f520ccb184f04191991fda2e48de99de4ae888793cdd6d17ea67f6fd0",
+    "bbox": [
+      85,
+      228,
+      993,
+      1114
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/paris.webp": {
+    "mask": "image-masks/products/paris.png",
+    "sourceSha256": "2c79e907a77812ae8b53755872be97a14a977c340e7ca5c1af0af4a9d23239a2",
+    "bbox": [
+      179,
+      28,
+      882,
+      1289
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/monaco.webp": {
+    "mask": "image-masks/products/monaco.png",
+    "sourceSha256": "fe3abb3033f3df58217614400e2ce74e4928677599b2bbdc902121734dac6753",
+    "bbox": [
+      52,
+      224,
+      1159,
+      761
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/miami.webp": {
+    "mask": "image-masks/products/miami.png",
+    "sourceSha256": "7849f0851eebb594e990d312c5d2824e62eb0521f8ecc84c1cb01a083887b4bd",
+    "bbox": [
+      70,
+      116,
+      1137,
+      1043
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/bali.webp": {
+    "mask": "image-masks/products/bali.png",
+    "sourceSha256": "e0f5c07904bfab19232e037a8143ff19b5e48859d85e6e8d58c2ab461a4c8a3f",
+    "bbox": [
+      20,
+      483,
+      1154,
+      1058
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/sahara.webp": {
+    "mask": "image-masks/products/sahara.png",
+    "sourceSha256": "76f53bb91e2d967cbf686a85e2e69733c29c489ded067a7be003fa046f9c2961",
+    "bbox": [
+      97,
+      547,
+      1130,
+      1153
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/tokyo.webp": {
+    "mask": "image-masks/products/tokyo.png",
+    "sourceSha256": "e816e4a25cd299603fd0148c84fa9f0d9d52a969083dbf3ce1df81f816698be2",
+    "bbox": [
+      125,
+      319,
+      1094,
+      876
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/madrid.webp": {
+    "mask": "image-masks/products/madrid.png",
+    "sourceSha256": "5a6ea71c80d37436aa7612b6e60b46724a80c47fdbed79d005fe3bbcea0fc73f",
+    "bbox": [
+      133,
+      603,
+      1104,
+      1153
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/ibiza.webp": {
+    "mask": "image-masks/products/ibiza.png",
+    "sourceSha256": "c58b28ab37497e84fc3a65fca78cff341b4348bbef19b913026bec9f179742be",
+    "bbox": [
+      77,
+      255,
+      1127,
+      1240
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/porto.webp": {
+    "mask": "image-masks/products/porto.png",
+    "sourceSha256": "46e6264acca9dbc3e24bce00d89ed1ecd6319a6d080d9ef3c88bc58d815c5f9c",
+    "bbox": [
+      107,
+      345,
+      1119,
+      1291
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/maldives.webp": {
+    "mask": "image-masks/products/maldives.png",
+    "sourceSha256": "08ea229db4fce29ed94d2406ccd32ca7228699904a62281cd87521d46502011c",
+    "bbox": [
+      25,
+      175,
+      625,
+      768
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/corfu.webp": {
+    "mask": "image-masks/products/corfu.png",
+    "sourceSha256": "9863e3bd27e8b6f389b66caa6383f167d87b15a354f3e06dc03cff85b22e5a57",
+    "bbox": [
+      235,
+      13,
+      984,
+      1117
+    ],
+    "model": "isnet-general-use",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/lisbon.webp": {
+    "mask": "image-masks/products/lisbon.png",
+    "sourceSha256": "2543d58b9a288672755388c2c1afc447b922927d85080abb14c9558a827f48fe",
+    "bbox": [
+      279,
+      12,
+      942,
+      982
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/tulum.webp": {
+    "mask": "image-masks/products/tulum.png",
+    "sourceSha256": "6b0daebaea42ae29217b81b73443347a4c865b081fdd2cb4b959902b92de9228",
+    "bbox": [
+      134,
+      145,
+      1148,
+      1041
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/mykonos.webp": {
+    "mask": "image-masks/products/mykonos.png",
+    "sourceSha256": "98d57a34c221365d79d73da099c2a46564792ee3ca14afbfd49e0164873c1804",
+    "bbox": [
+      102,
+      389,
+      1095,
+      1013
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/milan.webp": {
+    "mask": "image-masks/products/milan.png",
+    "sourceSha256": "e6a2f033de29121b44533c0f73544fcd95010df9f74bf2758addfa377b721a3a",
+    "bbox": [
+      150,
+      37,
+      965,
+      1271
+    ],
+    "model": "isnet-general-use",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/venice.webp": {
+    "mask": "image-masks/products/venice.png",
+    "sourceSha256": "606705d4e74e8a31f8101e8455d8200fbf5a63b1b9a84957c712c82e82976d11",
+    "bbox": [
+      237,
+      84,
+      877,
+      1191
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/dubai-corrected.webp": {
+    "mask": "image-masks/products/dubai-corrected.png",
+    "sourceSha256": "8b893f0e587de78c118c7f1ed327fc9b64f72115af048bf9d4fcc0f13ad8225c",
+    "bbox": [
+      25,
+      219,
+      985,
+      1323
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/florence.webp": {
+    "mask": "image-masks/products/florence.png",
+    "sourceSha256": "15a46f5b9ed0ad183ee19c733b777a5e4eefde5e97b89a32dcb9b09fb5056fe8",
+    "bbox": [
+      78,
+      387,
+      1124,
+      1001
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/marrakech.webp": {
+    "mask": "image-masks/products/marrakech.png",
+    "sourceSha256": "904beaf2c951003310bf146c0da2889bb97d16a1e9e597736abb180f90dcfbfc",
+    "bbox": [
+      48,
+      345,
+      1163,
+      1075
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/black-front.webp": {
+    "mask": "image-masks/custom/clutch/black-front.png",
+    "sourceSha256": "5fd825e0b4cc892728fb0a8e9f84329c98ea39f11b03df649309ee5e056ea3ec",
+    "bbox": [
+      72,
+      422,
+      875,
+      887
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/ivory-front.webp": {
+    "mask": "image-masks/custom/clutch/ivory-front.png",
+    "sourceSha256": "1aff9046e0e234450ac1e9d7552886047dd864f1d4d112f459bb9bb9d879786d",
+    "bbox": [
+      71,
+      419,
+      877,
+      886
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/sky-front.webp": {
+    "mask": "image-masks/custom/clutch/sky-front.png",
+    "sourceSha256": "15323e139a9b4c63fd5cf59fc654bc33f1aabd06ae363e728a0c59c2e1cebb5d",
+    "bbox": [
+      72,
+      419,
+      877,
+      886
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/lime-front.webp": {
+    "mask": "image-masks/custom/clutch/lime-front.png",
+    "sourceSha256": "8f6b6850f9acd1cbecc406e61f1e36a3f04819576bf0c7d189efced5a9fb20aa",
+    "bbox": [
+      72,
+      420,
+      875,
+      886
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/berry-front.webp": {
+    "mask": "image-masks/custom/clutch/berry-front.png",
+    "sourceSha256": "7484e21606b1bf008082856c6bbaefcfb5687ea16026a1a7c352e1142c146774",
+    "bbox": [
+      72,
+      420,
+      876,
+      886
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/fuchsia-front.webp": {
+    "mask": "image-masks/custom/clutch/fuchsia-front.png",
+    "sourceSha256": "5f1d54d2e0a935a908846a8529b1ef06ec47e784123f2e6ac88881c21e269cdd",
+    "bbox": [
+      72,
+      419,
+      875,
+      884
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/coral-front.webp": {
+    "mask": "image-masks/custom/clutch/coral-front.png",
+    "sourceSha256": "5a70d88ad624de872030fd938565e2b3cdd403a86cf553c215f7ef6f4d8c6d3d",
+    "bbox": [
+      70,
+      419,
+      874,
+      884
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/clutch/sand-front.webp": {
+    "mask": "image-masks/custom/clutch/sand-front.png",
+    "sourceSha256": "b2a0541a1f3a754c9adf03667e533437d336dab30c2a07de6a959c9dbd016e0d",
+    "bbox": [
+      72,
+      421,
+      875,
+      886
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/black.webp": {
+    "mask": "image-masks/custom/maldives/black.png",
+    "sourceSha256": "a9ed3d5b20b2ae176a0a9951fdf21fee3b9399c459b3aa048422045390adbf14",
+    "bbox": [
+      100,
+      137,
+      779,
+      794
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/ivory.webp": {
+    "mask": "image-masks/custom/maldives/ivory.png",
+    "sourceSha256": "901cb323f0a061ea1ee3a62f43f057f0b9446d2c01c8e9cf0443ad984ebc2556",
+    "bbox": [
+      105,
+      124,
+      775,
+      796
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/sky.webp": {
+    "mask": "image-masks/custom/maldives/sky.png",
+    "sourceSha256": "e7d0993ee857ac482c2b4fe3f2497522942dc404fac1ea4ee5cda3276e75931c",
+    "bbox": [
+      106,
+      125,
+      778,
+      796
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/lime.webp": {
+    "mask": "image-masks/custom/maldives/lime.png",
+    "sourceSha256": "a5932a8957f6befe2d8d3d3032a831b11f0280a78010d6947124b0a7d3f0a2a0",
+    "bbox": [
+      107,
+      126,
+      779,
+      793
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/berry.webp": {
+    "mask": "image-masks/custom/maldives/berry.png",
+    "sourceSha256": "5e487545a4c30ab636fc01e692995d6cbf4efcf3b06b2c05f933b3434cdff8f2",
+    "bbox": [
+      101,
+      112,
+      779,
+      783
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/fuchsia.webp": {
+    "mask": "image-masks/custom/maldives/fuchsia.png",
+    "sourceSha256": "749f9297492013379e639c4d693d4611a3b2de28c22836bc72182ac53e9d0933",
+    "bbox": [
+      102,
+      113,
+      776,
+      784
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/coral.webp": {
+    "mask": "image-masks/custom/maldives/coral.png",
+    "sourceSha256": "5a7bf5a2d32326e6d415adeead9f6baa85b352dbed121453ab1524c2d8b2a457",
+    "bbox": [
+      104,
+      110,
+      781,
+      784
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/maldives/sand.webp": {
+    "mask": "image-masks/custom/maldives/sand.png",
+    "sourceSha256": "763e4641b09ee78ff9b47891d01ddf07bd18dffbbc5d1e0d43bfda3e4586c9ba",
+    "bbox": [
+      106,
+      111,
+      783,
+      783
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/black.webp": {
+    "mask": "image-masks/custom/dubai/black.png",
+    "sourceSha256": "815e55cfa2b5cfce48502a16b4f77f0931b523e9507fd4b7c3bb7ab167e3b5cb",
+    "bbox": [
+      42,
+      84,
+      399,
+      396
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/ivory.webp": {
+    "mask": "image-masks/custom/dubai/ivory.png",
+    "sourceSha256": "617ee2d58b4d4dd334927396d05b220449f5f4c01bc574b8ce6a599ed2e4175e",
+    "bbox": [
+      45,
+      71,
+      402,
+      395
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/sky.webp": {
+    "mask": "image-masks/custom/dubai/sky.png",
+    "sourceSha256": "683aaddfa42ee70d6b6f1557e9e5f1b52e608f5026c2d23c2324611f3ff6f964",
+    "bbox": [
+      45,
+      80,
+      400,
+      394
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/lime.webp": {
+    "mask": "image-masks/custom/dubai/lime.png",
+    "sourceSha256": "c28ddebae0a479f88bbfe46faafe5d521c00e75ed64c096d444f9cb3f61ec41d",
+    "bbox": [
+      42,
+      75,
+      401,
+      394
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/berry.webp": {
+    "mask": "image-masks/custom/dubai/berry.png",
+    "sourceSha256": "977372f4e2dc828b73febd12ad14d16278c76a6d0a7b1cddf59e30648705a513",
+    "bbox": [
+      43,
+      77,
+      399,
+      390
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/fuchsia.webp": {
+    "mask": "image-masks/custom/dubai/fuchsia.png",
+    "sourceSha256": "2f05640752ab40896ba5d907a8b6297c13c716958041ca6ff6ff906927f1662a",
+    "bbox": [
+      45,
+      76,
+      400,
+      390
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/coral.webp": {
+    "mask": "image-masks/custom/dubai/coral.png",
+    "sourceSha256": "4a4184940ad41582c281099e4f2e115d7fe2eb72fbaa74c52244671b248a5b20",
+    "bbox": [
+      45,
+      77,
+      400,
+      390
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  },
+  "assets/custom/dubai/sand.webp": {
+    "mask": "image-masks/custom/dubai/sand.png",
+    "sourceSha256": "aca24f724f3db87efa2ee89e94745191acdfaae9cc7caf15a166db6e2397aac9",
+    "bbox": [
+      45,
+      77,
+      399,
+      390
+    ],
+    "model": "u2net",
+    "toolVersion": "rembg-2.0.85"
+  }
+}

@@ -5,6 +5,8 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import sharp from 'sharp';
+import crypto from 'node:crypto';
+import {attachOriginalAlpha} from './image-mask.mjs';
 
 const script = path.resolve('scripts/build-images.mjs');
 test('publication gate converts source formats, preserves originals and rejects unreviewed or invalid output', async () => {
@@ -16,6 +18,17 @@ test('publication gate converts source formats, preserves originals and rejects 
     const source = path.join(root, 'site/assets/products/test.png');
     await sharp({create:{width:100,height:100,channels:3,background:'#336699'}}).png().toFile(source);
     const original = await fs.readFile(source);
+    await fs.mkdir(path.join(root,'image-masks'),{recursive:true});
+    const maskPath = path.join(root,'image-masks/test.png');
+    const white = await sharp({create:{width:50,height:50,channels:3,background:'#fff'}}).png().toBuffer();
+    await sharp({create:{width:100,height:100,channels:3,background:'#000'}}).composite([{input:white,left:25,top:25}]).greyscale().png().toFile(maskPath);
+    const attached = await sharp(await attachOriginalAlpha(original,await fs.readFile(maskPath))).raw().toBuffer({resolveWithObject:true});
+    const decoded = await sharp(original).raw().toBuffer();
+    assert.equal(attached.info.channels,4);
+    for(let i=0;i<10000;i++)assert.deepEqual(attached.data.subarray(i*4,i*4+3),decoded.subarray(i*3,i*3+3));
+    assert.equal(attached.data[3],0);
+    assert.equal(attached.data[(50*100+50)*4+3],255);
+    await fs.writeFile(path.join(root,'image-masks.json'),JSON.stringify({'assets/products/test.png':{mask:'image-masks/test.png',sourceSha256:crypto.createHash('sha256').update(original).digest('hex'),bbox:[0,0,100,100]}}));
     const run = (...args) => spawnSync(process.execPath, [script,...args], {cwd:root,encoding:'utf8'});
     assert.match(run().stderr, /Visual review required/);
     assert.equal(run('--review').status, 0);
@@ -24,14 +37,20 @@ test('publication gate converts source formats, preserves originals and rejects 
     const published = path.join(root, '_site/assets/products/test.webp');
     const meta = await sharp(published).metadata();
     assert.deepEqual([meta.format,meta.width,meta.height], ['webp',1200,1500]);
+    const backdrop=await sharp(published).extract({left:150,top:300,width:1,height:1}).raw().toBuffer();
+    for(const value of backdrop)assert.ok(Math.abs(value-238)<=3,'masked backdrop must replace original photograph');
     assert.deepEqual(await fs.readFile(source),original);
     const conveyor = await sharp(path.join(root, '_site/assets/conveyor/480/bag.webp')).metadata();
     assert.deepEqual([conveyor.width,conveyor.height],[480,600]);
     assert.match(await fs.readFile(path.join(root,'_site/data.js'),'utf8'), /test.webp/);
     await sharp({create:{width:100,height:100,channels:3,background:'#fff'}}).webp().toFile(published);
     assert.match(run('--check').stderr, /Nonstandard image/);
+    await fs.appendFile(maskPath,Buffer.from([0]));
+    assert.match(run().stderr,/Visual review required for mask/);
+    assert.equal(run('--review').status,0);
     await fs.appendFile(source, Buffer.from([0]));
     assert.match(run().stderr, /Visual review required/);
+    assert.match(run('--review').stderr,/Prepare a current background mask/);
     await fs.rm(source);
     assert.match(run().stderr, /Missing image/);
   } finally { await fs.rm(root,{recursive:true,force:true}); }

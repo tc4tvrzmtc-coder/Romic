@@ -1,17 +1,21 @@
 # Romic product image standard
 
-Every published product/gallery and customizer image is WebP on a 1200 × 1500 canvas (4:5). Images fit inside a consistent neutral outer canvas with at least 8% clearance. Reviewed clutch front views remove excess empty backdrop above/below the bag; product photography is otherwise contained without cropping. Responsive versions are generated at 900 × 1125, 600 × 750, 720 × 900, 480 × 600 and 240 × 300. Original files remain unchanged in `site/assets`.
+Every published product/gallery and customizer image is WebP on a 1200 × 1500 canvas (4:5). Responsive versions use the same ratio. Original photographs remain unchanged in `site/assets`.
 
-## Adding a new bag
+Primary catalogue images and every active customizer image require a reviewed alpha mask. The build attaches that mask to decoded original RGB pixels, crops only transparent surrounding space, fits the complete silhouette inside an 8% safety margin and places it on the configured full-canvas background. It never synthesizes a new bag, badge, stitch or strap. The same colour uses the same exact background across custom models; matching catalogue colours share that palette.
 
-1. Add the original JPEG, PNG or WebP to `site/assets/products`, then reference its exact filename in `site/data.js` (`image` and `gallery`). Filenames must use letters, digits and hyphens.
-2. Add the product's reviewed background reference colour to `image-policy.json`. The customizer's colour palette and models are configured in the same file.
-3. Inspect every added or replaced image: full bag and straps visible, correct product colour, logo unchanged, comparable product scale, appropriate original background. A common canvas does not remove a photographed background or add detail to a small source.
-4. After visual approval run `npm run review:images`, which records checksums for the source images. Commit `image-reviews.json` together with the source changes.
-5. Run `npm run build` and `npm run check:images`. Inspect `_site` before publishing.
+Lifestyle/model and detail gallery photographs keep their original scene, inside the standard 4:5 canvas. The launch collage and brand graphics remain editorial exceptions.
 
-GitHub Actions runs build and validation before deployment. A missing source, an unreviewed source change, unknown product background, duplicate output filename, unsupported filename, animated source or wrong output format/dimensions stops deployment. A stopped deployment leaves the previous published site in place.
+## Adding or replacing an image
 
-The build uses originals and always rebuilds the complete responsive set; it never repeatedly recompresses earlier derivatives. New source formats are converted and product references are compiled to `.webp` automatically. Unreferenced product/custom images are excluded from the published asset folders.
+1. Add an original JPEG, PNG or WebP to `site/assets/products`; use its exact filename in `site/data.js` (`image` and `gallery`). Filenames use letters, digits and hyphens. Configure the approved product background in `image-policy.json`.
+2. Prepare primary/custom masks. In a separate Python virtual environment install `requirements-image-masks.txt`, then run `python scripts/prepare-image-masks.py` from the repository root (or `npm run prepare:images` when that environment is active). The pinned tool generates masks only and reuses unchanged reviewed masks. The segmentation model is downloaded once from its official release.
+3. Inspect masks and the resulting composition: silhouette, full straps/chains, spaces inside handles, badge, colour, scale and clean edges. Low contrast straps or transparent hardware can require correcting the mask by hand. Never approve automatically just because preparation completed.
+4. Run `npm run review:images` only after visual approval. It records both original and mask checksums. Commit `image-masks.json`, corresponding `image-masks/` PNGs and `image-reviews.json` together with source changes. Masks are tied to the exact source checksum; replacing an original invalidates its mask.
+5. Run `npm run build` and `npm run check:images`; inspect `_site` before publishing.
 
-Brand SVGs, launch collages and other non-product editorial graphics are intentional exceptions. This standard applies to bag photographs consumed by the product catalogue, galleries and customizer. It does not claim to automatically judge product fidelity, backgrounds, logos or visual scale; those require the explicit review in step 3.
+## Publication checks
+
+GitHub Actions runs tests, build and validation before deployment. Missing/unreviewed originals, missing/stale/unreviewed masks, incorrect mask dimensions, invalid bounds, unknown background, duplicate filenames and incorrect output format/dimensions stop publication. The previous published site remains active when validation fails.
+
+CI uses saved reviewed masks; it does not install or run segmentation models. Original RGB values are retained before resizing and ordinary WebP encoding; resizing/compression necessarily interpolates pixels. Enlarging a low-resolution source does not restore photographic detail.

@@ -5,7 +5,10 @@
   "scripts": {
     "build": "node scripts/build-images.mjs",
     "check:images": "node scripts/build-images.mjs --check",
-    "review:images": "node scripts/build-images.mjs --review"
+    "review:images": "node scripts/build-images.mjs --review",
+    "prepare:images": "python3 scripts/prepare-image-masks.py"
   },
-  "dependencies": { "sharp": "0.35.4" }
+  "dependencies": {
+    "sharp": "0.35.4"
+  }
 }

@@ -3,11 +3,13 @@ import path from 'node:path';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
 import sharp from 'sharp';
+import {attachOriginalAlpha} from './image-mask.mjs';
 
 const root = process.cwd();
 const site = path.join(root, 'site');
 const output = path.join(root, '_site');
 const policy = JSON.parse(await fs.readFile(path.join(root, 'image-policy.json'), 'utf8'));
+const masks = JSON.parse(await fs.readFile(path.join(root, 'image-masks.json'), 'utf8'));
 const code = await fs.readFile(path.join(site, 'data.js'), 'utf8');
 const products = vm.runInNewContext(`${code}\nROMIC_PRODUCTS;`, {});
 const reviewsPath = path.join(root, 'image-reviews.json');
@@ -20,22 +22,22 @@ const safeName = name => {
 };
 const webpName = name => safeName(name).replace(/\.[^.]+$/, '.webp');
 const sources = new Map();
-const add = (source, target, background) => {
+const add = (source, target, background, needsMask = false) => {
   if (sources.has(target) && sources.get(target).source !== source) throw new Error(`Duplicate output ${target}`);
-  sources.set(target, { source, target, background });
+  sources.set(target, { source, target, background, needsMask });
 };
 for (const product of products) {
   if (!product.image || !product.gallery?.includes(product.image)) throw new Error(`Missing primary/gallery image for ${product.id}`);
   const background = policy.productBackgrounds[product.id];
   if (!background) throw new Error(`Review and configure a background for new product ${product.id}`);
   for (const name of new Set([product.image, ...product.gallery])) {
-    add(`assets/products/${safeName(name)}`, `assets/products/${webpName(name)}`, background);
+    add(`assets/products/${safeName(name)}`, `assets/products/${webpName(name)}`, background, name === product.image);
   }
 }
 for (const model of policy.customModels) {
   for (const [color, background] of Object.entries(policy.colorBackgrounds)) {
     const name = `${color}${model === 'clutch' ? '-front' : ''}.webp`;
-    add(`assets/custom/${model}/${name}`, `assets/custom/${model}/${name}`, background);
+    add(`assets/custom/${model}/${name}`, `assets/custom/${model}/${name}`, background, true);
   }
 }
 const prepared = [];
@@ -43,11 +45,33 @@ for (const entry of sources.values()) {
   const file = path.join(site, entry.source);
   const bytes = await fs.readFile(file).catch(() => { throw new Error(`Missing image ${entry.source}`); });
   const hash = crypto.createHash('sha256').update(bytes).digest('hex');
-  const meta = await sharp(bytes).metadata();
+  const sourceMeta = await sharp(bytes).metadata();
+  const meta = {...sourceMeta,width:sourceMeta.autoOrient?.width || sourceMeta.width,height:sourceMeta.autoOrient?.height || sourceMeta.height};
   if (!meta.width || !meta.height || meta.pages > 1) throw new Error(`Invalid/still-image required: ${entry.source}`);
   if (reviewMode) reviews[entry.source] = hash;
   else if (reviews[entry.source] !== hash) throw new Error(`Visual review required: ${entry.source}. Review full bag, logo, background and scale, then run npm run review:images.`);
-  prepared.push({ ...entry, bytes, meta });
+  let maskBytes;
+  let maskEntry;
+  if (entry.needsMask) {
+    maskEntry = masks[entry.source];
+    if (!maskEntry || maskEntry.sourceSha256 !== hash) throw new Error(`Prepare a current background mask for ${entry.source}`);
+    if (!/^image-masks\/[a-z0-9/.-]+\.png$/i.test(maskEntry.mask) || maskEntry.mask.includes('..')) throw new Error('Invalid mask path');
+    maskBytes = await fs.readFile(path.join(root, maskEntry.mask)).catch(() => { throw new Error(`Missing mask ${maskEntry.mask}`); });
+    const maskMeta = await sharp(maskBytes).metadata();
+    if (maskMeta.width !== meta.width || maskMeta.height !== meta.height || maskMeta.format !== 'png') throw new Error(`Mask size mismatch: ${entry.source}`);
+    const maskStats = await sharp(maskBytes).stats();
+    if (maskStats.channels[0].min !== 0 || maskStats.channels[0].max !== 255) throw new Error(`Mask must contain foreground and removed background: ${entry.source}`);
+    const metadataKey = maskEntry.mask + '#metadata';
+    const metadataHash = crypto.createHash('sha256').update(JSON.stringify(maskEntry)).digest('hex');
+    if (reviewMode) reviews[metadataKey] = metadataHash;
+    else if (reviews[metadataKey] !== metadataHash) throw new Error(`Visual review required for mask bounds ${entry.source}`);
+    const maskHash = crypto.createHash('sha256').update(maskBytes).digest('hex');
+    if (reviewMode) reviews[maskEntry.mask] = maskHash;
+    else if (reviews[maskEntry.mask] !== maskHash) throw new Error(`Visual review required for mask ${maskEntry.mask}`);
+    const [x1,y1,x2,y2] = maskEntry.bbox;
+    if (![x1,y1,x2,y2].every(Number.isInteger) || x1 < 0 || y1 < 0 || x2 > meta.width || y2 > meta.height || x2 <= x1 || y2 <= y1) throw new Error('Invalid mask bounds');
+  }
+  prepared.push({ ...entry, bytes, meta, maskBytes, maskEntry });
 }
 if (reviewMode) {
   await fs.writeFile(reviewsPath, JSON.stringify(reviews, null, 2) + '\n');
@@ -82,13 +106,17 @@ for (const entry of prepared) {
   const innerWidth = Math.round(1200 * (1 - policy.margin * 2));
   const innerHeight = Math.round(1500 * (1 - policy.margin * 2));
   let original = sharp(entry.bytes).rotate();
-  // Reviewed front-view clutch files contain excess empty space above the bag.
-  if (entry.source.startsWith('assets/custom/clutch/')) original = original.extract({ left: 0, top: Math.round(entry.meta.height * .18), width: entry.meta.width, height: Math.round(entry.meta.height * .74) });
+  if (entry.maskBytes) {
+    // Attach only alpha to decoded original RGB. Never generate or repaint product pixels.
+    const rgba = await attachOriginalAlpha(entry.bytes,entry.maskBytes);
+    const [x1,y1,x2,y2] = entry.maskEntry.bbox;
+    original = sharp(rgba).extract({left:x1,top:y1,width:x2-x1,height:y2-y1});
+  }
   const image = await original.resize(innerWidth, innerHeight, { fit: 'inside' }).png().toBuffer({ resolveWithObject: true });
   const left = Math.floor((1200 - image.info.width) / 2);
   const top = Math.floor((1500 - image.info.height) / 2);
   // Use a consistent neutral outer canvas; never stretch photographed edge pixels.
-  await sharp(image.data).extend({ left, right: 1200 - image.info.width - left, top, bottom: 1500 - image.info.height - top, background: '#f4f0ec' })
+  await sharp(image.data).flatten({background: entry.maskBytes ? entry.background : '#f4f0ec'}).extend({ left, right: 1200 - image.info.width - left, top, bottom: 1500 - image.info.height - top, background: entry.maskBytes ? entry.background : '#f4f0ec' })
     .webp({ quality: 88, effort: 4 }).toFile(file);
   await validate(file, 1200, 1500);
   if (entry.target.startsWith('assets/products/')) {
@@ -108,9 +136,26 @@ for (const product of products) for (const [folder, width] of Object.entries(pol
   await sharp(path.join(output, 'assets/products', webpName(product.image))).resize(width, width * 5 / 4).webp({ quality: 84, effort: 4 }).toFile(derivative);
   await validate(derivative, width, width * 5 / 4);
 }
-// Keep runtime image names aligned with JPEG/PNG uploads converted into WebP.
+// Version all image requests so returning browsers load the current assets.
+const assetVersion = 'backgrounds-' + crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy)).digest('hex').slice(0,12);
 let compiledData = code;
-for (const p of products) for (const name of new Set([p.image, ...p.gallery])) compiledData = compiledData.replaceAll(`'${name}'`, `'${webpName(name)}'`);
+for (const p of products) for (const name of new Set([p.image, ...p.gallery])) compiledData = compiledData.replaceAll(`'${name}'`, `'${webpName(name)}?v=${assetVersion}'`);
 await fs.writeFile(path.join(output, 'data.js'), compiledData);
-await fs.writeFile(path.join(output, 'image-build-report.json'), JSON.stringify({ format: 'webp', width: 1200, height: 1500, reviewedImages: prepared.length, originals: prepared.map(e => ({ source: e.source, width: e.meta.width, height: e.meta.height, lowResolution: e.meta.width < 800 })) }, null, 2));
+const appFile = path.join(output,'app.js');
+try {
+  const appCode = await fs.readFile(appFile,'utf8');
+  await fs.writeFile(appFile,appCode.replaceAll('.webp',`.webp?v=${assetVersion}`));
+} catch (error) { if (error.code !== 'ENOENT') throw error; }
+const versionHtml = async dir => {
+  for (const file of await fs.readdir(dir,{withFileTypes:true})) {
+    const full = path.join(dir,file.name);
+    if (file.isDirectory()) await versionHtml(full);
+    else if (file.name.endsWith('.html')) {
+      const html = await fs.readFile(full,'utf8');
+      await fs.writeFile(full,html.replace(/((?:app|data|documents)\.js|styles\.css)(?:\?v=[^"'\s<>]*)?/g,`$1?v=${assetVersion}`));
+    }
+  }
+};
+await versionHtml(output);
+await fs.writeFile(path.join(output, 'image-build-report.json'), JSON.stringify({ format: 'webp', width: 1200, height: 1500, reviewedImages: prepared.length, backgroundNormalizedImages: prepared.filter(e => e.needsMask).length, originals: prepared.map(e => ({ source: e.source, width: e.meta.width, height: e.meta.height, lowResolution: e.meta.width < 800 })) }, null, 2));
 console.log(`Built ${prepared.length} masters and responsive variants. Originals preserved. Small sources retain their original level of detail.`);
