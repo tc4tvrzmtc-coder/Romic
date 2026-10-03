@@ -212,8 +212,11 @@ function openAbout(trigger) {
     if (link.dataset.aboutDestination === 'customize') navigateToCustomizer();
     else {
       renderHomeBelowFold();
+      if (location.hash !== '#collection') history.pushState(null, '', '#collection');
+      const heading = document.querySelector('#collection h2');
+      heading?.setAttribute('tabindex', '-1');
       document.querySelector('#collection')?.scrollIntoView({ behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-      document.querySelector('#collection h2')?.focus({ preventScroll:true });
+      heading?.focus({ preventScroll:true });
     }
   }));
   dialog.addEventListener('close', () => {
