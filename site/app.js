@@ -181,21 +181,22 @@ function openAbout(trigger) {
   const dialog = document.createElement('dialog');
   dialog.className = 'about-dialog';
   dialog.setAttribute('aria-labelledby', 'about-title');
-  const title = isHebrew ? 'הידיים שמאחורי ROMIC' : 'The hands behind ROMIC';
+  const title = isHebrew ? 'היי, אני רומי.' : 'Hi, I’m Romi.';
   const story = isHebrew
-    ? 'אני רומי, המעצבת והידיים שמאחורי ROMIC. אני מעצבת וסורגת תיקים בעבודת יד בישראל, מחוטים שנבחרים בקפידה. שילובי צבעים, מרקמים ופרטים קטנים נותנים לכל תיק אופי משלו.'
-    : 'I’m Romi, the designer and hands behind ROMIC. I design and crochet bags by hand in Israel, using carefully chosen yarns. Colour, texture and thoughtful details give each bag its own character.';
+    ? 'אני מעצבת וסורגת בעצמי את התיקים של ROMIC — מהבחירה של הצבעים ועד הידית והשרשרת.'
+    : 'I design and crochet ROMIC bags myself — from choosing the colours to the handles and chains.';
   const invitation = isHebrew
-    ? 'בחרי תיק מהקולקציה או צרי איתי אחד שהוא לגמרי שלך.'
-    : 'Find your bag in the collection, or create one with me that feels entirely yours.';
+    ? 'תוכלי לבחור תיק שכבר מחכה לך בקולקציה, או שנבחר יחד דגם וצבע וניצור רומיק משלך.'
+    : 'Choose a bag from the collection, or we can pick a model and colour together and create your own Romic.';
   const closeLabel = isHebrew ? 'סגירת על ROMIC' : 'Close About ROMIC';
   dialog.innerHTML = `<button class="about-close" type="button" aria-label="${closeLabel}" autofocus>${icon('close')}</button>
     <div class="about-layout">
-      <div class="about-copy"><p class="about-kicker">${isHebrew ? 'נעים להכיר, אני רומי' : 'MEET ROMI'}</p>
+      <div class="about-copy"><p class="about-kicker">${isHebrew ? 'על ROMIC' : 'ABOUT ROMIC'}</p>
         <h2 id="about-title">${title}</h2><p class="about-story">${story}</p><p class="about-invitation">${invitation}</p>
+        <p class="about-invitation">${isHebrew ? 'יש לך משהו בראש? כתבי לי, ונראה מה אפשר לעשות.' : 'Have something in mind? Message me, and let’s see what we can make.'}</p>
         <p class="about-signature">${isHebrew ? 'תכניסי קצת צבע לחיים שלך.' : 'Bring a little colour into your life.'}</p>
-        <div class="about-actions"><a class="button button-dark" href="./#collection" data-about-destination="collection">${isHebrew ? 'גלי את הקולקציה' : 'DISCOVER THE COLLECTION'}${icon('arrow')}</a>
-        <a class="about-custom" href="./#customize" data-about-destination="customize"><bdi dir="ltr">Make it yours</bdi>${isHebrew ? '<span>תיקים בעיצוב אישי</span>' : '<span>YOUR BAG, YOUR WAY</span>'}</a></div>
+        <div class="about-actions"><a class="button" href="./#collection" data-about-destination="collection"><span>${isHebrew ? 'גלי את הקולקציה' : 'Discover the collection'}</span>${icon('arrow')}</a>
+        <a class="button" href="./#customize" data-about-destination="customize"><span>${isHebrew ? 'תיקים בעיצוב אישי · <bdi dir="ltr">Make it yours</bdi>' : 'Make it yours'}</span>${icon('arrow')}</a></div>
         <nav class="about-social" aria-label="${isHebrew ? 'להכיר את רומי וליצור קשר' : 'Connect with Romi'}">
           <a href="${instagramProfile}" target="_blank" rel="external noopener">${icon('instagram')}<span>${isHebrew ? 'בקרי אותי באינסטגרם' : 'Visit me on Instagram'}</span></a>
           <a href="${whatsappUrl(isHebrew ? 'היי רומי! אשמח לשאול אותך לגבי התיקים של ROMIC.' : 'Hi Romi! I’d love to ask you about ROMIC bags.')}" target="_blank" rel="external noopener">${icon('whatsapp')}<span>${isHebrew ? 'כתבי לי בוואטסאפ' : 'Message me on WhatsApp'}</span></a>
