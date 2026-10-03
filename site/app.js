@@ -776,7 +776,7 @@ function renderSavedPicks() {
   pill.setAttribute('aria-label', `${copy.bag} · ${count}`);
   const cartTitle = document.querySelector('#cart-title');
   if (cartTitle) cartTitle.textContent = copy.bagTitle;
-  document.querySelector('.cart-close')?.setAttribute('aria-label', copy.close);
+  document.querySelector('.cart-close')?.setAttribute('aria-label', isHebrew ? 'סגירת הסל' : 'Close bag');
   document.querySelectorAll('[data-cart-count]').forEach(item => item.textContent = String(count));
   document.querySelectorAll('[data-open-cart]').forEach(button => { button.setAttribute('aria-label', `${copy.bag} · ${count}`); button.classList.toggle('has-items', count > 0); });
   renderCartContents();
