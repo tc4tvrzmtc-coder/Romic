@@ -277,7 +277,7 @@ html[dir=rtl] .faq-item p{margin-inline:auto;text-align:center}
 html[dir=rtl] .customizer-summary>div+div{border-left:0;border-right:1px solid rgba(255,255,255,.25);padding-left:0;padding-right:20px}
 html[dir=rtl] .model-options button{text-align:right}
 html[dir=rtl] .back-link{direction:rtl}
-html[dir=rtl] .mobile-menu{right:auto;left:0;transform:translateX(-104%);direction:rtl;text-align:right;box-shadow:24px 0 70px rgba(18,17,18,.2)}
+html[dir=rtl] .mobile-menu{right:0;left:auto;transform:translateX(104%);direction:rtl;text-align:right;box-shadow:-24px 0 70px rgba(18,17,18,.2)}
 html[dir=rtl] .mobile-menu[aria-hidden=false]{transform:translateX(0)}
 
 .language-page{min-height:100dvh;background:#e8a3b7}.language-choice{min-height:100dvh;display:grid;grid-template-rows:auto 1fr auto;gap:40px;padding:clamp(28px,6vw,80px)}
@@ -477,3 +477,8 @@ html[dir=rtl] .cart-totals dd{text-align:left}
 .customizer-visual{width:min(100%,480px);aspect-ratio:4/5;height:auto;justify-self:center;background:var(--custom-image-bg,#a7af6c)}
 .customizer-visual img{aspect-ratio:4/5;object-fit:contain}
 @media(max-width:700px){.customizer-visual{width:min(100%,300px);height:auto;aspect-ratio:4/5;max-height:none}}
+
+/* The photo and its card share one backdrop. Reserve label space without an inset frame. */
+.conveyor-image{padding:0;height:calc(100% - 64px)}
+.conveyor-card:hover .conveyor-image img,.conveyor-card:focus-visible .conveyor-image img{transform:none!important}
+@media(max-width:600px){.conveyor-image{padding:0;height:calc(100% - 58px)}}

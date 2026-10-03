@@ -133,12 +133,12 @@
   },
   "assets/products/corfu.webp": {
     "mask": "image-masks/products/corfu.png",
-    "sourceSha256": "9863e3bd27e8b6f389b66caa6383f167d87b15a354f3e06dc03cff85b22e5a57",
+    "sourceSha256": "9a800c71166f48e8286c1d7ae473d34c28dc0048486ed4f6e9140b5f52afe055",
     "bbox": [
-      235,
-      13,
-      984,
-      1117
+      246,
+      14,
+      1024,
+      1165
     ],
     "model": "isnet-general-use",
     "toolVersion": "rembg-2.0.85"

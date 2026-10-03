@@ -4,6 +4,7 @@ import vm from 'node:vm';
 import crypto from 'node:crypto';
 import sharp from 'sharp';
 import {attachOriginalAlpha} from './image-mask.mjs';
+import {contactShadow} from './image-shadow.mjs';
 
 const root = process.cwd();
 const site = path.join(root, 'site');
@@ -115,8 +116,10 @@ for (const entry of prepared) {
   const image = await original.resize(innerWidth, innerHeight, { fit: 'inside' }).png().toBuffer({ resolveWithObject: true });
   const left = Math.floor((1200 - image.info.width) / 2);
   const top = Math.floor((1500 - image.info.height) / 2);
-  // Use a consistent neutral outer canvas; never stretch photographed edge pixels.
-  await sharp(image.data).flatten({background: entry.maskBytes ? entry.background : '#f4f0ec'}).extend({ left, right: 1200 - image.info.width - left, top, bottom: 1500 - image.info.height - top, background: entry.maskBytes ? entry.background : '#f4f0ec' })
+  // Preserve original product RGB and scale; place a separate contact shadow behind it.
+  const layers = entry.maskBytes ? [await contactShadow(image.data, {left, top})] : [];
+  layers.push({input:image.data, left, top});
+  await sharp({create:{width:1200,height:1500,channels:3,background:entry.maskBytes ? entry.background : '#f4f0ec'}}).composite(layers)
     .webp({ quality: 88, effort: 4 }).toFile(file);
   await validate(file, 1200, 1500);
   if (entry.target.startsWith('assets/products/')) {
@@ -138,6 +141,8 @@ for (const product of products) for (const [folder, width] of Object.entries(pol
 }
 // Version all image requests so returning browsers load the current assets.
 const versionHash = crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy));
+// Rendering changes must invalidate image caches even when source photos are unchanged.
+for (const name of ['build-images.mjs', 'image-mask.mjs', 'image-shadow.mjs']) versionHash.update(await fs.readFile(new URL(name, import.meta.url)));
 for (const name of ['app.js', 'styles.css', 'documents.js', 'data.js']) {
   versionHash.update(await fs.readFile(path.join(site, name)).catch(error => {
     if (error.code !== 'ENOENT') throw error;
