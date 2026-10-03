@@ -137,7 +137,14 @@ for (const product of products) for (const [folder, width] of Object.entries(pol
   await validate(derivative, width, width * 5 / 4);
 }
 // Version all image requests so returning browsers load the current assets.
-const assetVersion = 'backgrounds-' + crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy)).digest('hex').slice(0,12);
+const versionHash = crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy));
+for (const name of ['app.js', 'styles.css', 'documents.js', 'data.js']) {
+  versionHash.update(await fs.readFile(path.join(site, name)).catch(error => {
+    if (error.code !== 'ENOENT') throw error;
+    return '';
+  }));
+}
+const assetVersion = 'romic-' + versionHash.digest('hex').slice(0,12);
 let compiledData = code;
 for (const p of products) for (const name of new Set([p.image, ...p.gallery])) compiledData = compiledData.replaceAll(`'${name}'`, `'${webpName(name)}?v=${assetVersion}'`);
 await fs.writeFile(path.join(output, 'data.js'), compiledData);

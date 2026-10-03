@@ -425,7 +425,7 @@ html[lang=en] .customizer-head{direction:ltr;text-align:left}
 .cart-panel{padding:clamp(20px,4vw,34px)}
 .cart-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:18px;border-bottom:1px solid var(--line)}
 .cart-head h2{margin:0;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.04em}
-.cart-close{display:grid;width:42px;height:42px;place-items:center;padding:0;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit;cursor:pointer}.cart-close .icon{width:20px;height:20px}
+.cart-close{display:grid;width:44px;height:44px;place-items:center;padding:0;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit;cursor:pointer}.cart-close .icon{width:20px;height:20px}
 .cart-lines{display:grid;gap:0;max-height:min(36dvh,350px);overflow:auto;overscroll-behavior:contain}
 .cart-line{display:grid;grid-template-columns:76px minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
 .cart-thumb{display:block;width:76px;aspect-ratio:4/5;overflow:hidden;background:var(--paper)}.cart-thumb img{width:100%;height:100%;object-fit:contain}
@@ -461,7 +461,7 @@ html[dir=rtl] .cart-totals dd{text-align:left}
 
 .cart-whatsapp{margin-top:20px}
 .cart-coupon input{font-size:1rem}
-.cart-remove{min-height:44px}
+.cart-remove{min-width:44px;min-height:44px}
 
 /* Canonical 4:5 product photography; full images stay visible. */
 .product-image img,.product-hero-image img{object-fit:contain}

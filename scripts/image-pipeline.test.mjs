@@ -14,6 +14,9 @@ test('publication gate converts source formats, preserves originals and rejects 
   try {
     await fs.mkdir(path.join(root, 'site/assets/products'), { recursive: true });
     await fs.writeFile(path.join(root, 'site/data.js'), "const ROMIC_PRODUCTS=[{id:'bag',image:'test.png',gallery:['test.png']}];");
+    await fs.writeFile(path.join(root, 'site/index.html'), '<link href="styles.css?v=old"><script src="app.js?v=old"></script>');
+    await fs.writeFile(path.join(root, 'site/styles.css'), 'body{color:black}');
+    await fs.writeFile(path.join(root, 'site/app.js'), '// first version');
     await fs.writeFile(path.join(root, 'image-policy.json'), JSON.stringify({ margin:.08, customModels:[], colorBackgrounds:{}, productBackgrounds:{bag:'#eee'}, derivatives:{'cards/600':600,'gallery-thumbs':240,'conveyor/480':480} }));
     const source = path.join(root, 'site/assets/products/test.png');
     await sharp({create:{width:100,height:100,channels:3,background:'#336699'}}).png().toFile(source);
@@ -34,6 +37,14 @@ test('publication gate converts source formats, preserves originals and rejects 
     assert.equal(run('--review').status, 0);
     assert.equal(run().status, 0);
     assert.equal(run('--check').status, 0);
+    const versionBefore = await fs.readFile(path.join(root, '_site/index.html'), 'utf8');
+    await fs.appendFile(path.join(root, 'site/styles.css'), '\nbutton{min-height:44px}');
+    assert.equal(run().status, 0);
+    const versionAfterCss = await fs.readFile(path.join(root, '_site/index.html'), 'utf8');
+    assert.notEqual(versionBefore, versionAfterCss, 'CSS changes must invalidate the browser cache');
+    await fs.appendFile(path.join(root, 'site/app.js'), '\n// updated checkout');
+    assert.equal(run().status, 0);
+    assert.notEqual(versionAfterCss, await fs.readFile(path.join(root, '_site/index.html'), 'utf8'), 'App changes must invalidate the browser cache');
     const published = path.join(root, '_site/assets/products/test.webp');
     const meta = await sharp(published).metadata();
     assert.deepEqual([meta.format,meta.width,meta.height], ['webp',1200,1500]);

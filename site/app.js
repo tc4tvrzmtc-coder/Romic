@@ -99,6 +99,31 @@ const catalogOrder = ['marrakech','rio','ibiza','porto','florence','paris','miam
 
 function formatPrice(price) { return `₪${price}`; }
 function promoIsActive() { const now = Date.now(); return now >= promoStartsAt && now < promoEndsAt; }
+function currentFaqs() {
+  return HOME_LOCALE[language].faqs.map((entry, index) => index === 6 && Date.now() >= promoEndsAt
+    ? [entry[0], isHebrew ? 'הטבת ההשקה הסתיימה ב־16.10.2026. המחירים המוצגים באתר הם המחירים הנוכחיים, והקוד ROMIC2026 אינו פעיל.' : 'The launch offer ended on 16 October 2026. The prices shown on the website are the current prices, and ROMIC2026 is no longer active.']
+    : entry);
+}
+let promotionTimer;
+let previousPromotionState;
+function refreshPromotionState() {
+  const active = promoIsActive();
+  if (active !== previousPromotionState) {
+    previousPromotionState = active;
+    if (!active) document.querySelectorAll('.launch-dialog').forEach(dialog => dialog.close());
+    const entries = currentFaqs();
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      if (!entries[index]) return;
+      item.querySelector('summary').textContent = entries[index][0];
+      item.querySelector('p').textContent = entries[index][1];
+    });
+    renderCartContents();
+  }
+  window.clearTimeout(promotionTimer);
+  const now = Date.now();
+  const boundary = now < promoStartsAt ? promoStartsAt : promoEndsAt;
+  if (boundary > now) promotionTimer = window.setTimeout(refreshPromotionState, Math.min(boundary - now, 2147483647));
+}
 function isInternalHomeReturn() {
   const navigation = performance.getEntriesByType('navigation')[0];
   if (navigation?.type === 'reload') return false;
@@ -264,7 +289,7 @@ function renderCartContents() {
   const couponDraft = body.querySelector('#cart-coupon-code')?.value || '';
   const method = getDeliveryMethod();
   const { subtotal, total, shipping, discount: discountAmount } = calculateCart(products, applied, method);
-  const items = products.map(product => `<article class="cart-line"><a class="cart-thumb" href="product.html?id=${encodeURIComponent(product.id)}"><img src="../assets/gallery-thumbs/${product.image}" data-fallback-src="../assets/products/${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="240" height="300"></a><div class="cart-line-info"><a href="product.html?id=${encodeURIComponent(product.id)}">${product.name}</a><small>${product.size} · ${product.width} × ${product.height} cm</small><div class="cart-line-prices">${applied ? `<del>${formatPrice(product.price)}</del>` : ''}<strong>${formatPrice(cartPrice(product, applied))}</strong></div></div><button type="button" class="cart-remove" data-cart-remove="${product.id}">${copy.remove}</button></article>`).join('');
+  const items = products.map(product => `<article class="cart-line"><a class="cart-thumb" href="product.html?id=${encodeURIComponent(product.id)}"><img src="../assets/gallery-thumbs/${product.image}" data-fallback-src="../assets/products/${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="240" height="300"></a><div class="cart-line-info"><a href="product.html?id=${encodeURIComponent(product.id)}">${product.name}</a><small>${product.size} · ${product.width} × ${product.height} cm</small><div class="cart-line-prices">${applied ? `<del>${formatPrice(product.price)}</del>` : ''}<strong>${formatPrice(cartPrice(product, applied))}</strong></div></div><button type="button" class="cart-remove" data-cart-remove="${product.id}" aria-label="${copy.remove} ${product.name}">${copy.remove}</button></article>`).join('');
   const message = makeWhatsappMessage(products, applied, method);
   const couponStatus = applied ? copy.couponApplied : active ? '' : copy.couponExpired;
   body.innerHTML = products.length ? `<div class="cart-lines">${items}</div><div class="cart-coupon"><label for="cart-coupon-code">${copy.couponLabel}</label><div><input id="cart-coupon-code" type="text" value="${couponDraft.replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}" placeholder="${copy.couponPlaceholder}" autocomplete="off" autocapitalize="characters" ${active && !applied ? '' : 'disabled'} aria-describedby="cart-coupon-status"><button type="button" data-apply-coupon ${active && !applied ? '' : 'disabled'}>${applied ? copy.couponDone : copy.applyCoupon}</button></div><span id="cart-coupon-status" data-coupon-status role="status" aria-live="polite">${couponStatus}</span></div><fieldset class="cart-delivery"><legend>${copy.receiving}</legend><div class="cart-delivery-options">${['delivery','pickup'].map(value => `<label><input type="radio" name="cart-delivery" value="${value}" ${method === value ? 'checked' : ''}><span>${value === 'delivery' ? copy.delivery : copy.pickup}<strong>${value === 'delivery' ? formatPrice(35) : copy.free}</strong></span></label>`).join('')}</div></fieldset><dl class="cart-totals" aria-live="polite" aria-atomic="true"><div><dt>${copy.subtotal}</dt><dd>${formatPrice(subtotal)}</dd></div>${applied ? `<div><dt>${copy.discount}</dt><dd>−${formatPrice(discountAmount)}</dd></div>` : ''}<div><dt>${method === 'pickup' ? copy.pickup : copy.shipping}</dt><dd>${shipping ? formatPrice(shipping) : copy.free}</dd></div><div class="cart-total"><dt>${copy.total}</dt><dd>${formatPrice(total)}</dd></div></dl><a class="button cart-whatsapp" href="${whatsappUrl(message)}" target="_blank" rel="external noopener" aria-label="${copy.openWhatsapp}">${icon('whatsapp')} ${copy.whatsapp}</a><p class="cart-terms">${active ? copy.promoMessage : ''} <a href="terms.html">${copy.terms}</a></p>` : `<div class="cart-empty"><p>${copy.bagEmpty}</p><button class="button" type="button" data-cart-continue>${copy.keepBrowsing}</button></div>`;
@@ -297,6 +322,9 @@ function renderCartContents() {
   });
   body.querySelectorAll('[data-cart-remove]').forEach(button => button.addEventListener('click', () => setSavedPicks(getSavedPicks().filter(id => id !== button.dataset.cartRemove))));
   body.querySelector('[data-cart-continue]')?.addEventListener('click', () => dialog.close());
+  body.querySelector('.cart-whatsapp')?.addEventListener('click', event => {
+    event.currentTarget.href = whatsappUrl(makeWhatsappMessage(products, isCouponApplied(), getDeliveryMethod()));
+  });
   enableImageFallbacks();
 }
 
@@ -305,7 +333,7 @@ function initCart() {
   const dialog = document.createElement('dialog');
   dialog.className = 'cart-dialog'; dialog.dataset.cartDialog = '';
   dialog.setAttribute('aria-labelledby', 'cart-title');
-  dialog.innerHTML = `<div class="cart-panel"><header class="cart-head"><h2 id="cart-title">${copy.bagTitle}</h2><button class="cart-close" type="button" aria-label="${copy.close}">${icon('close')}</button></header><div data-cart-content></div></div>`;
+  dialog.innerHTML = `<div class="cart-panel"><header class="cart-head"><h2 id="cart-title">${copy.bagTitle}</h2><button class="cart-close" type="button" aria-label="${isHebrew ? 'סגירת הסל' : 'Close bag'}">${icon('close')}</button></header><div data-cart-content></div></div>`;
   dialog.querySelector('.cart-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
   dialog.addEventListener('close', () => document.querySelector('[data-open-cart]')?.focus());
@@ -326,9 +354,7 @@ function initCart() {
   });
   document.addEventListener('romic:picks-changed', renderSavedPicks);
   renderSavedPicks();
-  const now = Date.now();
-  const nextPromoBoundary = promoStartsAt > now ? promoStartsAt : promoEndsAt;
-  if (nextPromoBoundary > now) window.setTimeout(() => window.location.reload(), nextPromoBoundary - now + 100);
+  refreshPromotionState();
 }
 
 function heartIcon(filled = false) {
@@ -414,7 +440,7 @@ function applyHomeCopy() {
     faqIntro.querySelector('p:last-child').textContent = locale.faqIntro;
   }
   document.querySelectorAll('.faq-item').forEach((item, index) => {
-    const entry = locale.faqs[index];
+    const entry = currentFaqs()[index];
     if (!entry) return;
     item.querySelector('summary').textContent = entry[0];
     item.querySelector('p').textContent = entry[1];
@@ -1145,6 +1171,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'product') renderProduct();
   if (page === 'document') renderDocument();
 });
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') refreshPromotionState();
+});
 
 let homeInternalDeparture = false;
 document.addEventListener('click', event => {
@@ -1154,6 +1183,7 @@ document.addEventListener('click', event => {
   homeInternalDeparture = target.origin === location.origin && target.pathname !== location.pathname;
 });
 window.addEventListener('pageshow', (event) => {
+  refreshPromotionState();
   if (event.persisted && document.body.dataset.page === 'home') {
     sessionStorage.removeItem(collectionReturnKey);
     if (!homeInternalDeparture) {

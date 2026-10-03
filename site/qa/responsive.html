@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ROMIC — בדיקת תצוגה</title>
+  <style>
+    body{margin:0;padding:16px;background:#e8e4e7;color:#241f23;font:16px Arial,sans-serif}
+    header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+    h1{font-size:18px;margin:0}select{font:inherit;padding:8px}
+    iframe{display:block;width:375px;height:812px;border:1px solid #777;background:white;margin:auto}
+  </style>
+</head>
+<body>
+  <header><h1>ROMIC — בדיקת תצוגה</h1>
+    <label>רוחב <select id="width"><option>375</option><option>390</option><option>430</option><option>1280</option></select></label>
+    <label>שפה <select id="language"><option value="he">עברית</option><option value="en">English</option></select></label>
+  </header>
+  <iframe title="תצוגת האתר ברוחב שנבחר" src="../he/"></iframe>
+  <script>
+    const preview=document.querySelector('iframe');
+    document.querySelector('#width').addEventListener('change',event=>preview.style.width=event.target.value+'px');
+    document.querySelector('#language').addEventListener('change',event=>preview.src='../'+event.target.value+'/');
+  </script>
+</body>
+</html>
