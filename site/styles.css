@@ -1,4 +1,4 @@
-:root{--ink:#121112;--paper:#f7f3ee;--pink:#ff78a4;--lavender:#c8b8ff;--line:rgba(18,17,18,.22);--muted:#5c5659;--max:1440px;--gutter:clamp(18px,4vw,64px);--radius:clamp(18px,2.5vw,36px);--focus:#173cff;--font-latin:"Helvetica Neue",Helvetica,Arial,sans-serif;--font-hebrew:Heebo,"Arial Hebrew",Arial,sans-serif;--font-display:Didot,"Bodoni MT","Times New Roman",serif}
+:root{--ink:#121112;--paper:#f7f3ee;--pink:#ff78a4;--lavender:#c8b8ff;--line:rgba(18,17,18,.22);--muted:#5c5659;--max:1440px;--gutter:clamp(18px,4vw,64px);--radius:clamp(18px,2.5vw,36px);--focus:#173cff;--font-latin:"Helvetica Neue",Helvetica,Arial,sans-serif;--font-hebrew:"Romic Assistant",Arial,sans-serif;--font-display:Didot,"Bodoni MT","Times New Roman",serif}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
@@ -531,3 +531,34 @@ html[dir=rtl] .cart-totals dd{text-align:left}
 html[lang=he] .footer-about{direction:rtl;font-family:"Romic Assistant",var(--font-hebrew)}
 .footer-about:hover{background:#fff;border-color:#fff}
 @media(min-width:901px) and (max-width:1200px){.header-actions .instagram-link{display:none}}
+
+
+/* Consistent controls and compact purchase information. */
+button,input,select,textarea{font-family:inherit}
+.launch-subtitle{margin:-10px 0 20px;font-size:1.05rem;font-weight:600;line-height:1.4}
+.customizer-extras{margin:10px 0 16px;color:#e4dfdc;font-size:.9rem;line-height:1.5}
+.customizer-cta{display:flex;width:100%;min-height:52px;margin:0 0 22px;justify-content:center;text-align:center;gap:10px;font-size:1rem;font-weight:650;letter-spacing:0;line-height:1.4;white-space:normal}
+.customizer-cta .icon{flex:0 0 21px;width:21px;height:21px}
+.customizer-details{border-top:1px solid rgba(255,255,255,.28);border-bottom:1px solid rgba(255,255,255,.28)}
+.customizer-details summary,.service-detail summary{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:56px;padding:14px 0;cursor:pointer;list-style:none;font-size:1rem;font-weight:600;line-height:1.4}
+.customizer-details summary::-webkit-details-marker,.service-detail summary::-webkit-details-marker{display:none}
+.customizer-details summary::after,.service-detail summary::after{content:'+';flex:0 0 20px;text-align:center;font-size:1.4rem;font-weight:400}
+.customizer-details[open] summary::after,.service-detail[open] summary::after{content:'−'}
+.customizer-details>div{padding:0 0 16px;max-width:65ch}
+.customizer-details .customizer-note,.customizer-details .customizer-visual-note{margin:0 0 10px;font-size:.95rem;line-height:1.6;color:#e4dfdc}
+.service.service-compact{padding:24px var(--gutter)}
+.service-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;max-width:var(--max);margin:auto;align-items:start}
+.service-detail{min-width:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.service-detail>div{padding:0 0 18px}
+.service-detail p{max-width:60ch;margin:0 0 12px;font-size:1rem;line-height:1.6}
+.service-detail a{display:inline-flex;align-items:center;min-height:44px;text-underline-offset:4px;font-size:.95rem;font-weight:600}
+html[lang=he] .model-options button{align-items:flex-start;text-align:start}
+html[lang=he] .collection-tool-toggle,html[lang=he] .finder-launch,html[lang=he] .launch-action{font-family:var(--font-hebrew);letter-spacing:0}
+html[lang=he] .model-options button span{font-size:1rem;font-weight:600;line-height:1.4}
+@media(max-width:760px){
+ .service-details{grid-template-columns:1fr;gap:0}
+ .service-detail+.service-detail{border-top:0}
+ .service.service-compact{padding:20px var(--gutter)}
+ .launch-subtitle{grid-column:1/-1;margin:0;font-size:.95rem;line-height:1.4}
+ .customizer-cta{min-height:52px;font-size:1rem;padding:12px}
+}
