@@ -189,21 +189,13 @@ function openAbout(trigger) {
     ? 'תוכלי לבחור תיק שכבר מחכה לך בקולקציה, או שנבחר יחד דגם וצבע וניצור רומיק משלך.'
     : 'Choose a bag from the collection, or we can pick a model and colour together and create your own Romic.';
   const closeLabel = isHebrew ? 'סגירת על ROMIC' : 'Close About ROMIC';
-  dialog.innerHTML = `<button class="about-close" type="button" aria-label="${closeLabel}" autofocus>${icon('close')}</button>
-    <div class="about-layout">
-      <div class="about-copy"><p class="about-kicker">${isHebrew ? 'על ROMIC' : 'ABOUT ROMIC'}</p>
-        <h2 id="about-title">${title}</h2><p class="about-story">${story}</p><p class="about-invitation">${invitation}</p>
-        <p class="about-invitation">${isHebrew ? 'יש לך משהו בראש? כתבי לי, ונראה מה אפשר לעשות.' : 'Have something in mind? Message me, and let’s see what we can make.'}</p>
-        <p class="about-signature">${isHebrew ? 'תכניסי קצת צבע לחיים שלך.' : 'Bring a little colour into your life.'}</p>
-        <div class="about-actions"><a class="button" href="./#collection" data-about-destination="collection"><span>${isHebrew ? 'גלי את הקולקציה' : 'Discover the collection'}</span>${icon('arrow')}</a>
-        <a class="button" href="./#customize" data-about-destination="customize"><span>${isHebrew ? 'תיקים בעיצוב אישי · <bdi dir="ltr">Make it yours</bdi>' : 'Make it yours'}</span>${icon('arrow')}</a></div>
-        <nav class="about-social" aria-label="${isHebrew ? 'להכיר את רומי וליצור קשר' : 'Connect with Romi'}">
-          <a href="${instagramProfile}" target="_blank" rel="external noopener">${icon('instagram')}<span>${isHebrew ? 'בקרי אותי באינסטגרם' : 'Visit me on Instagram'}</span></a>
-          <a href="${whatsappUrl(isHebrew ? 'היי רומי! אשמח לשאול אותך לגבי התיקים של ROMIC.' : 'Hi Romi! I’d love to ask you about ROMIC bags.')}" target="_blank" rel="external noopener">${icon('whatsapp')}<span>${isHebrew ? 'כתבי לי בוואטסאפ' : 'Message me on WhatsApp'}</span></a>
-        </nav>
-      </div>
-      <figure class="about-photo"><img src="../assets/promo/bags-in-sun.webp" alt="${isHebrew ? 'ארבעה תיקים שרומי סרגה, בצילום המקורי באור טבעי' : 'Four bags crocheted by Romi, photographed in natural light'}" width="650" height="1140" decoding="async"></figure>
-    </div>`;
+  dialog.innerHTML = `<div class="about-frame">
+    <header class="about-header"><img src="../assets/romic-wordmark-vector.svg" width="142" height="52" alt="ROMIC — Handmade Bags"><button class="about-close" type="button" aria-label="${closeLabel}">${icon('close')}</button></header>
+    <div class="about-copy"><h2 id="about-title" tabindex="-1" autofocus>${title}</h2><p class="about-story">${story}</p><p class="about-invitation">${invitation}</p></div>
+    <footer class="about-footer"><p class="about-signature">${isHebrew ? 'תכניסי קצת צבע לחיים שלך.' : 'Bring a little colour into your life.'}</p>
+      <div class="about-actions"><a class="button" href="./#collection" data-about-destination="collection"><span>${isHebrew ? 'גלי את הקולקציה' : 'Discover the collection'}</span>${icon('arrow')}</a><a class="button" href="./#customize" data-about-destination="customize"><span>${isHebrew ? 'עיצוב אישי · <bdi dir="ltr">Make it yours</bdi>' : 'Make it yours'}</span>${icon('arrow')}</a></div>
+      <nav class="about-social" aria-label="${isHebrew ? 'להכיר את רומי וליצור קשר' : 'Connect with Romi'}"><a href="${instagramProfile}" target="_blank" rel="external noopener">${icon('instagram')}<span>${isHebrew ? 'בקרי אותי באינסטגרם' : 'Instagram'}</span></a><a href="${whatsappUrl(isHebrew ? 'היי רומי! אשמח לשאול אותך לגבי התיקים של ROMIC.' : 'Hi Romi! I’d love to ask you about ROMIC bags.')}" target="_blank" rel="external noopener">${icon('whatsapp')}<span>${isHebrew ? 'כתבי לי בוואטסאפ' : 'Message me'}</span></a></nav>
+    </footer></div>`;
   const returnTarget = trigger.closest('[data-mobile-menu]') ? document.querySelector('[data-menu-toggle]') : trigger;
   let restoreFocus = true;
   const dismiss = () => dialog.close();
