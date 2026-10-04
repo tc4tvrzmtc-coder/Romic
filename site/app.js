@@ -49,8 +49,8 @@ let menuEscapeHandler;
 
 const HOME_LOCALE = {
   en: {
-    title:'Romic — Handmade Bags',
-    description:'One-of-a-kind crochet bags, handmade in Israel. Explore the collection, check the measurements and message Romic on WhatsApp.',
+    title:"ROMIC — Handmade Crochet Bags & Custom Designs",
+    description:"Discover ROMIC crochet bags handmade in Israel from textile yarn. Explore handbags, shoulder bags and clutches, or choose a design and colour to make it yours.",
     conveyorLabel:'Moving Romic collection. Swipe or drag left and right to explore.',
     searchLabel:'Search bags', toolsLabel:'Find and sort bags', categoriesLabel:'Filter by bag type',
     categories:['All','Clutches','Top handle','Shoulder'], sortLabel:'Sort', sorts:['Featured','Price: low to high','Price: high to low'],
@@ -68,8 +68,8 @@ const HOME_LOCALE = {
     instagramKicker:'THE LATEST FROM ROMIC', instagramTitle:'FOLLOW THE<br>MAKING.', instagramButton:'OPEN @ROMIC_BRAND'
   },
   he: {
-    title:'Romic — תיקים בעבודת יד',
-    description:'תיקי Romic נסרגים בעבודת יד בישראל. כאן אפשר להכיר כל דגם, לראות מידות ולכתוב ל־Romic בוואטסאפ.',
+    title:"ROMIC | רומיק — תיקים סרוגים בעבודת יד ובעיצוב אישי",
+    description:"רומיק (ROMIC) — תיקים סרוגים בעבודת יד בישראל. גלי תיקי יד, תיקי כתף וקלאצ׳ים מחוטי טריקו, או בחרי דגם וצבע לתיק בעיצוב אישי.",
     conveyorLabel:'קולקציית Romic בתנועה. החליקי לצדדים כדי לגלות את הדגמים.',
     searchLabel:'חיפוש תיקים', toolsLabel:'חיפוש ומיון תיקים', categoriesLabel:'סינון לפי סוג תיק',
     categories:['הכול','קלאצ׳ים','תיקי יד','תיקי כתף'], sortLabel:'מיון', sorts:['מומלצים','מחיר: מהנמוך לגבוה','מחיר: מהגבוה לנמוך'],
