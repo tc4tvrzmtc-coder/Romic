@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://romic-handmade-bags.ad-st.chatgpt.site/sitemap.xml
+Sitemap: https://romic.co.il/sitemap.xml
