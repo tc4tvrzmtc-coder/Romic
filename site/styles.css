@@ -225,7 +225,7 @@ dialog{color:var(--ink)}dialog::backdrop{background:rgba(15,13,14,.56);backdrop-
 .site-header{direction:ltr}
 .header-actions{display:flex;align-items:center;gap:10px}
 .language-link{display:inline-flex;min-width:44px;min-height:44px;align-items:center;justify-content:center;padding:0 10px;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-decoration:none}
-.menu-toggle{display:none;width:46px;height:46px;padding:0;border:1px solid var(--ink);border-radius:var(--control-radius);background:transparent;color:var(--ink);place-items:center;cursor:pointer}
+.menu-toggle{display:grid;width:46px;height:46px;padding:0;border:1px solid var(--ink);border-radius:var(--control-radius);background:transparent;color:var(--ink);place-items:center;cursor:pointer}
 .menu-backdrop{position:fixed;z-index:198;inset:0;background:rgba(18,17,18,.32);backdrop-filter:blur(4px)}
 .mobile-menu{position:fixed;z-index:199;top:0;right:0;width:min(390px,92vw);height:100dvh;display:flex;flex-direction:column;padding:24px;background:var(--paper);box-shadow:-24px 0 70px rgba(18,17,18,.2);transform:translateX(104%);visibility:hidden;transition:transform .28s cubic-bezier(.2,.7,.2,1),visibility .28s}
 .mobile-menu[aria-hidden=false]{transform:translateX(0);visibility:visible}
@@ -526,3 +526,8 @@ html[dir=rtl] .cart-totals dd{text-align:left}
 .conveyor-image{padding:0;height:calc(100% - 64px)}
 .conveyor-card:hover .conveyor-image img,.conveyor-card:focus-visible .conveyor-image img{transform:none!important}
 @media(max-width:600px){.conveyor-image{padding:0;height:calc(100% - 58px)}}
+
+.footer-about{display:flex;align-items:center;justify-content:center;width:max-content;min-height:48px;margin:24px 0 32px auto;padding:12px 24px;border:1px solid #e4ddf2;border-radius:8px;background:#e4ddf2;color:var(--ink);font-size:1rem;font-weight:650;text-decoration:none;line-height:1.35}
+html[lang=he] .footer-about{direction:rtl;font-family:"Romic Assistant",var(--font-hebrew)}
+.footer-about:hover{background:#fff;border-color:#fff}
+@media(min-width:901px) and (max-width:1200px){.header-actions .instagram-link{display:none}}

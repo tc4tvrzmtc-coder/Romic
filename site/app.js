@@ -586,9 +586,9 @@ function header() {
 }
 
 function footer() {
-  return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="300" height="110"><div class="footer-grid">
+  return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="300" height="110"><a class="footer-about" href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'על ROMIC' : 'About ROMIC'}</a><div class="footer-grid">
     <div><p>${copy.handmade}</p><p>${copy.rights}</p></div>
-    <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}<a href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'על ROMIC' : 'About ROMIC'}</a></nav>
+    <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}</nav>
   </div></footer>`;
 }
 
