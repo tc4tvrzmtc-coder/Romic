@@ -141,7 +141,9 @@ function isInternalHomeReturn() {
 }
 function showLaunchOfferOnce(freshEntry = false) {
   if (!promoIsActive()) return;
-  if (!freshEntry && isInternalHomeReturn()) return;
+  // Review links reopen the real offer without changing live-site navigation.
+  const launchPreview = location.hostname === 'raw.githack.com' && new URLSearchParams(location.search).get('preview') === 'launch';
+  if (!freshEntry && !launchPreview && isInternalHomeReturn()) return;
   if (window.__romicLaunchOfferSeen) return;
   document.querySelectorAll('.launch-dialog').forEach(dialog => { dialog.close(); dialog.remove(); });
   const dialog = document.createElement('dialog');
