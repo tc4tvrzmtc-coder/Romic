@@ -601,6 +601,7 @@ function applyHomeCopy() {
     callout.querySelector('p').textContent = isHebrew ? 'מהסטודיו של ROMIC' : 'FROM THE ROMIC STUDIO';
     callout.querySelector('h2').innerHTML = isHebrew ? 'נפגשות<br>באינסטגרם.' : 'MEET US ON<br>INSTAGRAM.';
     callout.querySelector('.button').textContent = isHebrew ? 'בואי לראות אותנו' : 'Come say hello';
+    callout.querySelector('.button').setAttribute('aria-label', `${callout.querySelector('.button').textContent} — ${copy.openInstagram}`);
     callout.querySelector('.instagram-caption').textContent = isHebrew ? 'תיקים חדשים, רגעים מהסטודיו וכל מה שבדרך.' : 'New bags, studio moments and everything in the making.';
     callout.querySelector('.film-instagram span').textContent = isHebrew ? 'צפי ברילס באינסטגרם' : 'Watch the reel on Instagram';
     callout.querySelector('video').setAttribute('aria-label', isHebrew ? 'סרטון מהסטודיו של ROMIC' : 'ROMIC studio film');
