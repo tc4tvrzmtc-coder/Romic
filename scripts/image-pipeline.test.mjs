@@ -13,13 +13,16 @@ test('publication gate converts source formats, preserves originals and rejects 
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'romic-image-test-'));
   try {
     await fs.mkdir(path.join(root, 'site/assets/products'), { recursive: true });
-    await fs.writeFile(path.join(root, 'site/data.js'), "const ROMIC_PRODUCTS=[{id:'bag',image:'test.png',gallery:['test.png']}];");
+    await fs.writeFile(path.join(root, 'site/data.js'), "const ROMIC_PRODUCTS=[{id:'bag',image:'test.png',gallery:['test.png','model.png']}];");
     await fs.writeFile(path.join(root, 'site/index.html'), '<link href="styles.css?v=old"><script src="app.js?v=old"></script>');
     await fs.writeFile(path.join(root, 'site/styles.css'), 'body{color:black}');
     await fs.writeFile(path.join(root, 'site/app.js'), '// first version');
     await fs.writeFile(path.join(root, 'image-policy.json'), JSON.stringify({ margin:.08, customModels:[], colorBackgrounds:{}, productBackgrounds:{bag:'#eee'}, derivatives:{'cards/600':600,'gallery-thumbs':240,'conveyor/480':480} }));
     const source = path.join(root, 'site/assets/products/test.png');
     await sharp({create:{width:100,height:100,channels:3,background:'#336699'}}).png().toFile(source);
+    const scenePath = path.join(root,'site/assets/products/model.png');
+    await sharp({create:{width:100,height:180,channels:3,background:'#336699'}}).png().toFile(scenePath);
+    const originalScene = await fs.readFile(scenePath);
     const original = await fs.readFile(source);
     await fs.mkdir(path.join(root,'image-masks'),{recursive:true});
     const maskPath = path.join(root,'image-masks/test.png');
@@ -51,6 +54,11 @@ test('publication gate converts source formats, preserves originals and rejects 
     const backdrop=await sharp(published).extract({left:150,top:300,width:1,height:1}).raw().toBuffer();
     for(const value of backdrop)assert.ok(Math.abs(value-238)<=3,'masked backdrop must replace original photograph');
     assert.deepEqual(await fs.readFile(source),original);
+    const scene = await sharp(path.join(root,'_site/assets/products/model.webp')).metadata();
+    assert.deepEqual([scene.width,scene.height],[100,180], 'Full-scene galleries retain native proportions without upscaling');
+    assert.deepEqual(await fs.readFile(scenePath),originalScene);
+    const corner = await sharp(path.join(root,'_site/assets/products/model.webp')).extract({left:0,top:0,width:1,height:1}).raw().toBuffer();
+    assert.ok(Math.abs(corner[0]-51)<5 && Math.abs(corner[1]-102)<5 && Math.abs(corner[2]-153)<5, 'No pale frame is added to the scene');
     const conveyor = await sharp(path.join(root, '_site/assets/conveyor/480/bag.webp')).metadata();
     assert.deepEqual([conveyor.width,conveyor.height],[480,600]);
     assert.match(await fs.readFile(path.join(root,'_site/data.js'),'utf8'), /test.webp/);

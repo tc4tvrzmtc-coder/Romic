@@ -171,5 +171,9 @@
   "image-masks/custom/dubai/berry.png#metadata": "89569d458774212e44b67aa57a9709d53c759c59f57781bbfdfd4ea70c4f8af3",
   "image-masks/custom/dubai/fuchsia.png#metadata": "1a479aff4693e92904a5e71c8bb526bd182df9588aec94161ac5f6ac7a8ed0fd",
   "image-masks/custom/dubai/coral.png#metadata": "1dc13e792b1270c7ebd72e998b68e084297294d02a8f5918067282000d8c2911",
-  "image-masks/custom/dubai/sand.png#metadata": "e56d60e0673a31f003d6c73d4f33d204cd646de7fa5fb965143949ff9035caa4"
+  "image-masks/custom/dubai/sand.png#metadata": "e56d60e0673a31f003d6c73d4f33d204cd646de7fa5fb965143949ff9035caa4",
+  "assets/products/paris-original.jpg": "8111e0c7f1cede20e44fdcb9b910534063fae4eb7618b6e8a0177c11c255ccb8",
+  "assets/products/miami-model-new.jpg": "ab6bd6e9da5c1fa63a840b5172e4798796bce69dee2613cf0eed6443a8e84051",
+  "assets/products/tulum-model-new.jpg": "c41d0bc4102888bff555ca055efce0f84dea75609851196ddb5c331490cbf903",
+  "assets/products/dubai-model-new.jpg": "a628eb5a889c652ae5accfd24f9592b9d22d38038ae4d5b353f0d6f3bcc9b862"
 }

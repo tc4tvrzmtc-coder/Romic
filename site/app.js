@@ -5,7 +5,11 @@ const whatsappNumber = '972553160780';
 const whatsappBase = `https://wa.me/${whatsappNumber}`;
 const promoCode = 'ROMIC2026';
 const promoStartsAt = Date.parse('2026-10-02T20:45:00+03:00');
-const promoEndsAt = Date.parse('2026-10-16T20:45:00+03:00');
+const promoEndsAt = Date.parse('2026-10-23T00:00:00+03:00');
+const deliveryPrice = 30;
+const friendCouponCode = 'ROMICGIRLS30';
+const instagramReel = 'https://www.instagram.com/reel/DdbnlpQMoNE/';
+let couponMemory;
 const appliedCouponStorageKey = 'romic:applied-coupon';
 const collectionStorageKey = 'romic:collection-state';
 const collectionReturnKey = 'romic:collection-return';
@@ -17,31 +21,31 @@ const COPY = {
     skip:'Skip to content', collection:'Collection', craft:'Make It Yours', service:'Delivery', faq:'FAQ', instagram:'Instagram', menu:'Menu', close:'Close menu', language:'עברית',
     heroKicker:'HANDMADE IN ISRAEL · BY ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'DISCOVER THE COLLECTION', scroll:'SCROLL TO FIND YOURS',
     collectionTitle:'FIND YOUR ROMIC.', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Featured', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
-    readyTitle:'FROM THE COLLECTION', readyCopy:'Delivery within 7 business days.', customTitle:'MAKE IT YOURS', customCopy:'Choose a model and colour. Delivery within 7 business days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪35 delivery · free pickup in central Israel.',
+    readyTitle:'FROM THE COLLECTION', readyCopy:'Delivery within 7 business days.', customTitle:'MAKE IT YOURS', customCopy:'Choose a model and colour. Delivery within 7 business days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪30 delivery · free pickup in Givatayim.',
     privacy:'Privacy', accessibility:'Accessibility', terms:'Terms & offers', rights:'© 2026 Romic. All rights reserved.', handmade:'Handmade bags · Israel', email:'Email',
     back:'BACK TO COLLECTION', size:'SIZE', dimensions:'BAG BODY', order:'ADD TO BAG', save:'ADD TO BAG', saved:'IN YOUR BAG',
-    dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Delivery within 7 business days · Israel delivery ₪35 · free pickup in central Israel.', dmNote:'A message with your selection opens in WhatsApp. Review it and tap Send.',
+    dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Delivery within 7 business days · Israel delivery ₪30 · free pickup in Givatayim.', dmNote:'A message with your selection opens in WhatsApp. Review it and tap Send.',
     personalTitle:'WANT A DIFFERENT COLOUR?', personalCopy:'Choose a Romic model, then make it yours.', personalLink:'EXPLORE MAKE IT YOURS', invalid:'Bag not found', invalidCopy:'This design may no longer be available.',
     finderHint:'NEED HELP CHOOSING?', finderOpen:'FIND YOUR BAG', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
     model:'CHOOSE A MODEL', colour:'CHOOSE A COLOUR', basePrice:'BASE PRICE', bagBody:'BAG BODY', messageRomic:'SEND YOUR SELECTION ON WHATSAPP', extraNote:'Extras cost more.', detailsLabel:'More details', customLead:'Choose a model. Choose a colour.', customNote:'Base price: one solid colour with the standard handle and hardware. Straps, colour combinations, extra handles and accessories cost extra.', customVisual:'Visualisation for reference. Handmade colour and measurements may vary slightly.',
     copied:'Your message is ready in WhatsApp. Tap Send when you’re ready.', picksCopied:'Your bag is ready in WhatsApp. Tap Send when you’re ready.', picksLabel:'IN YOUR BAG', viewImage:'View', remove:'Remove', openInstagram:'open Romic on Instagram',
-    bag:'My bag', bagTitle:'Your bag', bagEmpty:'Your bag is empty.', keepBrowsing:'KEEP BROWSING', subtotal:'Subtotal', discount:'Launch offer · 20%', total:'Final total', receiving:'Delivery or pickup', delivery:'Delivery in Israel', pickup:'Pickup in central Israel', free:'Free', shipping:'Delivery', couponLabel:'Coupon code', couponPlaceholder:'Enter code', applyCoupon:'Apply', couponDone:'Applied', couponApplied:'20% applied to ready-made bags', couponInvalid:'That code doesn’t match. Check it and try again.', couponExpired:'The launch offer has ended.', whatsapp:'CONTINUE TO WHATSAPP', offerTitle:'CELEBRATING OUR LAUNCH', offerSubtitle:'Off the collection', offerCodeLabel:'Enter this code in My bag', offerTerms:'20% off ready-made collection bags · Through 16 October 2026. Custom designs and delivery are excluded.', offerAction:'EXPLORE THE COLLECTION', offerClose:'Close offer',
-    addConfirmation:'Added to your bag.', removeConfirmation:'Removed from your bag.', openWhatsapp:'Open WhatsApp to message Romic', couponUsed:'Coupon code ROMIC2026 applied.', promoMessage:'Launch offer: 20% off ready-made collection bags with ROMIC2026. Excludes custom designs and delivery. Through 16 October 2026.'
+    bag:'My bag', bagTitle:'Your bag', bagEmpty:'Your bag is empty.', keepBrowsing:'KEEP BROWSING', subtotal:'Subtotal', discount:'Launch offer · 20%', total:'Final total', receiving:'Delivery or pickup', delivery:'Delivery in Israel', pickup:'Pickup in Givatayim', free:'Free', shipping:'Delivery', couponLabel:'Coupon code', couponPlaceholder:'Enter code', applyCoupon:'Apply', couponDone:'Applied', couponApplied:'20% applied to ready-made bags', couponInvalid:'That code doesn’t match. Check it and try again.', couponExpired:'The launch offer has ended.', whatsapp:'CONTINUE TO WHATSAPP', offerTitle:'CELEBRATING OUR LAUNCH', offerSubtitle:'Off the collection', offerCodeLabel:'Your launch code', offerTerms:'20% off ready-made collection bags · Through 22 October 2026, inclusive. Custom designs and delivery are excluded.', offerAction:'EXPLORE THE COLLECTION', offerClose:'Close offer',
+    addConfirmation:'Added to your bag.', removeConfirmation:'Removed from your bag.', openWhatsapp:'Open WhatsApp to message Romic', couponUsed:'Coupon code ROMIC2026 applied.', promoMessage:'Launch offer: 20% off ready-made collection bags with ROMIC2026. Excludes custom designs and delivery. Through 22 October 2026, inclusive.'
   },
   he: {
     skip:'דילוג לתוכן', collection:'קולקציה', craft:'עיצוב אישי', service:'משלוחים', faq:'שאלות נפוצות', instagram:'אינסטגרם', menu:'תפריט', close:'סגירת התפריט', language:'EN',
     heroKicker:'עבודת יד ישראלית · ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'לצפייה בקולקציה', scroll:'גלי את התיק שלך',
     collectionTitle:'FIND YOUR ROMIC.', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'מומלצים', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
-    readyTitle:'תיק מהקולקציה', readyCopy:'אספקה עד 7 ימי עסקים.', customTitle:'תיקים בעיצוב אישי', customCopy:'בחרי דגם וצבע. אספקה עד 7 ימי עסקים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪35 · איסוף ללא עלות מאזור המרכז.',
+    readyTitle:'תיק מהקולקציה', readyCopy:'אספקה עד 7 ימי עסקים.', customTitle:'תיקים בעיצוב אישי', customCopy:'בחרי דגם וצבע. אספקה עד 7 ימי עסקים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪30 · איסוף עצמי מגבעתיים ללא עלות.',
     privacy:'מדיניות פרטיות', accessibility:'הצהרת נגישות', terms:'תנאים ומבצעים', rights:'© 2026 Romic. כל הזכויות שמורות.', handmade:'תיקים בעבודת יד · ישראל', email:'אימייל',
     back:'חזרה לקולקציה', size:'מידה', dimensions:'מידות גוף התיק', order:'הוסיפי לסל שלי', save:'הוסיפי לסל שלי', saved:'נוסף לסל',
-    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'אספקה עד 7 ימי עסקים · משלוח בישראל ₪35 · איסוף ללא עלות מאזור המרכז.', dmNote:'ההודעה עם הבחירות שלך תיפתח בוואטסאפ. בדקי אותה ולחצי על שליחה.',
+    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'אספקה עד 7 ימי עסקים · משלוח בישראל ₪30 · איסוף עצמי מגבעתיים ללא עלות.', dmNote:'ההודעה עם הבחירות שלך תיפתח בוואטסאפ. בדקי אותה ולחצי על שליחה.',
     personalTitle:'רוצה את התיק בצבע אחר?', personalCopy:'בחרי דגם וצבע ועצבי את ה־Romic שלך.', personalLink:'לעיצוב אישי', invalid:'התיק לא נמצא', invalidCopy:'ייתכן שהדגם כבר אינו זמין.',
     finderHint:'לא בטוחה?', finderOpen:'מצאי את התיק שלך', finderClose:'סגירת שאלון התאמה', finderCarry:'איך תרצי לשאת את התיק?', finderSize:'איזה גודל תרצי?', finderDetail:'איזה גימור את אוהבת?', hand:'ביד', onShoulder:'על הכתף', clutch:'קלאץ׳', small:'קטן', medium:'בינוני', large:'גדול', clean:'נקי', chain:'שרשרת', pearls:'פנינים', matches:'התיקים שמתאימים לך', yourRomic:'YOUR ROMIC.', noExact:'לא מצאנו התאמה מדויקת. אולי תמצאי את התיק שלך בעיצוב האישי.', makeYours:'לעיצוב אישי',
     model:'בחירת דגם', colour:'בחירת צבע', basePrice:'מחיר בסיס', bagBody:'מידות גוף התיק', messageRomic:'שלחי את הבחירה שלך בוואטסאפ', extraNote:'תוספות כרוכות בתשלום.', detailsLabel:'פרטים נוספים', customLead:'בחרי דגם. בחרי צבע.', customNote:'מחיר הבסיס כולל צבע אחיד, ידית ואבזור סטנדרטיים. רצועות, שילובי צבעים, ידיות נוספות ואביזרים מתומחרים בנפרד.', customVisual:'ההדמיה להמחשה. בעבודת יד ייתכנו הבדלים קטנים בגוון ובמידות.',
     copied:'ההודעה מוכנה בוואטסאפ. כשתרצי, לחצי על שליחה.', picksCopied:'הסל שלך מוכן בוואטסאפ. כשתרצי, לחצי על שליחה.', picksLabel:'בסל שלי', viewImage:'תמונה', remove:'הסרה', openInstagram:'פתיחת Romic באינסטגרם',
-    bag:'הסל שלי', bagTitle:'הבחירות שלך', bagEmpty:'עוד לא הוספת תיק לסל.', keepBrowsing:'חזרה לקולקציה', subtotal:'סכום ביניים', discount:'הטבת השקה · 20%', total:'מחיר סופי', receiving:'איך תרצי לקבל את התיק?', delivery:'משלוח בישראל', pickup:'איסוף עצמי מאזור המרכז', free:'ללא עלות', shipping:'משלוח', couponLabel:'קוד קופון', couponPlaceholder:'הזיני קוד', applyCoupon:'החילי קוד', couponDone:'הקוד הופעל', couponApplied:'20% הנחה על תיקי הקולקציה הקיימים', couponInvalid:'הקוד לא זוהה. בדקי ונסי שוב.', couponExpired:'הטבת ההשקה הסתיימה.', whatsapp:'המשיכי לוואטסאפ', offerTitle:'חוגגות את ההשקה', offerSubtitle:'הנחה על הקולקציה', offerCodeLabel:'הזיני את הקוד בסל שלי', offerTerms:'20% הנחה על התיקים שבקולקציה · בתוקף עד 16.10.2026. לא כולל עיצוב אישי ומשלוח.', offerAction:'לצפייה בקולקציה', offerClose:'סגירת ההטבה',
-    addConfirmation:'נוסף לסל שלך.', removeConfirmation:'הוסר מהסל.', openWhatsapp:'פתיחת וואטסאפ ושליחת הודעה ל־Romic', couponUsed:'קוד הקופון ROMIC2026 הופעל.', promoMessage:'הטבת השקה: 20% הנחה על תיקי הקולקציה הקיימים בקוד ROMIC2026. לא כולל עיצוב אישי ומשלוח. בתוקף עד 16.10.2026.'
+    bag:'הסל שלי', bagTitle:'הבחירות שלך', bagEmpty:'עוד לא הוספת תיק לסל.', keepBrowsing:'חזרה לקולקציה', subtotal:'סכום ביניים', discount:'הטבת השקה · 20%', total:'מחיר סופי', receiving:'איך תרצי לקבל את התיק?', delivery:'משלוח בישראל', pickup:'איסוף עצמי מגבעתיים', free:'ללא עלות', shipping:'משלוח', couponLabel:'קוד קופון', couponPlaceholder:'הזיני קוד', applyCoupon:'החילי קוד', couponDone:'הקוד הופעל', couponApplied:'20% הנחה על תיקי הקולקציה הקיימים', couponInvalid:'הקוד לא זוהה. בדקי ונסי שוב.', couponExpired:'הטבת ההשקה הסתיימה.', whatsapp:'המשיכי לוואטסאפ', offerTitle:'חוגגות את ההשקה', offerSubtitle:'הנחה על הקולקציה', offerCodeLabel:'קוד הטבת ההשקה', offerTerms:'20% הנחה על התיקים שבקולקציה · בתוקף עד 22.10.2026 כולל. לא כולל עיצוב אישי ומשלוח.', offerAction:'לצפייה בקולקציה', offerClose:'סגירת ההטבה',
+    addConfirmation:'נוסף לסל שלך.', removeConfirmation:'הוסר מהסל.', openWhatsapp:'פתיחת וואטסאפ ושליחת הודעה ל־Romic', couponUsed:'קוד הקופון ROMIC2026 הופעל.', promoMessage:'הטבת השקה: 20% הנחה על תיקי הקולקציה הקיימים בקוד ROMIC2026. לא כולל עיצוב אישי ומשלוח. בתוקף עד 22.10.2026 כולל.'
   }
 };
 let copy = COPY[language];
@@ -61,8 +65,8 @@ const HOME_LOCALE = {
       ['How do I choose the right size?','Each product page shows the bag size and body measurements. Handles and straps are not included in the measurements.'],
       ['Can I choose a model and colour?','Yes. In Romic Your Way, choose from the available models and colours. Straps, colour combinations and extra details may cost more.'],
       ['When will my bag arrive?','Delivery within 7 business days for both collection bags and custom designs.'],
-      ['What are the delivery and pickup options?','Delivery is available within Israel for ₪35. Pickup in central Israel is free.'],
-      ['How does the launch offer work?','Enter ROMIC2026 in My bag for 20% off ready-made collection bags through 16 October 2026. It excludes custom designs and delivery, and can’t be combined with another offer.'],
+      ['What are the delivery and pickup options?','Delivery is available within Israel for ₪30. Pickup in Givatayim is free.'],
+      ['How does the launch offer work?','Enter ROMIC2026 in My bag for 20% off ready-made collection bags through 22 October 2026. It excludes custom designs and delivery, and can’t be combined with another offer.'],
       ['Can I return or cancel an order?','Returns and cancellations follow Israeli consumer law. Change-of-mind cancellations are subject to the statutory cancellation fee and return shipping is at the customer’s expense. See the returns and cancellation terms in the footer.']
     ],
     faqContact:'HAVE A QUESTION? MESSAGE ROMIC ON WHATSAPP', faqMessage:'Hi Romic! I have a question about the bags on your website.',
@@ -81,8 +85,8 @@ const HOME_LOCALE = {
       ['איך לבחור את המידה המתאימה?','בעמוד של כל תיק תמצאי את המידה ואת מידות גוף התיק. המידות אינן כוללות ידיות ורצועות.'],
       ['אפשר לבחור דגם וצבע?','כן. בעיצוב האישי בחרי דגם וצבע מתוך האפשרויות הקיימות. רצועות, שילובי צבעים ותוספות עשויים להיות בתוספת תשלום.'],
       ['מה זמן האספקה של התיקים?','אספקה עד 7 ימי עסקים, לתיקים מהקולקציה ולתיקים בעיצוב אישי.'],
-      ['מהן אפשרויות המשלוח והאיסוף?','משלוחים בישראל בלבד בעלות ₪35, או איסוף עצמי מאזור המרכז ללא עלות.'],
-      ['איך מקבלים את הטבת ההשקה?','הזיני את הקוד ROMIC2026 בסל שלי וקבלי 20% הנחה על תיקי הקולקציה הקיימים, עד 16.10.2026. ההטבה לא כוללת עיצוב אישי או משלוח, ואינה מצטרפת למבצע אחר.'],
+      ['מהן אפשרויות המשלוח והאיסוף?','משלוחים בישראל בלבד בעלות ₪30, או איסוף עצמי מגבעתיים ללא עלות.'],
+      ['איך מקבלים את הטבת ההשקה?','הזיני את הקוד ROMIC2026 בסל שלי וקבלי 20% הנחה על תיקי הקולקציה הקיימים, עד 22.10.2026. ההטבה לא כוללת עיצוב אישי או משלוח, ואינה מצטרפת למבצע אחר.'],
       ['אפשר להחזיר או לבטל הזמנה?','ביטול והחזרה בהתאם לחוק הגנת הצרכן. בביטול עקב חרטה ייגבו דמי ביטול כחוק והחזרת התיק תהיה על חשבון הלקוחה. לפרטים עברי לתנאי ההחזרות והביטולים בתחתית האתר.']
     ],
     faqContact:'יש לך שאלה? כתבי ל־ROMIC בוואטסאפ', faqMessage:'היי Romic! יש לי שאלה לגבי התיקים באתר.',
@@ -99,11 +103,11 @@ const productDesign = {
 
 const catalogOrder = ['marrakech','rio','ibiza','porto','florence','paris','miami','monaco','madrid','venice','dubai','sahara','tulum','mykonos','milan','lisbon','bali','tokyo','corfu','maldives'];
 
-function formatPrice(price) { return `₪${price}`; }
+function formatPrice(price) { return `₪${Number(price.toFixed(2)).toLocaleString('he-IL', {maximumFractionDigits:2})}`; }
 function promoIsActive() { const now = Date.now(); return now >= promoStartsAt && now < promoEndsAt; }
 function currentFaqs() {
   return HOME_LOCALE[language].faqs.map((entry, index) => index === 6 && Date.now() >= promoEndsAt
-    ? [entry[0], isHebrew ? 'הטבת ההשקה הסתיימה ב־16.10.2026. המחירים המוצגים באתר הם המחירים הנוכחיים, והקוד ROMIC2026 אינו פעיל.' : 'The launch offer ended on 16 October 2026. The prices shown on the website are the current prices, and ROMIC2026 is no longer active.']
+    ? [entry[0], isHebrew ? 'הטבת ההשקה הסתיימה ב־22.10.2026. המחירים המוצגים באתר הם המחירים הנוכחיים, והקוד ROMIC2026 אינו פעיל.' : 'The launch offer ended on 22 October 2026. The prices shown on the website are the current prices, and ROMIC2026 is no longer active.']
     : entry);
 }
 let promotionTimer;
@@ -119,7 +123,7 @@ function refreshPromotionState() {
       item.querySelector('summary').textContent = entries[index][0];
       item.querySelector('p').textContent = entries[index][1];
     });
-    renderCartContents();
+    refreshPriceDisplays();
   }
   window.clearTimeout(promotionTimer);
   const now = Date.now();
@@ -143,7 +147,7 @@ function showLaunchOfferOnce(freshEntry = false) {
   const dialog = document.createElement('dialog');
   dialog.className = 'launch-dialog';
   dialog.setAttribute('aria-labelledby', 'launch-offer-title');
-  const photos = `<img class="launch-photo-main" src="../assets/promo/collection-real.webp" alt="${isHebrew ? 'תיקי Romic מהקולקציה, בצילום המקורי' : 'The Romic collection, photographed together'}" width="876" height="1035" decoding="async"><img class="launch-photo-detail" src="../assets/promo/bags-in-sun.webp" alt="${isHebrew ? 'ארבעה תיקי Romic בצילום באור טבעי' : 'Four Romic bags photographed in natural light'}" width="650" height="1140" decoding="async">`;
+  const photos = `<img class="launch-photo-main" src="../assets/promo/bags-in-sun.webp" alt="${isHebrew ? 'ארבעה תיקי ROMIC באור טבעי' : 'Four ROMIC bags in natural light'}" width="650" height="1140" decoding="async">`;
   dialog.innerHTML = `<div class="launch-dialog-layout">
     <button class="launch-dialog-close" type="button" aria-label="${copy.offerClose}" data-offer-close>${icon('close')}</button>
     <div class="launch-dialog-copy">
@@ -153,31 +157,24 @@ function showLaunchOfferOnce(freshEntry = false) {
       <p class="launch-code-label">${copy.offerCodeLabel}</p>
       <p class="launch-code"><bdi dir="ltr">ROMIC2026</bdi></p>
       <p class="launch-terms">${copy.offerTerms}</p>
-      <a class="launch-action" href="./#collection" data-offer-action>${copy.offerAction}</a>
+      <button class="launch-action" type="button" data-offer-action>${isHebrew ? 'הפעילי את ההטבה' : 'ACTIVATE THE OFFER'}</button>
     </div>
     <div class="launch-bag-collage" aria-label="${isHebrew ? 'מבחר תיקים מהקולקציה' : 'A selection of Romic bags'}">${photos}</div>
   </div>`;
   document.body.append(dialog);
   window.__romicLaunchOfferSeen = true;
-  const dismissToOpening = () => {
-    if (document.body.dataset.page !== 'home') return;
-    window.__romicLaunchDismissedToTop = true;
-    sessionStorage.removeItem(collectionReturnKey);
-    if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
-    const html = document.documentElement;
-    const previous = html.style.scrollBehavior;
-    html.style.scrollBehavior = 'auto';
-    document.querySelector('.brand')?.focus({ preventScroll: true });
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    requestAnimationFrame(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); html.style.scrollBehavior = previous; });
-  };
-  dialog.querySelector('[data-offer-close]').addEventListener('click', () => { dialog.close(); dismissToOpening(); });
-  dialog.addEventListener('cancel', () => requestAnimationFrame(dismissToOpening));
-  dialog.querySelector('[data-offer-action]').addEventListener('click', () => dialog.close());
+  dialog.querySelector('[data-offer-close]').addEventListener('click', () => dialog.close());
+  dialog.querySelector('[data-offer-action]').addEventListener('click', () => {
+    if (!promoIsActive()) { dialog.close(); toast(copy.couponExpired); return; }
+    const existing = activeCoupon();
+    if (!existing || existing.percent < 20) setCoupon(promoCode);
+    dialog.close();
+    toast(existing?.percent === 30 ? (isHebrew ? 'הטבת ה־30% שלך נשארת פעילה.' : 'Your 30% offer remains active.') : (isHebrew ? 'ההטבה הופעלה — 20% הנחה על הקולקציה.' : 'Offer activated — 20% off the collection.'));
+  });
   dialog.addEventListener('close', () => dialog.remove(), { once:true });
   dialog.showModal();
 }
-function currentPrice(product) { return product.price; }
+function currentPrice(product, custom = false) { return discountedPrice(product.price, activeCoupon(), custom); }
 function openAbout(trigger) {
   if (document.querySelector('.about-dialog[open]')) return;
   const dialog = document.createElement('dialog');
@@ -185,10 +182,10 @@ function openAbout(trigger) {
   dialog.setAttribute('aria-labelledby', 'about-title');
   const title = isHebrew ? 'היי, אני רומי.' : 'Hi, I’m Romi.';
   const story = isHebrew
-    ? 'אני מעצבת וסורגת בעצמי את התיקים של ROMIC — מהבחירה של הצבעים ועד הידית והשרשרת.'
-    : 'I design and crochet ROMIC bags myself — from choosing the colours to the handles and chains.';
+    ? 'ROMIC הוא המקום שלי ליצור תיקים עם אופי. אני מעצבת וסורגת כל תיק בעבודת יד, מחוטי טריקו ואביזרים שנבחרים בקפידה.'
+    : 'ROMIC is where I create bags with character. I design and hand-crochet each one, using textile yarn and carefully chosen accessories.';
   const invitation = isHebrew
-    ? 'תוכלי לבחור תיק שכבר מחכה לך בקולקציה, או שנבחר יחד דגם וצבע וניצור רומיק משלך.'
+    ? 'תוכלי לבחור תיק שכבר מחכה לך בקולקציה, או שנבחר יחד דגם וצבע וניצור ROMIC משלך.'
     : 'Choose a bag from the collection, or we can pick a model and colour together and create your own Romic.';
   const closeLabel = isHebrew ? 'סגירת על ROMIC' : 'Close About ROMIC';
   dialog.innerHTML = `<div class="about-frame">
@@ -235,10 +232,51 @@ function initAbout() {
   }));
 }
 
-function cartPrice(product, couponApplied) { return couponApplied ? Math.round(product.price * .8) : product.price; }
-function isCouponApplied() { try { return promoIsActive() && sessionStorage.getItem(appliedCouponStorageKey) === promoCode; } catch (_) { return false; } }
-function priceMarkup(product, className = 'price') {
-  return `<span class="${className}"><strong>${formatPrice(product.price)}</strong></span>`;
+function couponByCode(code) {
+  const normalized = String(code || '').trim().toUpperCase();
+  if (normalized === friendCouponCode) return { code:friendCouponCode, percent:30, custom:true };
+  if (normalized === promoCode && promoIsActive()) return { code:promoCode, percent:20, custom:false };
+  return null;
+}
+function activeCoupon() {
+  let code = couponMemory;
+  if (code === undefined) { try { code = sessionStorage.getItem(appliedCouponStorageKey); } catch (_) {} }
+  return couponByCode(code);
+}
+function discountedPrice(price, coupon, custom = false) {
+  return coupon && (!custom || coupon.custom) ? Math.round(price * (100 - coupon.percent)) / 100 : price;
+}
+function cartPrice(product, coupon = activeCoupon()) {
+  if (coupon === true) coupon = couponByCode(promoCode);
+  return discountedPrice(product.price, coupon, Boolean(product.custom));
+}
+function isCouponApplied() { return Boolean(activeCoupon()); }
+function priceMarkup(product, className = 'price', custom = false) {
+  const coupon = activeCoupon();
+  const price = discountedPrice(product.price, coupon, custom);
+  const discounted = price !== product.price;
+  return `<span class="${className}${discounted ? ' is-discounted' : ''}" data-price-base="${product.price}" data-price-custom="${custom}">${discounted ? `<del>${formatPrice(product.price)}</del>` : ''}<strong>${formatPrice(price)}</strong>${discounted ? `<span class="price-offer">−${coupon.percent}%</span>` : ''}</span>`;
+}
+function couponLabel(coupon) {
+  return isHebrew ? `הנחה · ${coupon.percent}%` : `Offer · ${coupon.percent}%`;
+}
+function refreshPriceDisplays() {
+  document.querySelectorAll('[data-price-base]').forEach(element => {
+    const price = Number(element.dataset.priceBase);
+    const custom = element.dataset.priceCustom === 'true';
+    element.outerHTML = priceMarkup({price}, element.classList.contains('product-price') ? 'product-price' : 'price', custom);
+  });
+  document.querySelectorAll('[data-quick-product]').forEach(link => {
+    const product = ROMIC_PRODUCTS.find(item => item.id === link.dataset.quickProduct);
+    if (product) link.setAttribute('aria-label', `${product.name}, ${formatPrice(currentPrice(product))}, ${product.size}`);
+  });
+  document.querySelector('[data-refresh-custom-price]')?.dispatchEvent(new Event('romic:price-refresh'));
+  renderCartContents();
+}
+function setCoupon(code) {
+  couponMemory = code || '';
+  try { if (code) sessionStorage.setItem(appliedCouponStorageKey, code); else sessionStorage.removeItem(appliedCouponStorageKey); } catch (_) {}
+  refreshPriceDisplays();
 }
 function whatsappUrl(message) { return `${whatsappBase}?text=${encodeURIComponent(message)}`; }
 
@@ -313,19 +351,20 @@ const deliveryStorageKey = 'romic:delivery-method';
 let selectedDeliveryMethod;
 function getDeliveryMethod() {
   if (selectedDeliveryMethod) return selectedDeliveryMethod;
-  try { return sessionStorage.getItem(deliveryStorageKey) === 'pickup' ? 'pickup' : 'delivery'; }
-  catch (_) { return 'delivery'; }
+  try { return sessionStorage.getItem(deliveryStorageKey) === 'delivery' ? 'delivery' : 'pickup'; }
+  catch (_) { return 'pickup'; }
 }
 function calculateCart(products, couponApplied, method) {
   const subtotal = products.reduce((sum, product) => sum + product.price, 0);
   const discountedSubtotal = products.reduce((sum, product) => sum + cartPrice(product, couponApplied), 0);
-  const shipping = method === 'pickup' ? 0 : 35;
+  const shipping = method === 'pickup' ? 0 : deliveryPrice;
   return { subtotal, discount: subtotal - discountedSubtotal, shipping, total: discountedSubtotal + shipping };
 }
-function makeWhatsappMessage(products, couponApplied = false, method = getDeliveryMethod()) {
+function makeWhatsappMessage(products, couponApplied = activeCoupon(), method = getDeliveryMethod()) {
   const lines = products.map(product => `${product.name} · ${product.size} · ${formatPrice(cartPrice(product, couponApplied))}`);
   const intro = isHebrew ? 'היי, אשמח להזמין:' : 'Hi, I’d like to order:';
-  const offer = couponApplied ? `\n${copy.couponUsed}` : '';
+  const coupon = couponApplied === true ? couponByCode(promoCode) : couponApplied;
+  const offer = coupon ? `\n${isHebrew ? 'קוד קופון' : 'Coupon'} ${coupon.code} · ${coupon.percent}%` : '';
   const totals = calculateCart(products, couponApplied, method);
   const receiving = method === 'pickup' ? `${copy.pickup} · ${copy.free}` : `${copy.delivery} · ${formatPrice(totals.shipping)}`;
   return `${intro}\n${lines.join('\n')}${offer}\n${receiving}\n${copy.total}: ${formatPrice(totals.total)}`;
@@ -343,15 +382,17 @@ function renderCartContents() {
   const body = dialog?.querySelector('[data-cart-content]');
   if (!body) return;
   const products = getSavedPicks().map(id => ROMIC_PRODUCTS.find(product => product.id === id)).filter(Boolean);
-  const active = promoIsActive();
-  const applied = isCouponApplied();
+  const applied = activeCoupon();
   const couponDraft = body.querySelector('#cart-coupon-code')?.value || '';
   const method = getDeliveryMethod();
   const { subtotal, total, shipping, discount: discountAmount } = calculateCart(products, applied, method);
-  const items = products.map(product => `<article class="cart-line"><a class="cart-thumb" href="product.html?id=${encodeURIComponent(product.id)}"><img src="../assets/gallery-thumbs/${product.image}" data-fallback-src="../assets/products/${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="240" height="300"></a><div class="cart-line-info"><a href="product.html?id=${encodeURIComponent(product.id)}">${product.name}</a><small>${product.size} · ${product.width} × ${product.height} cm</small><div class="cart-line-prices">${applied ? `<del>${formatPrice(product.price)}</del>` : ''}<strong>${formatPrice(cartPrice(product, applied))}</strong></div></div><button type="button" class="cart-remove" data-cart-remove="${product.id}" aria-label="${copy.remove} ${product.name}">${copy.remove}</button></article>`).join('');
-  const message = makeWhatsappMessage(products, applied, method);
-  const couponStatus = applied ? copy.couponApplied : active ? '' : copy.couponExpired;
-  body.innerHTML = products.length ? `<div class="cart-lines">${items}</div><div class="cart-coupon"><label for="cart-coupon-code">${copy.couponLabel}</label><div><input id="cart-coupon-code" type="text" value="${(applied ? promoCode : couponDraft).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}" placeholder="${copy.couponPlaceholder}" autocomplete="off" autocapitalize="characters" ${active && !applied ? '' : 'disabled'} aria-describedby="cart-coupon-status"><button type="button" data-apply-coupon ${active && !applied ? '' : 'disabled'}>${applied ? copy.couponDone : copy.applyCoupon}</button></div><span id="cart-coupon-status" data-coupon-status role="status" aria-live="polite">${couponStatus}</span></div><fieldset class="cart-delivery"><legend>${copy.receiving}</legend><div class="cart-delivery-options">${['delivery','pickup'].map(value => `<label><input type="radio" name="cart-delivery" value="${value}" ${method === value ? 'checked' : ''}><span>${value === 'delivery' ? copy.delivery : copy.pickup}<strong>${value === 'delivery' ? formatPrice(35) : copy.free}</strong></span></label>`).join('')}</div></fieldset><dl class="cart-totals" aria-live="polite" aria-atomic="true"><div><dt>${copy.subtotal}</dt><dd>${formatPrice(subtotal)}</dd></div>${applied ? `<div><dt>${copy.discount}</dt><dd>−${formatPrice(discountAmount)}</dd></div>` : ''}<div><dt>${method === 'pickup' ? copy.pickup : copy.shipping}</dt><dd>${shipping ? formatPrice(shipping) : copy.free}</dd></div><div class="cart-total"><dt>${copy.total}</dt><dd>${formatPrice(total)}</dd></div></dl><a class="button cart-whatsapp" href="${whatsappUrl(message)}" target="_blank" rel="external noopener" aria-label="${copy.openWhatsapp}">${icon('whatsapp')} ${copy.whatsapp}</a><p class="cart-terms">${active ? copy.promoMessage : ''} <a href="terms.html">${copy.terms}</a></p>` : `<div class="cart-empty"><p>${copy.bagEmpty}</p><button class="button" type="button" data-cart-continue>${copy.keepBrowsing}</button></div>`;
+  const items = products.map(product => `<article class="cart-line"><a class="cart-thumb" href="product.html?id=${encodeURIComponent(product.id)}"><img src="../assets/gallery-thumbs/${product.image}" data-fallback-src="../assets/products/${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="240" height="300"></a><div class="cart-line-info"><a href="product.html?id=${encodeURIComponent(product.id)}">${product.name}</a><small>${product.size} · ${product.width} × ${product.height} cm</small>${priceMarkup(product,'price')}</div><button type="button" class="cart-remove" data-cart-remove="${product.id}" aria-label="${copy.remove} ${product.name}">${copy.remove}</button></article>`).join('');
+  const escapedDraft = (applied?.code || couponDraft).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const statusText = applied ? (isHebrew ? `הקוד הופעל · ${applied.percent}% הנחה${applied.custom ? ' על הקולקציה ועל עיצוב אישי' : ' על הקולקציה'}` : `${applied.percent}% applied to ${applied.custom ? 'collection and custom designs' : 'the collection'}`) : '';
+  const couponMarkup = `<div class="cart-coupon"><label for="cart-coupon-code">${copy.couponLabel}</label><div><input id="cart-coupon-code" type="text" value="${escapedDraft}" placeholder="${copy.couponPlaceholder}" autocomplete="off" autocapitalize="characters" dir="ltr" aria-describedby="cart-coupon-status"><button type="button" data-apply-coupon>${copy.applyCoupon}</button></div><span id="cart-coupon-status" data-coupon-status role="status" aria-live="polite">${statusText}</span>${applied ? `<button class="coupon-remove" type="button" data-remove-coupon>${isHebrew ? 'הסירי את ההטבה' : 'Remove offer'}</button>` : ''}</div>`;
+  const emptyMarkup = `<div class="cart-empty"><p>${copy.bagEmpty}</p><button class="button" type="button" data-cart-continue>${copy.keepBrowsing}</button></div>`;
+  const totalsMarkup = `<fieldset class="cart-delivery"><legend>${copy.receiving}</legend><div class="cart-delivery-options">${['pickup','delivery'].map(value => `<label><input type="radio" name="cart-delivery" value="${value}" ${method === value ? 'checked' : ''}><span>${value === 'delivery' ? copy.delivery : copy.pickup}<strong>${value === 'delivery' ? formatPrice(deliveryPrice) : copy.free}</strong></span></label>`).join('')}</div></fieldset><dl class="cart-totals" aria-live="polite" aria-atomic="true"><div><dt>${copy.subtotal}</dt><dd>${formatPrice(subtotal)}</dd></div>${discountAmount ? `<div><dt>${couponLabel(applied)}</dt><dd>−${formatPrice(discountAmount)}</dd></div>` : ''}<div><dt>${method === 'pickup' ? copy.pickup : copy.shipping}</dt><dd>${shipping ? formatPrice(shipping) : copy.free}</dd></div><div class="cart-total"><dt>${copy.total}</dt><dd>${formatPrice(total)}</dd></div></dl><a class="button cart-whatsapp" href="${whatsappUrl(makeWhatsappMessage(products, applied, method))}" target="_blank" rel="external noopener" aria-label="${copy.openWhatsapp}">${icon('whatsapp')} ${copy.whatsapp}</a><p class="cart-terms">${applied?.code === promoCode ? copy.promoMessage : ''} <a href="terms.html">${copy.terms}</a></p>`;
+  body.innerHTML = (products.length ? `<div class="cart-lines">${items}</div>` : emptyMarkup) + couponMarkup + (products.length ? totalsMarkup : '');
   body.querySelectorAll('input[name=cart-delivery]').forEach(input => input.addEventListener('change', () => {
     if (!input.checked) return;
     selectedDeliveryMethod = input.value;
@@ -363,26 +404,34 @@ function renderCartContents() {
   body.querySelector('[data-apply-coupon]')?.addEventListener('click', () => {
     const input = body.querySelector('#cart-coupon-code');
     const status = body.querySelector('[data-coupon-status]');
-    if (!promoIsActive()) { status.textContent = copy.couponExpired; input.disabled = true; return; }
-    if (input.value.trim().toUpperCase() !== promoCode) { status.textContent = copy.couponInvalid; status.dataset.error = 'true'; input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
-    try { sessionStorage.setItem(appliedCouponStorageKey, promoCode); } catch (_) {}
-    renderCartContents();
+    const normalized = input.value.trim().toUpperCase();
+    const coupon = couponByCode(normalized);
+    if (!coupon) {
+      status.textContent = normalized === promoCode && !promoIsActive() ? copy.couponExpired : copy.couponInvalid;
+      status.dataset.error = 'true'; input.setAttribute('aria-invalid', 'true'); input.focus(); return;
+    }
+    setCoupon(coupon.code);
+    body.querySelector('#cart-coupon-code')?.focus({preventScroll:true});
+  });
+  body.querySelector('[data-remove-coupon]')?.addEventListener('click', () => {
+    setCoupon('');
+    body.querySelector('#cart-coupon-code').value = '';
+    body.querySelector('#cart-coupon-code')?.focus({preventScroll:true});
   });
   const couponInput = body.querySelector('#cart-coupon-code');
   couponInput?.addEventListener('keydown', event => {
     if (event.key !== 'Enter') return;
-    event.preventDefault();
-    body.querySelector('[data-apply-coupon]')?.click();
+    event.preventDefault(); body.querySelector('[data-apply-coupon]')?.click();
   });
   couponInput?.addEventListener('input', () => {
     couponInput.removeAttribute('aria-invalid');
     const status = body.querySelector('[data-coupon-status]');
-    if (status && !isCouponApplied()) { status.textContent = ''; delete status.dataset.error; }
+    if (status?.dataset.error) { status.textContent = ''; delete status.dataset.error; }
   });
   body.querySelectorAll('[data-cart-remove]').forEach(button => button.addEventListener('click', () => setSavedPicks(getSavedPicks().filter(id => id !== button.dataset.cartRemove))));
   body.querySelector('[data-cart-continue]')?.addEventListener('click', () => dialog.close());
   body.querySelector('.cart-whatsapp')?.addEventListener('click', event => {
-    event.currentTarget.href = whatsappUrl(makeWhatsappMessage(products, isCouponApplied(), getDeliveryMethod()));
+    event.currentTarget.href = whatsappUrl(makeWhatsappMessage(products, activeCoupon(), getDeliveryMethod()));
   });
   enableImageFallbacks();
 }
@@ -456,6 +505,39 @@ function replaceCanonical(href) {
   document.head.append(canonical);
 }
 
+function renderInstagramSection() {
+  const section = document.querySelector('.instagram-callout');
+  if (!section || section.querySelector('video')) return;
+  section.innerHTML = `<div class="instagram-editorial"><p>${isHebrew ? 'מהסטודיו של ROMIC' : 'FROM THE ROMIC STUDIO'}</p><h2 id="instagram-title">${isHebrew ? 'נפגשות<br>באינסטגרם.' : 'MEET US ON<br>INSTAGRAM.'}</h2><div class="instagram-caption">${isHebrew ? 'תיקים חדשים, רגעים מהסטודיו וכל מה שבדרך.' : 'New bags, studio moments and everything in the making.'}</div>${instagramLink(isHebrew ? 'בואי לראות אותנו' : 'Come say hello', 'button')}</div><div class="instagram-film"><video muted loop playsinline preload="none" poster="../assets/promo/studio-poster.webp" aria-label="${isHebrew ? 'סרטון מהסטודיו של ROMIC' : 'ROMIC studio film'}"><source src="../assets/promo/studio-reel.mp4" type="video/mp4"></video><button type="button" class="film-toggle" aria-label="${isHebrew ? 'הפעלת הסרטון' : 'Play video'}">▶</button><a class="film-instagram" href="${instagramReel}" target="_blank" rel="external noopener">${icon('instagram')}<span>${isHebrew ? 'צפי ברילס באינסטגרם' : 'Watch the reel on Instagram'}</span></a></div>`;
+  const video = section.querySelector('video');
+  const button = section.querySelector('.film-toggle');
+  let visible = false;
+  let manuallyPaused = false;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const autoPlay = () => !reducedMotion.matches && !navigator.connection?.saveData;
+  const syncButton = () => {
+    button.textContent = video.paused ? '▶' : 'Ⅱ';
+    button.setAttribute('aria-label', isHebrew ? (video.paused ? 'הפעלת הסרטון' : 'השהיית הסרטון') : (video.paused ? 'Play video' : 'Pause video'));
+  };
+  const sync = () => {
+    if (visible && !document.hidden && !manuallyPaused && autoPlay()) video.play().catch(syncButton);
+    else video.pause();
+  };
+  button.addEventListener('click', () => {
+    if (video.paused) { manuallyPaused = false; video.play().catch(syncButton); }
+    else { manuallyPaused = true; video.pause(); }
+  });
+  video.addEventListener('play', syncButton);
+  video.addEventListener('pause', syncButton);
+  document.addEventListener('romic:locale-changed', syncButton);
+  if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    sync();
+  }, {threshold:.15}).observe(video);
+  document.addEventListener('visibilitychange', sync);
+  reducedMotion.addEventListener?.('change', sync);
+}
+
 function applyHomeCopy() {
   const locale = HOME_LOCALE[language];
   document.title = locale.title;
@@ -474,6 +556,7 @@ function applyHomeCopy() {
   document.querySelector('[data-open-finder] strong').textContent = copy.finderOpen;
   document.querySelector('[data-filter-toggle] span').textContent = copy.filters;
 
+  renderInstagramSection();
   const heroMedia = document.querySelector('.hero-media');
   if (heroMedia) heroMedia.setAttribute('aria-label', locale.conveyorLabel);
   const search = document.querySelector('[data-product-search]');
@@ -515,9 +598,12 @@ function applyHomeCopy() {
   }
   const callout = document.querySelector('.instagram-callout');
   if (callout) {
-    callout.querySelector('p').textContent = locale.instagramKicker;
-    callout.querySelector('h2').innerHTML = locale.instagramTitle;
-    callout.querySelector('.button').textContent = locale.instagramButton;
+    callout.querySelector('p').textContent = isHebrew ? 'מהסטודיו של ROMIC' : 'FROM THE ROMIC STUDIO';
+    callout.querySelector('h2').innerHTML = isHebrew ? 'נפגשות<br>באינסטגרם.' : 'MEET US ON<br>INSTAGRAM.';
+    callout.querySelector('.button').textContent = isHebrew ? 'בואי לראות אותנו' : 'Come say hello';
+    callout.querySelector('.instagram-caption').textContent = isHebrew ? 'תיקים חדשים, רגעים מהסטודיו וכל מה שבדרך.' : 'New bags, studio moments and everything in the making.';
+    callout.querySelector('.film-instagram span').textContent = isHebrew ? 'צפי ברילס באינסטגרם' : 'Watch the reel on Instagram';
+    callout.querySelector('video').setAttribute('aria-label', isHebrew ? 'סרטון מהסטודיו של ROMIC' : 'ROMIC studio film');
   }
 
   document.querySelectorAll('[data-conveyor-product]:not([aria-hidden="true"])').forEach(card => {
@@ -581,17 +667,17 @@ function header() {
   const isDocumentPage = document.body.dataset.page === 'document';
   const otherLanguage = `${isHebrew ? '../en/' : '../he/'}${isProductPage ? `product.html${location.search}` : isDocumentPage ? `${document.body.dataset.doc}.html` : ''}`;
   const navigation = `<a href="${siteRoot}#collection">${copy.collection}</a><a href="${siteRoot}#customize">${copy.craft}</a><a href="${siteRoot}#faq">${copy.faq}</a>`;
-  const aboutLink = `<a href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'על ROMIC' : 'About ROMIC'}</a>`;
+  const aboutLink = `<a href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'הכירי את ROMIC' : 'Meet ROMIC'}</a>`;
   const cartButton = `<button class="bag-link" type="button" data-open-cart aria-label="${copy.bag}">${bagIcon()} <span data-cart-label>${copy.bag}</span><span class="bag-count" data-cart-count>0</span></button>`;
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
     <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
     <div class="header-actions"><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
-    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}</nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
+    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}<button class="menu-cart-row" type="button" data-open-cart>${bagIcon()}<span data-cart-label>${copy.bag}</span><span data-cart-count>0</span></button></nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
 function footer() {
-  return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="300" height="110"><a class="footer-about" href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'על ROMIC' : 'About ROMIC'}</a><div class="footer-grid">
+  return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="300" height="110"><a class="footer-about" href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'הכירי את ROMIC' : 'Meet ROMIC'}</a><div class="footer-grid">
     <div><p>${copy.handmade}</p><p>${copy.rights}</p></div>
     <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}<a href="terms.html#returns" data-returns-link>${isHebrew ? 'החזרות וביטולים' : 'Returns & cancellations'}</a></nav>
   </div></footer>`;
@@ -637,7 +723,7 @@ function localizeShellInPlace() {
   [copy.privacy, copy.accessibility, copy.terms, copy.email, copy.instagram].forEach((label, index) => { if (footerLinks[index]) footerLinks[index].textContent = label; });
   document.querySelector('[data-returns-link]')?.replaceChildren(document.createTextNode(isHebrew ? 'החזרות וביטולים' : 'Returns & cancellations'));
   document.querySelector('.footer-links')?.setAttribute('aria-label', isHebrew ? 'קישורי מידע' : 'Information links');
-  document.querySelectorAll('[data-open-about]').forEach(link => { link.textContent = isHebrew ? 'על ROMIC' : 'About ROMIC'; });
+  document.querySelectorAll('[data-open-about]').forEach(link => { link.textContent = isHebrew ? 'הכירי את ROMIC' : 'Meet ROMIC'; });
 }
 
 function initMenu() {
@@ -665,7 +751,7 @@ function productCard(product) {
     : '';
   return `<article class="product-card" data-tone="${tone}" data-product-id="${product.id}" style="--card-bg:${background}">
     <button class="save-pick" type="button" data-add-to-bag="${product.id}" aria-label="${added ? copy.saved : copy.save} ${product.name}" aria-pressed="${added}">${bagIcon()}</button>
-    <a class="product-card-link" data-quick-product="${product.id}" href="product.html?id=${product.id}" aria-label="${product.name}, ${formatPrice(product.price)}, ${product.size}, ${product.width} × ${product.height} cm">
+    <a class="product-card-link" data-quick-product="${product.id}" href="product.html?id=${product.id}" aria-label="${product.name}, ${formatPrice(currentPrice(product))}, ${product.size}, ${product.width} × ${product.height} cm">
       <div class="product-image"><img class="product-image-primary" src="../assets/cards/600/${product.image}" srcset="../assets/cards/600/${product.image} 600w, ../assets/cards/900/${product.image} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.image}" alt="${product.name} — ${isHebrew ? product.he : product.en}" loading="lazy" decoding="async" width="900" height="1125">${alternateImage}</div>
       <div class="product-meta"><h3>${product.name}</h3>${priceMarkup(product)}<span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
     </a></article>`;
@@ -903,11 +989,11 @@ function renderServiceDetails() {
   const root = document.querySelector('[data-service-details]');
   if (!root) return;
   const items = isHebrew ? [
-    ['משלוחים ואיסוף','משלוחים בישראל בעלות ₪35. איסוף עצמי מגבעתיים ללא עלות, בתיאום מראש.'],
+    ['משלוחים ואיסוף','משלוחים בישראל בעלות ₪30. איסוף עצמי מגבעתיים ללא עלות, בתיאום מראש.'],
     ['זמני אספקה','אספקה עד 7 ימי עסקים, לתיקים מהקולקציה ולתיקים בעיצוב אישי.'],
     ['החזרות וביטולים','ניתן לבטל הזמנה בהתאם לחוק הגנת הצרכן. בביטול עקב חרטה ייגבו דמי ביטול כחוק, והחזרת התיק תהיה על חשבון הלקוחה.']
   ] : [
-    ['Delivery & pickup','Delivery within Israel costs ₪35. Free pickup in Givatayim by prior arrangement.'],
+    ['Delivery & pickup','Delivery within Israel costs ₪30. Free pickup in Givatayim by prior arrangement.'],
     ['Delivery times','Delivery within 7 business days for both collection bags and custom designs.'],
     ['Returns & cancellations','Orders may be cancelled in accordance with Israeli consumer law. Cancellation fees apply to a change-of-mind cancellation, and return shipping is at the customer’s expense.']
   ];
@@ -918,7 +1004,7 @@ function renderCustomizer() {
   const root = document.querySelector('[data-customizer]');
   if (!root) return;
   const models = [{ id:'clutch', name:'Classic Clutch', he:'קלאץ׳ קלאסי', price:320, measure:'25 × 10' }, { id:'maldives', name:'Handbag', he:'תיק יד', price:370, measure:'25 × 15' }, { id:'dubai', name:'Clutch with handles', he:'קלאץ׳ עם ידיות', price:400, measure:'25 × 12' }];
-  const colors = [{ id:'black', name:'Black', he:'שחור', hex:'#242124' }, { id:'ivory', name:'White', he:'לבן', hex:'#eee4d2' }, { id:'sky', name:'Sky', he:'תכלת', hex:'#92cdf2' }, { id:'lime', name:'Olive', he:'ירוק זית', hex:'#78804f' }, { id:'berry', name:'Burgundy', he:'בורדו', hex:'#8e183c' }, { id:'fuchsia', name:'Fuchsia', he:'פוקסיה', hex:'#ee1772' }, { id:'coral', name:'Orange', he:'כתום', hex:'#f46d48' }, { id:'sand', name:'Sand brown', he:'חום חול', hex:'#bd9064' }];
+  const colors = [{ id:'black', name:'Black', he:'שחור', hex:'#242124' }, { id:'ivory', name:'White', he:'לבן', hex:'#ffffff' }, { id:'sky', name:'Sky', he:'תכלת', hex:'#92cdf2' }, { id:'lime', name:'Green', he:'ירוק', hex:'#78804f' }, { id:'berry', name:'Burgundy', he:'בורדו', hex:'#8e183c' }, { id:'fuchsia', name:'Fuchsia', he:'פוקסיה', hex:'#ee1772' }, { id:'coral', name:'Orange', he:'כתום', hex:'#f46d48' }, { id:'sand', name:'Sand brown', he:'חום חול', hex:'#bd9064' }];
   let selectedModel = models.find(model => model.id === root.dataset.selectedModel) || models[0];
   let selectedColor = colors.find(color => color.id === root.dataset.selectedColor) || colors[3];
   const displayModel = model => isHebrew ? model.he : model.name;
@@ -926,22 +1012,26 @@ function renderCustomizer() {
   root.innerHTML = `<div class="customizer-head"><p class="eyebrow">ROMIC YOUR WAY</p><h2>MAKE IT<br>YOURS.</h2><p>${copy.customLead}</p></div><div class="customizer-grid" id="customize" tabindex="-1">
     <div class="customizer-visual"><img data-custom-image src="" alt="" loading="lazy" decoding="async" width="1200" height="1500"><span class="customizer-live" aria-live="polite" data-custom-live></span></div>
     <div class="customizer-controls"><fieldset><legend>01 · ${copy.model}</legend><div class="model-options" data-model-options></div></fieldset><fieldset><legend>02 · ${copy.colour}</legend><div class="color-options" data-color-options></div></fieldset>
-    <div class="customizer-summary"><div><span>${copy.basePrice}</span><strong data-custom-price></strong></div><div><span>${copy.bagBody}</span><strong data-custom-size></strong></div></div>
+    <div class="customizer-summary"><div><span>${copy.basePrice}</span><strong data-custom-price data-refresh-custom-price></strong></div><div><span>${copy.bagBody}</span><strong data-custom-size></strong></div></div>
     <p class="customizer-extras">${copy.extraNote}</p><a class="button button-light customizer-cta" href="${whatsappBase}" target="_blank" rel="external noopener" data-custom-whatsapp>${icon('whatsapp')} ${copy.messageRomic}</a><details class="customizer-details"><summary>${copy.detailsLabel}</summary><div><p class="customizer-note">${copy.customNote}</p><p class="customizer-visual-note">${copy.customVisual}</p></div></details></div></div>`;
   const image = root.querySelector('[data-custom-image]'), live = root.querySelector('[data-custom-live]'), price = root.querySelector('[data-custom-price]'), size = root.querySelector('[data-custom-size]'), modelOptions = root.querySelector('[data-model-options]'), colorOptions = root.querySelector('[data-color-options]');
-  modelOptions.innerHTML = models.map(model => `<button type="button" data-model="${model.id}"><span>${displayModel(model)}</span><small>${formatPrice(model.price)}</small></button>`).join('');
+  modelOptions.innerHTML = models.map(model => `<button type="button" data-model="${model.id}"><span>${displayModel(model)}</span><small>${priceMarkup(model, 'price', true)}</small></button>`).join('');
   colorOptions.innerHTML = colors.map(color => `<button type="button" data-color="${color.id}" aria-label="${displayColor(color)}"><span style="--swatch:${color.hex}"></span><small>${displayColor(color)}</small></button>`).join('');
   function update() {
     image.classList.add('is-changing');
     const imageName = selectedModel.id === 'clutch' ? `${selectedColor.id}-front.webp` : `${selectedColor.id}.webp`;
     image.src = `../assets/custom/${selectedModel.id}/${imageName}`;
     image.alt = `${displayModel(selectedModel)} · ${displayColor(selectedColor)}`;
-    live.textContent = `${displayModel(selectedModel)} · ${displayColor(selectedColor)}`; price.textContent = formatPrice(selectedModel.price); size.textContent = `${selectedModel.measure} cm`; size.dir = 'ltr';
+    live.textContent = `${displayModel(selectedModel)} · ${displayColor(selectedColor)}`; price.innerHTML = priceMarkup(selectedModel, 'price', true); size.textContent = `${selectedModel.measure} cm`; size.dir = 'ltr';
     const cta = root.querySelector('.customizer-cta');
     const message = isHebrew
       ? `היי, אשמח להזמין תיק בעיצוב אישי: ${displayModel(selectedModel)} בצבע ${displayColor(selectedColor)}.`
       : `Hi, I’d like to order a custom ${displayModel(selectedModel)} in ${displayColor(selectedColor)}.`;
-    cta.href = whatsappUrl(message);
+    const coupon = activeCoupon();
+    const finalPrice = currentPrice(selectedModel, true);
+    const pricing = isHebrew ? `מחיר בסיס ${formatPrice(finalPrice)}. תוספות יתומחרו בנפרד.` : `Base price ${formatPrice(finalPrice)}. Extras are priced separately.`;
+    const offer = coupon?.custom ? ` ${isHebrew ? 'קוד קופון' : 'Coupon'} ${coupon.code} · ${coupon.percent}%` : '';
+    cta.href = whatsappUrl(`${message} ${pricing}${offer}`);
     root.dataset.selectedModel = selectedModel.id;
     root.dataset.selectedColor = selectedColor.id;
     modelOptions.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.model === selectedModel.id)));
@@ -950,6 +1040,7 @@ function renderCustomizer() {
   }
   modelOptions.addEventListener('click', event => { const button = event.target.closest('[data-model]'); if (!button) return; selectedModel = models.find(model => model.id === button.dataset.model) || selectedModel; update(); });
   colorOptions.addEventListener('click', event => { const button = event.target.closest('[data-color]'); if (!button) return; selectedColor = colors.find(color => color.id === button.dataset.color) || selectedColor; update(); });
+  price.addEventListener('romic:price-refresh', update);
   update();
   root.querySelector('[data-custom-whatsapp]')?.setAttribute('aria-label', copy.messageRomic);
 }
@@ -970,7 +1061,7 @@ function renderHeroConveyor() {
     const background = (productDesign[product.id] || ['', '#e5ded5'])[1];
     const priority = !duplicate && index === 0 ? 'high' : 'auto';
     const duplicateAttributes = duplicate ? ' aria-hidden="true" tabindex="-1"' : '';
-    return `<a class="conveyor-card" href="product.html?id=${product.id}" data-conveyor-product="${product.id}" draggable="false" style="--conveyor-bg:${background}"${duplicateAttributes}><span class="conveyor-image"><img data-conveyor-src="../assets/conveyor/480/${product.id}.webp" data-conveyor-srcset="../assets/conveyor/480/${product.id}.webp 480w, ../assets/conveyor/720/${product.id}.webp 720w" sizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" data-fallback-src="../assets/products/${product.image}" alt="${duplicate ? '' : `${product.name} — ${isHebrew ? product.he : product.en}`}" draggable="false" loading="lazy" fetchpriority="${priority}" decoding="async" width="720" height="900"></span><span class="conveyor-label"><strong>${product.name}</strong><span aria-hidden="true">·</span><small><b>${formatPrice(product.price)}</b></small></span></a>`;
+    return `<a class="conveyor-card" href="product.html?id=${product.id}" data-conveyor-product="${product.id}" draggable="false" style="--conveyor-bg:${background}"${duplicateAttributes}><span class="conveyor-image"><img data-conveyor-src="../assets/conveyor/480/${product.id}.webp" data-conveyor-srcset="../assets/conveyor/480/${product.id}.webp 480w, ../assets/conveyor/720/${product.id}.webp 720w" sizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" data-fallback-src="../assets/products/${product.image}" alt="${duplicate ? '' : `${product.name} — ${isHebrew ? product.he : product.en}`}" draggable="false" loading="lazy" fetchpriority="${priority}" decoding="async" width="720" height="900"></span><span class="conveyor-label"><strong>${product.name}</strong><span aria-hidden="true">·</span><small>${priceMarkup(product)}</small></span></a>`;
   }
   root.innerHTML = products.map((product, index) => cardMarkup(product, index)).join('') + products.slice(0, duplicateCount).map((product, index) => cardMarkup(product, index, true)).join('');
 
@@ -1203,8 +1294,10 @@ function renderProduct() {
   document.head.append(structuredData);
   document.body.style.setProperty('--product-bg', (productDesign[product.id] || ['stone', '#e5ded5'])[1]);
   const gallery = product.gallery || [product.image];
+  const imageSize = image => typeof ROMIC_IMAGE_SIZES !== 'undefined' ? ROMIC_IMAGE_SIZES[image.split('?')[0]] || [1200,1500] : [1200,1500];
+  const [initialWidth, initialHeight] = imageSize(gallery[0]);
   const galleryMarkup = `<div class="product-gallery" data-product-gallery>
-    <div class="product-hero-image"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="1200" height="1500"></div>
+    <div class="product-hero-image" style="aspect-ratio:${initialWidth}/${initialHeight}"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"></div>
     ${gallery.length > 1 ? `<div class="product-thumbnails" aria-label="${isHebrew ? `גלריית תמונות של ${product.name}` : `${product.name} image gallery`}">${gallery.map((image, index) => `<button type="button" class="product-thumbnail" data-gallery-image="${image}" data-gallery-index="${index}" aria-label="${copy.viewImage} ${index + 1} / ${gallery.length}" aria-pressed="${index === 0}"><img src="../assets/gallery-thumbs/${image}" data-fallback-src="../assets/products/${image}" alt="" loading="lazy" decoding="async" width="240" height="300"></button>`).join('')}</div>` : ''}
   </div>`;
   main.innerHTML = `<div class="product-page"><a class="back-link" href="./#collection">${icon('arrow')} ${copy.back}</a><div class="product-layout">
@@ -1224,6 +1317,10 @@ function renderProduct() {
   main.querySelectorAll('[data-gallery-image]').forEach(button => button.addEventListener('click', () => {
     if (button.getAttribute('aria-pressed') === 'true') return;
     mainImage.classList.add('is-changing');
+    const [width,height] = imageSize(button.dataset.galleryImage);
+    mainImage.width = width;
+    mainImage.height = height;
+    mainImage.parentElement.style.aspectRatio = `${width}/${height}`;
     mainImage.src = `../assets/products/${button.dataset.galleryImage}`;
     mainImage.alt = isHebrew
       ? `${product.name} — תמונה ${Number(button.dataset.galleryIndex) + 1} מתוך ${gallery.length}`

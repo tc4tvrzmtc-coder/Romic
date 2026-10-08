@@ -32,7 +32,7 @@ for (const product of products) {
   const background = policy.productBackgrounds[product.id];
   if (!background) throw new Error(`Review and configure a background for new product ${product.id}`);
   for (const name of new Set([product.image, ...product.gallery])) {
-    add(`assets/products/${safeName(name)}`, `assets/products/${webpName(name)}`, background, name === product.image);
+    add(`assets/products/${safeName(name)}`, `assets/products/${webpName(name)}`, background, name === product.image && !policy.preserveSceneProducts?.includes(product.id));
   }
 }
 for (const model of policy.customModels) {
@@ -85,7 +85,9 @@ const validate = async (file, width, height) => {
 };
 if (checkOnly) {
   for (const entry of prepared) {
-    await validate(path.join(output, entry.target), 1200, 1500);
+    const width = entry.needsMask ? 1200 : Math.min(1200, entry.meta.width, Math.floor(1500 * entry.meta.width / entry.meta.height));
+    const height = entry.needsMask ? 1500 : Math.round(width * entry.meta.height / entry.meta.width);
+    await validate(path.join(output, entry.target), width, height);
     if (entry.target.startsWith('assets/products/')) {
       const name = path.basename(entry.target);
       for (const [folder, width] of Object.entries(policy.derivatives)) await validate(path.join(output, 'assets', folder, name), width, width * 5 / 4);
@@ -94,7 +96,7 @@ if (checkOnly) {
   for (const product of products) for (const [folder, width] of Object.entries(policy.derivatives)) {
     if (folder.startsWith('conveyor/')) await validate(path.join(output, 'assets', folder, `${product.id}.webp`), width, width * 5 / 4);
   }
-  console.log(`PASS: ${prepared.length} reviewed masters and all responsive derivatives are WebP at 4:5.`);
+  console.log(`PASS: ${prepared.length} reviewed masters preserve full scenes; catalog derivatives are WebP at 4:5.`);
   process.exit(0);
 }
 await fs.rm(output, { recursive: true, force: true });
@@ -113,6 +115,13 @@ for (const entry of prepared) {
     const [x1,y1,x2,y2] = entry.maskEntry.bbox;
     original = sharp(rgba).extract({left:x1,top:y1,width:x2-x1,height:y2-y1});
   }
+  if (!entry.maskBytes) {
+    // Full photographs retain their native aspect ratio: no crop, generated detail or pale frame.
+    const width = Math.min(1200, entry.meta.width, Math.floor(1500 * entry.meta.width / entry.meta.height));
+    const height = Math.round(width * entry.meta.height / entry.meta.width);
+    await original.resize(width, height).webp({quality:90, effort:4}).toFile(file);
+    await validate(file, width, height);
+  } else {
   const image = await original.resize(innerWidth, innerHeight, { fit: 'inside' }).png().toBuffer({ resolveWithObject: true });
   const left = Math.floor((1200 - image.info.width) / 2);
   const top = Math.floor((1500 - image.info.height) / 2);
@@ -122,11 +131,12 @@ for (const entry of prepared) {
   await sharp({create:{width:1200,height:1500,channels:3,background:entry.maskBytes ? entry.background : '#f4f0ec'}}).composite(layers)
     .webp({ quality: 88, effort: 4 }).toFile(file);
   await validate(file, 1200, 1500);
+  }
   if (entry.target.startsWith('assets/products/')) {
     for (const [folder, width] of Object.entries(policy.derivatives)) {
       const derivative = path.join(output, 'assets', folder, path.basename(entry.target));
       await fs.mkdir(path.dirname(derivative), { recursive: true });
-      await sharp(file).resize(width, width * 5 / 4).webp({ quality: 84, effort: 4 }).toFile(derivative);
+      await sharp(file).resize(width, width * 5 / 4, {fit:'contain',background:entry.background}).webp({ quality: 84, effort: 4 }).toFile(derivative);
       await validate(derivative, width, width * 5 / 4);
     }
   }
@@ -136,7 +146,7 @@ for (const product of products) for (const [folder, width] of Object.entries(pol
   if (!folder.startsWith('conveyor/')) continue;
   const derivative = path.join(output, 'assets', folder, `${product.id}.webp`);
   await fs.mkdir(path.dirname(derivative), { recursive: true });
-  await sharp(path.join(output, 'assets/products', webpName(product.image))).resize(width, width * 5 / 4).webp({ quality: 84, effort: 4 }).toFile(derivative);
+  await sharp(path.join(output, 'assets/products', webpName(product.image))).resize(width, width * 5 / 4, {fit:'contain',background:policy.productBackgrounds[product.id]}).webp({ quality: 84, effort: 4 }).toFile(derivative);
   await validate(derivative, width, width * 5 / 4);
 }
 // Version all image requests so returning browsers load the current assets.
@@ -150,7 +160,12 @@ for (const name of ['app.js', 'styles.css', 'documents.js', 'data.js']) {
   }));
 }
 const assetVersion = 'romic-' + versionHash.digest('hex').slice(0,12);
-let compiledData = code;
+const imageSizes = {};
+for (const entry of prepared) {
+  const meta = await sharp(path.join(output, entry.target)).metadata();
+  imageSizes[path.basename(entry.target)] = [meta.width, meta.height];
+}
+let compiledData = code + '\nconst ROMIC_IMAGE_SIZES = ' + JSON.stringify(imageSizes) + ';\n';
 for (const p of products) for (const name of new Set([p.image, ...p.gallery])) compiledData = compiledData.replaceAll(`'${name}'`, `'${webpName(name)}?v=${assetVersion}'`);
 await fs.writeFile(path.join(output, 'data.js'), compiledData);
 const appFile = path.join(output,'app.js');
