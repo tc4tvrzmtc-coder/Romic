@@ -1,6 +1,5 @@
 {
   "assets/products/rio.webp": "47bb5e0f520ccb184f04191991fda2e48de99de4ae888793cdd6d17ea67f6fd0",
-  "assets/products/rio-worn.webp": "6f6d9907ba660a7eae6366814f509e6d9bad1f5c5e89563e70cb225f49adcdb4",
   "assets/products/rio-detail.webp": "7a793636bdb0f82d2aecdcc7a16b9d17373f45be02d7f62bfa965e3f63680ea0",
   "assets/products/rio-collection.webp": "853ea2f15091988ab3f2001328c8c7bcb11fa6176bbdecd64f3a617b02e8bdcc",
   "assets/products/paris.webp": "2c79e907a77812ae8b53755872be97a14a977c340e7ca5c1af0af4a9d23239a2",
@@ -175,5 +174,6 @@
   "assets/products/paris-original.jpg": "8111e0c7f1cede20e44fdcb9b910534063fae4eb7618b6e8a0177c11c255ccb8",
   "assets/products/miami-model-new.jpg": "ab6bd6e9da5c1fa63a840b5172e4798796bce69dee2613cf0eed6443a8e84051",
   "assets/products/tulum-model-new.jpg": "c41d0bc4102888bff555ca055efce0f84dea75609851196ddb5c331490cbf903",
-  "assets/products/dubai-model-new.jpg": "a628eb5a889c652ae5accfd24f9592b9d22d38038ae4d5b353f0d6f3bcc9b862"
+  "assets/products/dubai-model-new.jpg": "a628eb5a889c652ae5accfd24f9592b9d22d38038ae4d5b353f0d6f3bcc9b862",
+  "assets/products/rio-model-new.webp": "06eed419aa4f54205183d6d8fb4945a2510203ba38b48c0dfdf710b861139635"
 }
