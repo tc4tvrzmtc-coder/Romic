@@ -151,7 +151,7 @@ function showLaunchOfferOnce(freshEntry = false) {
   dialog.setAttribute('aria-labelledby', 'launch-offer-title');
   const photos = `<img class="launch-photo-main" src="../assets/promo/bags-in-sun.webp" alt="${isHebrew ? 'ארבעה תיקי ROMIC באור טבעי' : 'Four ROMIC bags in natural light'}" width="650" height="1140" decoding="async">
     <img class="launch-model launch-model-black" src="../assets/promo/launch-black-model.webp" alt="${isHebrew ? 'דוגמנית עם תיק ROMIC שחור' : 'Model carrying a black ROMIC bag'}" width="1158" height="1536" decoding="async">
-    <img class="launch-model launch-model-rio" src="../assets/promo/launch-rio-model.webp" alt="${isHebrew ? 'דוגמנית עם תיק Rio ורוד וכתום' : 'Model carrying the pink and orange Rio bag'}" width="1081" height="1600" decoding="async">`;
+    <img class="launch-model launch-model-miami" src="../assets/promo/launch-miami-model.webp" alt="${isHebrew ? 'דוגמנית עם תיק Miami ורוד ולבן' : 'Model carrying the pink and white Miami bag'}" width="1031" height="1536" decoding="async">`;
   dialog.innerHTML = `<div class="launch-dialog-layout">
     <button class="launch-dialog-close" type="button" aria-label="${copy.offerClose}" data-offer-close>${icon('close')}</button>
     <div class="launch-dialog-copy">
