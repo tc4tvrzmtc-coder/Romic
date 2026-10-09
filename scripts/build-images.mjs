@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import sharp from 'sharp';
 import {attachOriginalAlpha} from './image-mask.mjs';
 import {contactShadow} from './image-shadow.mjs';
+import {fullSceneFrame} from './image-scene-frame.mjs';
 
 const root = process.cwd();
 const site = path.join(root, 'site');
@@ -136,7 +137,9 @@ for (const entry of prepared) {
     for (const [folder, width] of Object.entries(policy.derivatives)) {
       const derivative = path.join(output, 'assets', folder, path.basename(entry.target));
       await fs.mkdir(path.dirname(derivative), { recursive: true });
-      await sharp(file).resize(width, width * 5 / 4, {fit:'contain',background:entry.background}).webp({ quality: 84, effort: 4 }).toFile(derivative);
+      const extendScene = policy.fullBackdropSources?.includes(entry.source);
+      const canvas = extendScene ? sharp(await fullSceneFrame(entry.bytes, width, width * 5 / 4)) : sharp(file).resize(width, width * 5 / 4, {fit:'contain',background:entry.background});
+      await canvas.webp({ quality: 84, effort: 4 }).toFile(derivative);
       await validate(derivative, width, width * 5 / 4);
     }
   }
@@ -146,13 +149,15 @@ for (const product of products) for (const [folder, width] of Object.entries(pol
   if (!folder.startsWith('conveyor/')) continue;
   const derivative = path.join(output, 'assets', folder, `${product.id}.webp`);
   await fs.mkdir(path.dirname(derivative), { recursive: true });
-  await sharp(path.join(output, 'assets/products', webpName(product.image))).resize(width, width * 5 / 4, {fit:'contain',background:policy.productBackgrounds[product.id]}).webp({ quality: 84, effort: 4 }).toFile(derivative);
+  const source = `assets/products/${product.image}`;
+  const canvas = policy.fullBackdropSources?.includes(source) ? sharp(await fullSceneFrame(path.join(site,source),width,width * 5 / 4)) : sharp(path.join(output, 'assets/products', webpName(product.image))).resize(width, width * 5 / 4, {fit:'contain',background:policy.productBackgrounds[product.id]});
+  await canvas.webp({ quality: 84, effort: 4 }).toFile(derivative);
   await validate(derivative, width, width * 5 / 4);
 }
 // Version all image requests so returning browsers load the current assets.
 const versionHash = crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy));
 // Rendering changes must invalidate image caches even when source photos are unchanged.
-for (const name of ['build-images.mjs', 'image-mask.mjs', 'image-shadow.mjs']) versionHash.update(await fs.readFile(new URL(name, import.meta.url)));
+for (const name of ['build-images.mjs', 'image-mask.mjs', 'image-shadow.mjs','image-scene-frame.mjs']) versionHash.update(await fs.readFile(new URL(name, import.meta.url)));
 for (const name of ['app.js', 'styles.css', 'documents.js', 'data.js']) {
   versionHash.update(await fs.readFile(path.join(site, name)).catch(error => {
     if (error.code !== 'ENOENT') throw error;
