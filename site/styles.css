@@ -627,3 +627,7 @@ html[dir=rtl] .instagram-callout h2{letter-spacing:-.035em;font-size:clamp(2.8re
  .launch-bag-collage .launch-model-black{grid-column:1;grid-row:1}
  .launch-bag-collage .launch-model-miami{grid-column:3;grid-row:1}
 }
+@media(max-width:700px){
+ /* Match the three original aspect ratios so no letterbox padding is needed. */
+ .launch-bag-collage{grid-template-columns:.754fr .570fr .671fr;height:auto;aspect-ratio:1.995}
+}
