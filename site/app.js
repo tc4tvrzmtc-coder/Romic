@@ -257,7 +257,7 @@ function priceMarkup(product, className = 'price', custom = false) {
   const coupon = activeCoupon();
   const price = discountedPrice(product.price, coupon, custom);
   const discounted = price !== product.price;
-  return `<span class="${className}${discounted ? ' is-discounted' : ''}" data-price-base="${product.price}" data-price-custom="${custom}">${discounted ? `<del>${formatPrice(product.price)}</del>` : ''}<strong>${formatPrice(price)}</strong>${discounted ? `<span class="price-offer">−${coupon.percent}%</span>` : ''}</span>`;
+  return `<span class="${className}${discounted ? ' is-discounted' : ''}" data-price-base="${product.price}" data-price-custom="${custom}">${discounted ? `<del title="${isHebrew ? 'מחיר מקורי' : 'Original price'}">${formatPrice(product.price)}</del>` : ''}<strong>${formatPrice(price)}</strong>${discounted ? `<span class="price-offer" dir="auto">${isHebrew ? `${coupon.percent}% הנחה` : `${coupon.percent}% off`}</span>` : ''}</span>`;
 }
 function couponLabel(coupon) {
   return isHebrew ? `הנחה · ${coupon.percent}%` : `Offer · ${coupon.percent}%`;

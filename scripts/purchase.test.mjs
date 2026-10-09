@@ -84,7 +84,7 @@ test('launch offer leaves custom prices intact; pickup is default; empty cart ca
   a.run("setCoupon('ROMICGIRLS30')");
   assert.equal(a.run("calculateCart([],activeCoupon(),'pickup').total"),0);
   assert.equal(a.run('currentPrice({price:320},true)'),224);
-  assert.match(a.run("priceMarkup({price:320},'price',true)"),/<del>₪320<\/del>/);
+  assert.match(a.run("priceMarkup({price:320},'price',true)"),/<del[^>]*>₪320<\/del>/);
   assert.match(a.run("priceMarkup({price:320},'price',true)"),/₪224/);
   assert.equal(a.run('formatPrice(224.0199999999)'),'₪224.02');
 });
