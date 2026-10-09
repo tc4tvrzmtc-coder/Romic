@@ -631,3 +631,6 @@ html[dir=rtl] .instagram-callout h2{letter-spacing:-.035em;font-size:clamp(2.8re
  /* Match the three original aspect ratios so no letterbox padding is needed. */
  .launch-bag-collage{grid-template-columns:.754fr .570fr .671fr;height:auto;aspect-ratio:1.995}
 }
+/* The supplied reel includes ~5px black bands. Hide only its outer 6px. */
+.instagram-film{aspect-ratio:120/157}
+.instagram-film video{position:absolute;left:0;top:-.955414%;width:100%;height:101.910828%;object-fit:fill}
