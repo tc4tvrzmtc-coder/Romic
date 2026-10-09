@@ -1,10 +1,10 @@
 # Romic product image standard
 
-Every published product/gallery and customizer image is WebP on a 1200 × 1500 canvas (4:5). Responsive versions use the same ratio. Original photographs remain unchanged in `site/assets`.
+Catalogue cutouts and customizer images use a 1200 × 1500 WebP canvas (4:5). Full-scene gallery photographs preserve their native aspect ratio, with a maximum width of 1200 and height of 1500, without upscaling. Catalogue derivatives remain 4:5 and contain the full photograph. Original photographs remain unchanged in `site/assets`.
 
 Primary catalogue images and every active customizer image require a reviewed alpha mask. The build attaches that mask to decoded original RGB pixels, crops only transparent surrounding space, fits the complete silhouette inside an 8% safety margin and places it on the configured full-canvas background. It never synthesizes a new bag, badge, stitch or strap. The same colour uses the same exact background across custom models; matching catalogue colours share that palette.
 
-Lifestyle/model and detail gallery photographs keep their original scene, inside the standard 4:5 canvas. The launch collage and brand graphics remain editorial exceptions.
+Lifestyle/model and detail gallery photographs keep their original scene and proportions, without pale padding or cropping. `preserveSceneProducts` identifies primary photographs that already have an approved scene and shadow (currently Paris); these bypass segmentation and synthetic shadows. Uniform catalogue derivatives use the configured product background only where needed, with no additional card padding. The launch photo and brand graphics remain editorial exceptions.
 
 ## Adding or replacing an image
 

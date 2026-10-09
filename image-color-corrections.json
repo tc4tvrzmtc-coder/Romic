@@ -1,0 +1,41 @@
+{
+  "method": "CIELAB median offset on existing yarn pixels only; lossless WebP",
+  "reference": "assets/custom/clutch/lime-front.webp",
+  "reference_sha256": "8f6b6850f9acd1cbecc406e61f1e36a3f04819576bf0c7d189efced5a9fb20aa",
+  "targets": {
+    "assets/custom/maldives/lime.webp": {
+      "original_sha256": "a5932a8957f6befe2d8d3d3032a831b11f0280a78010d6947124b0a7d3f0a2a0",
+      "corrected_sha256": "7c747f7b5218f8db47b8cba7bceb4c01af1151ef9e6026ada8d18be5e93f08b3",
+      "dimensions": [
+        886,
+        886
+      ],
+      "selected_pixels": 320496,
+      "lab_offset": [
+        17.81362415070827,
+        -7.0336188660986005,
+        7.370198414321806
+      ],
+      "non_yarn_changed_pixels": 0,
+      "logo_changed_pixels": 0,
+      "background_changed_pixels": 0
+    },
+    "assets/custom/dubai/lime.webp": {
+      "original_sha256": "c28ddebae0a479f88bbfe46faafe5d521c00e75ed64c096d444f9cb3f61ec41d",
+      "corrected_sha256": "658d1d34b010c9e4029a82900de94015335b400486717d88e219314a22c682fb",
+      "dimensions": [
+        443,
+        443
+      ],
+      "selected_pixels": 71973,
+      "lab_offset": [
+        17.083940324180105,
+        -4.077355586078523,
+        6.5577497917071454
+      ],
+      "non_yarn_changed_pixels": 0,
+      "logo_changed_pixels": 0,
+      "background_changed_pixels": 0
+    }
+  }
+}

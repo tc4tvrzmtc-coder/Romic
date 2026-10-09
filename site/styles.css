@@ -562,3 +562,55 @@ html[lang=he] .model-options button span{font-size:1rem;font-weight:600;line-hei
  .launch-subtitle{grid-column:1/-1;margin:0;font-size:.95rem;line-height:1.4}
  .customizer-cta{min-height:52px;font-size:1rem;padding:12px}
 }
+
+/* October launch: shared prices and full-scene photographs. */
+.price,.product-price{flex-wrap:wrap;column-gap:10px;row-gap:6px;direction:ltr;unicode-bidi:isolate;line-height:1.4}
+.price strong,.product-price strong{order:0}
+.price del,.product-price del{order:1;font-size:.9em;font-weight:500;color:#565056;text-decoration-thickness:1px;opacity:1}
+.price-offer{order:2;display:inline-block;padding:0;border-radius:0;background:none;color:#752a49;font-family:inherit;font-size:.8rem;font-weight:600;line-height:1.4;letter-spacing:0;white-space:nowrap}
+.product-meta{background:var(--paper);color:var(--ink);padding:18px;gap:9px 12px}
+.product-card[data-tone=charcoal] .product-meta{color:var(--ink)}
+.product-meta h3{flex-basis:100%}
+.product-meta .price{flex:1 1 100%;font-size:1.15rem}
+.product-meta .product-card-size{margin-top:0}
+/* Constrain the photo itself, rather than an intrinsic grid row that can overflow. */
+.product-image{padding:0;display:block;position:relative}
+.product-image img{position:absolute;inset:0;width:100%;height:100%;min-width:0;min-height:0;object-fit:contain;object-position:center}
+.product-card:hover .product-image img{transform:none!important}
+.conveyor-label{flex-wrap:wrap;white-space:normal;gap:4px 8px}
+.conveyor-label>span{display:none}
+.conveyor-label>small{flex-basis:100%}
+.conveyor-label .price{font-size:.95rem}
+.conveyor-label .price-offer{font-size:.75rem}
+.product-card[data-tone=charcoal] .product-card-size{color:#565056}
+.customizer .price del{color:#c7bec3}.customizer .price-offer{background:#f5d6e2;color:#64253e}
+.conveyor-label .price{font-size:inherit}.conveyor-label small{min-width:0}
+.conveyor-image{height:100%;padding:0}
+.product-hero-image,.product-thumbnail{background:transparent}
+.product-thumbnail img{object-fit:contain}.product-thumbnail{border-radius:8px}
+.menu-cart-row{display:flex;align-items:center;gap:12px;padding:16px 0;border:0;border-top:1px solid var(--line);background:transparent;color:inherit;font:inherit;font-size:clamp(1.65rem,7vw,2.7rem);text-align:start;cursor:pointer}
+.menu-cart-row .icon{width:28px;height:28px}.menu-cart-row [data-cart-count]{margin-inline-start:auto;font-size:1rem}
+.footer-about{margin-inline:auto;font-size:1rem;min-height:48px;padding:12px 24px;text-align:center}
+.launch-bag-collage .launch-photo-main{position:static;width:100%;height:100%;max-width:none;border:0;background:none;box-shadow:none;transform:none;object-fit:cover}
+.launch-dialog-copy h2{max-width:none}.launch-action{font-family:inherit;cursor:pointer}
+.instagram-callout{grid-template-columns:minmax(0,1fr) minmax(260px,380px);gap:48px;align-items:center;padding-block:clamp(64px,7vw,100px)}
+.instagram-editorial{max-width:680px}.instagram-callout h2{font-size:clamp(3rem,6vw,6.3rem);line-height:1;letter-spacing:-.055em;margin:22px 0}
+html[dir=rtl] .instagram-callout h2{letter-spacing:-.035em;font-size:clamp(2.8rem,5.5vw,5.5rem)}
+.instagram-caption{font-size:1.05rem;max-width:32ch;margin-bottom:28px}
+.instagram-film{position:relative;overflow:hidden;border-radius:12px;aspect-ratio:3/4;background:#d1b399}
+.instagram-film video{width:100%;height:100%;object-fit:contain;display:block}
+.film-toggle{position:absolute;inset-block-start:12px;inset-inline-end:12px;display:grid;place-items:center;width:44px;height:44px;border:1px solid #ffffff70;border-radius:50%;background:#151015ba;color:#fff;font-size:18px;cursor:pointer}
+.film-instagram{position:absolute;inset-inline:12px;bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:10px;background:#f7f3eef2;color:var(--ink);text-decoration:none;font-size:.86rem;font-weight:700;border-radius:6px}
+.hero h1{font-size:clamp(3.6rem,7.2vw,8.1rem)}
+@media(max-width:700px){
+ .conveyor-image{height:100%;padding:0}
+ .product-meta{padding:13px 12px 15px;gap:8px}
+ .product-meta .price{font-size:1rem;column-gap:8px}
+ .price-offer{font-size:.75rem}.conveyor-label .price{gap:6px}.conveyor-label{max-width:calc(100% - 20px)}
+ .instagram-callout{grid-template-columns:1fr;gap:28px;padding:56px 24px}
+ .instagram-callout h2,html[dir=rtl] .instagram-callout h2{font-size:clamp(2.5rem,10vw,3.5rem);line-height:1.02}
+ .instagram-film{width:min(100%,320px);justify-self:center}.instagram-caption{font-size:1rem;margin-bottom:20px}
+ .launch-bag-collage .launch-photo-main{width:100%;height:100%;max-width:none;object-fit:contain;background:#e8dccc}
+ .launch-terms{font-size:.83rem}.launch-code-label{font-size:.84rem}
+ .hero h1{font-size:clamp(3.3rem,16.7vw,4.7rem)}
+}

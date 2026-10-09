@@ -47,5 +47,9 @@
   "maskModels": {
     "assets/products/corfu.webp": "isnet-general-use",
     "assets/products/milan.webp": "isnet-general-use"
-  }
+  },
+  "fullBackdropSources": ["assets/products/paris-original.jpg"],
+  "preserveSceneProducts": [
+    "paris"
+  ]
 }
