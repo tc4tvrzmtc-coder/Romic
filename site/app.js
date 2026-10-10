@@ -304,27 +304,34 @@ function primeShareFiles(items) {
 function shareImagesOrWhatsApp(event, items, message) {
   event.preventDefault();
   const files = items.map(item => preparedShareFiles.get(new URL(item.url, location.href).href));
-  const urls = items.map(item => new URL(item.url, location.href).href);
-  const imagesLine = isHebrew ? 'תמונות התיקים שבחרת באתר:' : 'Images of your selected bags:';
-  const fallback = whatsappUrl(`${message}\n${imagesLine}\n${urls.join('\n')}`);
+  const showShareNotice = text => window.alert(text);
+  if (typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') {
+    showShareNotice(isHebrew
+      ? 'הדפדפן הזה לא תומך בצירוף תמונות. נסי לפתוח את האתר בטלפון כדי לשתף את התיק.'
+      : 'This browser cannot attach images. Open the site on a phone to share the bag image.');
+    return;
+  }
+  if (!files.every(Boolean)) {
+    showShareNotice(isHebrew ? 'התמונה עדיין נטענת. נסי שוב בעוד רגע.' : 'The image is still loading. Please try again in a moment.');
+    return;
+  }
   let canShareFiles = false;
-  try {
-    canShareFiles = files.length > 0 && files.every(Boolean)
-      && typeof navigator.share === 'function'
-      && typeof navigator.canShare === 'function'
-      && navigator.canShare({ files });
-  } catch (_) {}
+  try { canShareFiles = navigator.canShare({ files }); } catch (_) {}
   if (!canShareFiles) {
-    location.assign(fallback);
+    showShareNotice(isHebrew
+      ? 'הדפדפן הזה לא תומך בצירוף תמונות. נסי לפתוח את האתר בטלפון כדי לשתף את התיק.'
+      : 'This browser cannot attach images. Open the site on a phone to share the bag image.');
     return;
   }
   try {
     navigator.share({ files, text: message, title: isHebrew ? 'הבחירה שלך ב־Romic' : 'Your Romic selection' })
       .catch(error => {
-        if (error?.name !== 'AbortError') location.assign(fallback);
+        if (error?.name !== 'AbortError') {
+          showShareNotice(isHebrew ? 'לא ניתן לשתף את התמונה. נסי שוב.' : 'The image could not be shared. Please try again.');
+        }
       });
   } catch (_) {
-    location.assign(fallback);
+    showShareNotice(isHebrew ? 'לא ניתן לשתף את התמונה. נסי שוב.' : 'The image could not be shared. Please try again.');
   }
 }
 
