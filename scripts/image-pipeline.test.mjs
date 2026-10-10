@@ -15,6 +15,11 @@ test('publication gate converts source formats, preserves originals and rejects 
     await fs.mkdir(path.join(root, 'site/assets/products'), { recursive: true });
     await fs.writeFile(path.join(root, 'site/data.js'), "const ROMIC_PRODUCTS=[{id:'bag',image:'test.png',gallery:['test.png','model.png']}];");
     await fs.writeFile(path.join(root, 'site/index.html'), '<link href="styles.css?v=old"><script src="app.js?v=old"></script>');
+    await fs.mkdir(path.join(root, 'site/he'), { recursive: true });
+    await fs.mkdir(path.join(root, 'site/en'), { recursive: true });
+    const productTemplate = '<!doctype html><html><head><title>Bag — Romic</title><meta name="description" content="Bag details."><meta property="og:type" content="website"><meta property="og:site_name" content="ROMIC"><meta property="og:title" content="Handmade bag | ROMIC"><meta property="og:description" content="Bag details."><meta property="og:url" content="https://romic.co.il/he/product.html"><meta property="og:image" content="https://romic.co.il/assets/products/test.webp"><meta property="og:image:alt" content="Bag by ROMIC"></head><body data-page="product"></body></html>';
+    await fs.writeFile(path.join(root, 'site/he/product.html'), productTemplate);
+    await fs.writeFile(path.join(root, 'site/en/product.html'), productTemplate.replace('/he/product.html','/en/product.html'));
     await fs.writeFile(path.join(root, 'site/styles.css'), 'body{color:black}');
     await fs.writeFile(path.join(root, 'site/app.js'), '// first version');
     await fs.writeFile(path.join(root, 'image-policy.json'), JSON.stringify({ margin:.08, customModels:[], colorBackgrounds:{}, productBackgrounds:{bag:'#eee'}, derivatives:{'cards/600':600,'gallery-thumbs':240,'conveyor/480':480} }));
@@ -38,7 +43,13 @@ test('publication gate converts source formats, preserves originals and rejects 
     const run = (...args) => spawnSync(process.execPath, [script,...args], {cwd:root,encoding:'utf8'});
     assert.match(run().stderr, /Visual review required/);
     assert.equal(run('--review').status, 0);
-    assert.equal(run().status, 0);
+    const firstBuild = run();
+    assert.equal(firstBuild.status, 0, firstBuild.stderr);
+    const sharePage = await fs.readFile(path.join(root, '_site/he/product-bag.html'), 'utf8');
+    assert.match(sharePage, /property="og:title" content="bag \| ROMIC"/);
+    assert.match(sharePage, /property="og:image" content="https:\/\/romic\.co\.il\/assets\/products\/model\.webp\?v=romic-/);
+    assert.match(sharePage, /property="og:url" content="https:\/\/romic\.co\.il\/he\/product-bag\.html"/);
+    assert.match(await fs.readFile(path.join(root, '_site/sitemap.xml'), 'utf8'), /https:\/\/romic\.co\.il\/he\/product-bag\.html/);
     assert.equal(run('--check').status, 0);
     const versionBefore = await fs.readFile(path.join(root, '_site/index.html'), 'utf8');
     await fs.appendFile(path.join(root, 'site/styles.css'), '\nbutton{min-height:44px}');
