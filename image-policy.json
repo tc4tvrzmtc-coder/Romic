@@ -50,7 +50,9 @@
     "assets/products/milan.webp": "isnet-general-use"
   },
   "fullBackdropSources": [
-    "assets/products/paris-original.jpg"
+    "assets/products/paris-original.jpg",
+    "assets/products/soho.webp",
+    "assets/products/soho-model.webp"
   ],
   "preserveSceneProducts": [
     "paris",
