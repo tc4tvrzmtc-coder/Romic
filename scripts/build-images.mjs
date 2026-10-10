@@ -196,7 +196,7 @@ for (const language of ['he','en']) {
     const description = product[language] || product.name;
     const imageAlt = language === 'he' ? `תיק ${product.name} של ROMIC` : `${product.name} bag by ROMIC`;
     let html = template.replaceAll('product.html', filename);
-    html = html.replace(/<title>[^<]*<\\/title>/, `<title>${escapeHtml(title)}</title>`);
+    html = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)}</title>`);
     html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(description)}">`);
     html = html.replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${escapeHtml(title)}">`);
     html = html.replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${escapeHtml(description)}">`);
@@ -210,7 +210,7 @@ for (const language of ['he','en']) {
   }
 }
 const sitemapUrls = ['https://romic.co.il/','https://romic.co.il/en/','https://romic.co.il/he/', ...productSharePages];
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n${sitemapUrls.map(url => `  <url><loc>${url}</loc></url>`).join('\\n')}\\n</urlset>\\n`;
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`;
 await fs.writeFile(path.join(output, 'sitemap.xml'), sitemap);
 
 const versionHtml = async dir => {
