@@ -178,6 +178,41 @@ try {
   const appCode = await fs.readFile(appFile,'utf8');
   await fs.writeFile(appFile,appCode.replaceAll('.webp',`.webp?v=${assetVersion}`));
 } catch (error) { if (error.code !== 'ENOENT') throw error; }
+
+const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
+  '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+}[character]));
+const productSharePages = [];
+for (const language of ['he','en']) {
+  const template = await fs.readFile(path.join(output, language, 'product.html'), 'utf8');
+  for (const product of products) {
+    if (!/^[a-z0-9-]+$/.test(product.id)) throw new Error(`Invalid product route: ${product.id}`);
+    const filename = `product-${product.id}.html`;
+    const routeUrl = `https://romic.co.il/${language}/${filename}`;
+    const imageSource = (product.gallery || []).find(name => /(?:model|worn|held|lifestyle|styled|real)/i.test(name)) || product.image;
+    const imageFile = webpName(imageSource);
+    const imageUrl = `https://romic.co.il/assets/products/${imageFile}?v=${assetVersion}`;
+    const title = `${product.name} | ROMIC`;
+    const description = product[language] || product.name;
+    const imageAlt = language === 'he' ? `תיק ${product.name} של ROMIC` : `${product.name} bag by ROMIC`;
+    let html = template.replaceAll('product.html', filename);
+    html = html.replace(/<title>[^<]*<\\/title>/, `<title>${escapeHtml(title)}</title>`);
+    html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(description)}">`);
+    html = html.replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${escapeHtml(title)}">`);
+    html = html.replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${escapeHtml(description)}">`);
+    html = html.replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${routeUrl}">`);
+    html = html.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${imageUrl}">`);
+    html = html.replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${escapeHtml(imageAlt)}">`);
+    html = html.replace('</head>', `<link rel="canonical" href="${routeUrl}"></head>`);
+    if (!html.includes(`content="${imageUrl}"`) || !html.includes(`content="${routeUrl}"`)) throw new Error(`Product metadata missing for ${language}/${product.id}`);
+    await fs.writeFile(path.join(output, language, filename), html);
+    productSharePages.push(routeUrl);
+  }
+}
+const sitemapUrls = ['https://romic.co.il/','https://romic.co.il/en/','https://romic.co.il/he/', ...productSharePages];
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n${sitemapUrls.map(url => `  <url><loc>${url}</loc></url>`).join('\\n')}\\n</urlset>\\n`;
+await fs.writeFile(path.join(output, 'sitemap.xml'), sitemap);
+
 const versionHtml = async dir => {
   for (const file of await fs.readdir(dir,{withFileTypes:true})) {
     const full = path.join(dir,file.name);
