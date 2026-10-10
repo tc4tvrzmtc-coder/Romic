@@ -36,7 +36,8 @@
     "dubai": "#423d3c",
     "florence": "#a57961",
     "marrakech": "#bd9c54",
-    "soho": "#423d3c"
+    "soho": "#423d3c",
+    "cannes": "#b8afa7"
   },
   "derivatives": {
     "cards/600": 600,
@@ -52,10 +53,15 @@
   "fullBackdropSources": [
     "assets/products/paris-original.jpg",
     "assets/products/soho.webp",
-    "assets/products/soho-model.webp"
+    "assets/products/soho-model.webp",
+    "assets/products/cannes.webp",
+    "assets/products/cannes-model.webp",
+    "assets/products/cannes-chair.webp",
+    "assets/products/cannes-styled.webp"
   ],
   "preserveSceneProducts": [
     "paris",
-    "soho"
+    "soho",
+    "cannes"
   ]
 }

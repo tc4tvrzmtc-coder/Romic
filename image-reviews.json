@@ -40,7 +40,6 @@
   "assets/products/lisbon.webp": "2543d58b9a288672755388c2c1afc447b922927d85080abb14c9558a827f48fe",
   "assets/products/lisbon-worn.webp": "6cb98fb9ff92ff858afea9768b66916b981436fd48cdb5cc644ed928898d4e42",
   "assets/products/lisbon-real.webp": "3c63d67d06f935d39108ce43e4ea198c8a0da7b137da697161b8e998759f06f9",
-  "assets/products/lisbon-box.webp": "05b1e84fd4cb61b5264800b799ce1a2ba1c7dbc4d15a646727bbac0d3c97a2bb",
   "assets/products/tulum.webp": "6b0daebaea42ae29217b81b73443347a4c865b081fdd2cb4b959902b92de9228",
   "assets/products/tulum-worn.webp": "536f6e3d28e8508a9196afc3315b87d74fe9a09a26d2a9d83d5213a707b37f57",
   "assets/products/tulum-lifestyle.webp": "97b41c7adebad3e1a28f6b3ebf861443fcc40b477054deeb0c24a4cfcbd31850",
@@ -177,5 +176,9 @@
   "assets/products/dubai-model-new.jpg": "a628eb5a889c652ae5accfd24f9592b9d22d38038ae4d5b353f0d6f3bcc9b862",
   "assets/products/rio-model-new.webp": "06eed419aa4f54205183d6d8fb4945a2510203ba38b48c0dfdf710b861139635",
   "assets/products/soho.webp": "043f93fafb682258aa50844d73ac957a5537410ff6324bfe122b1dea04e3c91d",
-  "assets/products/soho-model.webp": "3ae43bb7de290ab045acaa1619c8f341cb130c3963186fd2df56d8ffee609b6f"
+  "assets/products/soho-model.webp": "3ae43bb7de290ab045acaa1619c8f341cb130c3963186fd2df56d8ffee609b6f",
+  "assets/products/cannes.webp": "adc770a42e1d2d12f9146f8048679119bc8393ee13298d9b8473b53520e67ba2",
+  "assets/products/cannes-model.webp": "560ac748c4bf37fe1afc0bbb801d9f910674f8e01a0efd28d6bb8ef0d7c3ef06",
+  "assets/products/cannes-chair.webp": "d318935cc32b86f08e4f25f225636aa22948273b73fe663f5ec4662e66ec52c4",
+  "assets/products/cannes-styled.webp": "3bdd977f0cbfdc7d0cbc52a1a163e0a222cdbf07df0de0c747a91c247dcdd7ee"
 }
