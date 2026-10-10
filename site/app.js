@@ -380,7 +380,7 @@ function goToProduct(id) {
   if (!ROMIC_PRODUCTS.some(product => product.id === id)) return;
   rememberHomePosition();
   homeInternalDeparture = true;
-  location.href = `product.html?id=${encodeURIComponent(id)}`;
+  location.href = `product-${encodeURIComponent(id)}.html`;
 }
 
 function getSavedPicks() {
@@ -525,7 +525,7 @@ function localeUrl(nextLanguage) {
 
 function updateAlternateLinks() {
   const page = document.body.dataset.page;
-  const productId = new URLSearchParams(location.search).get('id');
+  const productId = new URLSearchParams(location.search).get('id') || location.pathname.match(/\/product-([a-z0-9-]+)\.html$/i)?.[1];
   ['en', 'he'].forEach(nextLanguage => {
     let link = document.querySelector(`link[rel="alternate"][hreflang="${nextLanguage}"]`);
     if (!link) {
@@ -533,7 +533,7 @@ function updateAlternateLinks() {
       document.head.append(link);
     }
     const suffix = page === 'product'
-      ? `/product.html${productId ? `?id=${encodeURIComponent(productId)}` : ''}`
+      ? (location.pathname.match(/\/product-([a-z0-9-]+)\.html$/i)?.[1] ? `/product-${encodeURIComponent(productId)}.html` : `/product.html${productId ? `?id=${encodeURIComponent(productId)}` : ''}`)
       : page === 'document' ? `/${document.body.dataset.doc}.html` : '/';
     link.href = `${location.origin}${siteBasePath}/${nextLanguage}${suffix}`;
   });
@@ -715,7 +715,9 @@ function header() {
   const siteRoot = './';
   const isProductPage = document.body.dataset.page === 'product';
   const isDocumentPage = document.body.dataset.page === 'document';
-  const otherLanguage = `${isHebrew ? '../en/' : '../he/'}${isProductPage ? `product.html${location.search}` : isDocumentPage ? `${document.body.dataset.doc}.html` : ''}`;
+  const productId = new URLSearchParams(location.search).get('id') || location.pathname.match(/\/product-([a-z0-9-]+)\.html$/i)?.[1];
+  const productPage = productId ? `product-${encodeURIComponent(productId)}.html` : `product.html${location.search}`;
+  const otherLanguage = `${isHebrew ? '../en/' : '../he/'}${isProductPage ? productPage : isDocumentPage ? `${document.body.dataset.doc}.html` : ''}`;
   const navigation = `<a href="${siteRoot}#collection">${copy.collection}</a><a href="${siteRoot}#customize">${copy.craft}</a><a href="${siteRoot}#faq">${copy.faq}</a>`;
   const aboutLink = `<a href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'הכירי את ROMIC' : 'Meet ROMIC'}</a>`;
   const cartButton = `<button class="bag-link" type="button" data-open-cart aria-label="${copy.bag}">${bagIcon()} <span data-cart-label>${copy.bag}</span><span class="bag-count" data-cart-count>0</span></button>`;
@@ -1333,14 +1335,18 @@ function renderProduct() {
   renderShell();
   setTimeout(showLaunchOfferOnce, 280);
   document.querySelectorAll('link[data-romic-canonical],script[data-romic-structured]').forEach(element => element.remove());
-  const product = ROMIC_PRODUCTS.find(item => item.id === new URLSearchParams(location.search).get('id'));
+  const productId = new URLSearchParams(location.search).get('id') || location.pathname.match(/\/product-([a-z0-9-]+)\.html$/i)?.[1];
+  const product = ROMIC_PRODUCTS.find(item => item.id === productId);
   const main = document.querySelector('[data-product]');
   if (!product) { main.innerHTML = `<div class="shell doc"><h1>${copy.invalid}</h1><p>${copy.invalidCopy}</p><a href="./">${copy.back}</a></div>`; return; }
   document.title = `${product.name} — Romic`;
   setMetaDescription(isHebrew
     ? `${product.name} של Romic — ${product.he}. מידות גוף התיק: ${product.width} × ${product.height} ס״מ.`
     : `${product.name} by Romic — ${product.en} Bag body: ${product.width} × ${product.height} cm.`);
-  replaceCanonical(`${location.origin}${siteBasePath}/${language}/product.html?id=${encodeURIComponent(product.id)}`);
+  const productCanonical = /\/product-[a-z0-9-]+\.html$/i.test(location.pathname)
+    ? `${location.origin}${siteBasePath}/${language}/product-${encodeURIComponent(product.id)}.html`
+    : `${location.origin}${siteBasePath}/${language}/product.html?id=${encodeURIComponent(product.id)}`;
+  replaceCanonical(productCanonical);
   updateAlternateLinks();
   const structuredData = document.createElement('script'); structuredData.type = 'application/ld+json';
   structuredData.dataset.romicStructured = '';
