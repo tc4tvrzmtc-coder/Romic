@@ -35,7 +35,8 @@
     "venice": "#8e1d2b",
     "dubai": "#423d3c",
     "florence": "#a57961",
-    "marrakech": "#bd9c54"
+    "marrakech": "#bd9c54",
+    "soho": "#423d3c"
   },
   "derivatives": {
     "cards/600": 600,
@@ -48,8 +49,11 @@
     "assets/products/corfu.webp": "isnet-general-use",
     "assets/products/milan.webp": "isnet-general-use"
   },
-  "fullBackdropSources": ["assets/products/paris-original.jpg"],
+  "fullBackdropSources": [
+    "assets/products/paris-original.jpg"
+  ],
   "preserveSceneProducts": [
-    "paris"
+    "paris",
+    "soho"
   ]
 }
