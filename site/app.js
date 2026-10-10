@@ -304,9 +304,7 @@ function primeShareFiles(items) {
 function shareImagesOrWhatsApp(event, items, message) {
   event.preventDefault();
   const files = items.map(item => preparedShareFiles.get(new URL(item.url, location.href).href));
-  const urls = items.map(item => new URL(item.url, location.href).href);
-  const imagesLine = isHebrew ? 'תמונות התיקים שבחרת באתר:' : 'Images of your selected bags:';
-  const fallback = whatsappUrl(`${message}\n${imagesLine}\n${urls.join('\n')}`);
+  const fallback = whatsappUrl(message);
   let canShareFiles = false;
   try {
     canShareFiles = files.length > 0 && files.every(Boolean)
