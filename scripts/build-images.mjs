@@ -224,11 +224,11 @@ const installGoogleTagManager = async dir => {
     } else if (item.isFile() && item.name.endsWith('.html')) {
       let html = await fs.readFile(full,'utf8');
       if (html.includes(containerId)) continue;
-      if (!/<head\\b[^>]*>/i.test(html) || !/<body\\b[^>]*>/i.test(html)) {
+      if (!/<head\b[^>]*>/i.test(html) || !/<body\b[^>]*>/i.test(html)) {
         throw new Error(`Cannot install Google Tag Manager in ${full}: missing head or body tag.`);
       }
-      html = html.replace(/<head\\b[^>]*>/i, match => match + '\\n' + headSnippet);
-      html = html.replace(/<body\\b[^>]*>/i, match => match + '\\n' + bodySnippet);
+      html = html.replace(/<head\b[^>]*>/i, match => match + '\n' + headSnippet);
+      html = html.replace(/<body\b[^>]*>/i, match => match + '\n' + bodySnippet);
       if (!html.includes(containerId)) throw new Error(`Google Tag Manager installation failed for ${full}.`);
       await fs.writeFile(full,html);
     }
