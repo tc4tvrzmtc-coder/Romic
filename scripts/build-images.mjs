@@ -213,6 +213,29 @@ const sitemapUrls = ['https://romic.co.il/','https://romic.co.il/en/','https://r
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`;
 await fs.writeFile(path.join(output, 'sitemap.xml'), sitemap);
 
+const installGoogleTagManager = async dir => {
+  const containerId = 'GTM-PNZSZMCG';
+  const headSnippet = "<!-- Google Tag Manager -->\n<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\nnew Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\nj=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n})(window,document,'script','dataLayer','GTM-PNZSZMCG');</script>\n<!-- End Google Tag Manager -->";
+  const bodySnippet = "<!-- Google Tag Manager (noscript) -->\n<noscript><iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-PNZSZMCG\"\nheight=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe></noscript>\n<!-- End Google Tag Manager (noscript) -->";
+  for (const item of await fs.readdir(dir,{withFileTypes:true})) {
+    const full = path.join(dir,item.name);
+    if (item.isDirectory()) {
+      await installGoogleTagManager(full);
+    } else if (item.isFile() && item.name.endsWith('.html')) {
+      let html = await fs.readFile(full,'utf8');
+      if (html.includes(containerId)) continue;
+      if (!/<head\\b[^>]*>/i.test(html) || !/<body\\b[^>]*>/i.test(html)) {
+        throw new Error(`Cannot install Google Tag Manager in ${full}: missing head or body tag.`);
+      }
+      html = html.replace(/<head\\b[^>]*>/i, match => match + '\\n' + headSnippet);
+      html = html.replace(/<body\\b[^>]*>/i, match => match + '\\n' + bodySnippet);
+      if (!html.includes(containerId)) throw new Error(`Google Tag Manager installation failed for ${full}.`);
+      await fs.writeFile(full,html);
+    }
+  }
+};
+await installGoogleTagManager(output);
+
 const versionHtml = async dir => {
   for (const file of await fs.readdir(dir,{withFileTypes:true})) {
     const full = path.join(dir,file.name);
