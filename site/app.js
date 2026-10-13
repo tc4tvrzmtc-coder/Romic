@@ -96,12 +96,12 @@ const HOME_LOCALE = {
 
 const productDesign = {
   rio: ['coral', '#fda476'], paris: ['berry', '#da9d9e'], monaco: ['mauve', '#c18a99'], miami: ['berry', '#ed93a4'],
-  bali: ['lime', '#a7af6c'], sahara: ['sand', '#a6795b'], tokyo: ['lime', '#a6d270'], madrid: ['red', '#bf1320'], cannes: ['silver', '#b8afa7'], ibiza: ['coral', '#fda476'], porto: ['wine', '#8e1d2b'], soho: ['charcoal', '#423d3c'],
+  bali: ['lime', '#a7af6c'], sahara: ['sand', '#a6795b'], tokyo: ['lime', '#a6d270'], madrid: ['red', '#bf1320'], cannes: ['silver', '#b8afa7'], jerus: ['gold', '#bc955e'], ibiza: ['coral', '#fda476'], porto: ['wine', '#8e1d2b'], soho: ['charcoal', '#423d3c'],
   maldives: ['sky', '#a9cdef'], corfu: ['sky', '#a9cdef'], lisbon: ['sun', '#f8d063'], tulum: ['sand', '#d1b399'],
   mykonos: ['stone', '#eee9e4'], milan: ['stone', '#eee9e4'], venice: ['wine', '#8e1d2b'], dubai: ['charcoal', '#423d3c'], florence:['sand','#a57961'], marrakech:['gold','#bd9c54']
 };
 
-const catalogOrder = ['marrakech','rio','ibiza','soho','porto','florence','paris','miami','monaco','madrid','cannes','venice','dubai','sahara','tulum','mykonos','milan','lisbon','bali','tokyo','corfu','maldives'];
+const catalogOrder = ['marrakech','rio','ibiza','soho','porto','florence','paris','miami','monaco','madrid','cannes','jerus','venice','dubai','sahara','tulum','mykonos','milan','lisbon','bali','tokyo','corfu','maldives'];
 
 function formatPrice(price) { return `₪${Number(price.toFixed(2)).toLocaleString('he-IL', {maximumFractionDigits:2})}`; }
 function promoIsActive() { const now = Date.now(); return now >= promoStartsAt && now < promoEndsAt; }

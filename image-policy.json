@@ -37,7 +37,8 @@
     "florence": "#a57961",
     "marrakech": "#bd9c54",
     "soho": "#423d3c",
-    "cannes": "#b8afa7"
+    "cannes": "#b8afa7",
+    "jerus": "#bc955e"
   },
   "derivatives": {
     "cards/600": 600,
@@ -57,11 +58,14 @@
     "assets/products/cannes.webp",
     "assets/products/cannes-model.webp",
     "assets/products/cannes-chair.webp",
-    "assets/products/cannes-styled.webp"
+    "assets/products/cannes-styled.webp",
+    "assets/products/jerus.jpg",
+    "assets/products/jerus-held.jpg"
   ],
   "preserveSceneProducts": [
     "paris",
     "soho",
-    "cannes"
+    "cannes",
+    "jerus"
   ]
 }
