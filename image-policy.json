@@ -38,7 +38,8 @@
     "marrakech": "#bd9c54",
     "soho": "#423d3c",
     "cannes": "#b8afa7",
-    "jerus": "#bc955e"
+    "jerus": "#bc955e",
+    "malibu": "#a9cdef"
   },
   "derivatives": {
     "cards/600": 600,
@@ -60,12 +61,15 @@
     "assets/products/cannes-chair.webp",
     "assets/products/cannes-styled.webp",
     "assets/products/jerus.jpg",
-    "assets/products/jerus-held.jpg"
+    "assets/products/jerus-held.jpg",
+    "assets/products/malibu.jpg",
+    "assets/products/malibu-model.jpg"
   ],
   "preserveSceneProducts": [
     "paris",
     "soho",
     "cannes",
-    "jerus"
+    "jerus",
+    "malibu"
   ]
 }
