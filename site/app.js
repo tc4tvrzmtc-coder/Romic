@@ -415,7 +415,7 @@ function renderCartContents() {
   const couponDraft = body.querySelector('#cart-coupon-code')?.value || '';
   const method = getDeliveryMethod();
   const { subtotal, total, shipping, discount: discountAmount } = calculateCart(products, applied, method);
-  const items = products.map(product => `<article class="cart-line"><a class="cart-thumb" href="product.html?id=${encodeURIComponent(product.id)}"><img src="../assets/gallery-thumbs/${product.image}" data-fallback-src="../assets/products/${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="240" height="300"></a><div class="cart-line-info"><a href="product.html?id=${encodeURIComponent(product.id)}">${product.name}</a><small>${product.size} · ${product.width} × ${product.height} cm</small>${priceMarkup(product,'price')}</div><button type="button" class="cart-remove" data-cart-remove="${product.id}" aria-label="${copy.remove} ${product.name}">${copy.remove}</button></article>`).join('');
+  const items = products.map(product => `<article class="cart-line"><a class="cart-thumb" href="product-${encodeURIComponent(product.id)}.html"><img src="../assets/gallery-thumbs/${product.image}" data-fallback-src="../assets/products/${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="240" height="300"></a><div class="cart-line-info"><a href="product-${encodeURIComponent(product.id)}.html">${product.name}</a><small>${product.size} · ${product.width} × ${product.height} cm</small>${priceMarkup(product,'price')}</div><button type="button" class="cart-remove" data-cart-remove="${product.id}" aria-label="${copy.remove} ${product.name}">${copy.remove}</button></article>`).join('');
   const escapedDraft = (applied?.code || couponDraft).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const statusText = applied ? (isHebrew ? `הקוד הופעל · ${applied.percent}% הנחה${applied.custom ? ' על הקולקציה ועל עיצוב אישי' : ' על הקולקציה'}` : `${applied.percent}% applied to ${applied.custom ? 'collection and custom designs' : 'the collection'}`) : '';
   const couponMarkup = `<div class="cart-coupon"><label for="cart-coupon-code">${copy.couponLabel}</label><div><input id="cart-coupon-code" type="text" value="${escapedDraft}" placeholder="${copy.couponPlaceholder}" autocomplete="off" autocapitalize="characters" dir="ltr" aria-describedby="cart-coupon-status"><button type="button" data-apply-coupon>${copy.applyCoupon}</button></div><span id="cart-coupon-status" data-coupon-status role="status" aria-live="polite">${statusText}</span>${applied ? `<button class="coupon-remove" type="button" data-remove-coupon>${isHebrew ? 'הסירי את ההטבה' : 'Remove offer'}</button>` : ''}</div>`;
@@ -515,7 +515,7 @@ function updateAlternateLinks() {
       document.head.append(link);
     }
     const suffix = page === 'product'
-      ? (location.pathname.match(/\/product-([a-z0-9-]+)\.html$/i)?.[1] ? `/product-${encodeURIComponent(productId)}.html` : `/product.html${productId ? `?id=${encodeURIComponent(productId)}` : ''}`)
+      ? (productId ? `/product-${encodeURIComponent(productId)}.html` : '/product.html')
       : page === 'document' ? `/${document.body.dataset.doc}.html` : '/';
     link.href = `${location.origin}${siteBasePath}/${nextLanguage}${suffix}`;
   });
@@ -530,7 +530,7 @@ function setMetaDescription(content) {
 }
 
 function replaceCanonical(href) {
-  document.querySelectorAll('link[data-romic-canonical]').forEach(link => link.remove());
+  document.querySelectorAll('link[rel="canonical"]').forEach(link => link.remove());
   const canonical = document.createElement('link');
   canonical.rel = 'canonical'; canonical.href = href; canonical.dataset.romicCanonical = '';
   document.head.append(canonical);
@@ -785,7 +785,7 @@ function productCard(product) {
     : '';
   return `<article class="product-card" data-tone="${tone}" data-product-id="${product.id}" style="--card-bg:${background}">
     <button class="save-pick" type="button" data-add-to-bag="${product.id}" aria-label="${added ? copy.saved : copy.save} ${product.name}" aria-pressed="${added}">${bagIcon()}</button>
-    <a class="product-card-link" data-quick-product="${product.id}" href="product.html?id=${product.id}" aria-label="${product.name}, ${formatPrice(currentPrice(product))}, ${product.size}, ${product.width} × ${product.height} cm">
+    <a class="product-card-link" data-quick-product="${product.id}" href="product-${product.id}.html" aria-label="${product.name}, ${formatPrice(currentPrice(product))}, ${product.size}, ${product.width} × ${product.height} cm">
       <div class="product-image"><img class="product-image-primary" src="../assets/cards/600/${product.image}" srcset="../assets/cards/600/${product.image} 600w, ../assets/cards/900/${product.image} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.image}" alt="${product.name} — ${isHebrew ? product.he : product.en}" loading="lazy" decoding="async" width="900" height="1125">${alternateImage}</div>
       <div class="product-meta"><h3>${product.name}</h3>${priceMarkup(product)}<span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
     </a></article>`;
@@ -1099,7 +1099,7 @@ function renderHeroConveyor() {
     const background = (productDesign[product.id] || ['', '#e5ded5'])[1];
     const priority = !duplicate && index === 0 ? 'high' : 'auto';
     const duplicateAttributes = duplicate ? ' aria-hidden="true" tabindex="-1"' : '';
-    return `<a class="conveyor-card" href="product.html?id=${product.id}" data-conveyor-product="${product.id}" draggable="false" style="--conveyor-bg:${background}"${duplicateAttributes}><span class="conveyor-image"><img data-conveyor-src="../assets/conveyor/480/${product.id}.webp" data-conveyor-srcset="../assets/conveyor/480/${product.id}.webp 480w, ../assets/conveyor/720/${product.id}.webp 720w" sizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" data-fallback-src="../assets/products/${product.image}" alt="${duplicate ? '' : `${product.name} — ${isHebrew ? product.he : product.en}`}" draggable="false" loading="lazy" fetchpriority="${priority}" decoding="async" width="720" height="900"></span><span class="conveyor-label"><strong>${product.name}</strong><span aria-hidden="true">·</span><small>${priceMarkup(product)}</small></span></a>`;
+    return `<a class="conveyor-card" href="product-${product.id}.html" data-conveyor-product="${product.id}" draggable="false" style="--conveyor-bg:${background}"${duplicateAttributes}><span class="conveyor-image"><img data-conveyor-src="../assets/conveyor/480/${product.id}.webp" data-conveyor-srcset="../assets/conveyor/480/${product.id}.webp 480w, ../assets/conveyor/720/${product.id}.webp 720w" sizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" data-fallback-src="../assets/products/${product.image}" alt="${duplicate ? '' : `${product.name} — ${isHebrew ? product.he : product.en}`}" draggable="false" loading="lazy" fetchpriority="${priority}" decoding="async" width="720" height="900"></span><span class="conveyor-label"><strong>${product.name}</strong><span aria-hidden="true">·</span><small>${priceMarkup(product)}</small></span></a>`;
   }
   root.innerHTML = products.map((product, index) => cardMarkup(product, index)).join('') + products.slice(0, duplicateCount).map((product, index) => cardMarkup(product, index, true)).join('');
 
@@ -1321,18 +1321,16 @@ function renderProduct() {
   const product = ROMIC_PRODUCTS.find(item => item.id === productId);
   const main = document.querySelector('[data-product]');
   if (!product) { main.innerHTML = `<div class="shell doc"><h1>${copy.invalid}</h1><p>${copy.invalidCopy}</p><a href="./">${copy.back}</a></div>`; return; }
-  document.title = `${product.name} — Romic`;
+  document.title = `${product.name} | ROMIC`;
   setMetaDescription(isHebrew
     ? `${product.name} של Romic — ${product.he}. מידות גוף התיק: ${product.width} × ${product.height} ס״מ.`
     : `${product.name} by Romic — ${product.en} Bag body: ${product.width} × ${product.height} cm.`);
-  const productCanonical = /\/product-[a-z0-9-]+\.html$/i.test(location.pathname)
-    ? `${location.origin}${siteBasePath}/${language}/product-${encodeURIComponent(product.id)}.html`
-    : `${location.origin}${siteBasePath}/${language}/product.html?id=${encodeURIComponent(product.id)}`;
+  const productCanonical = `${location.origin}${siteBasePath}/${language}/product-${encodeURIComponent(product.id)}.html`;
   replaceCanonical(productCanonical);
   updateAlternateLinks();
   const structuredData = document.createElement('script'); structuredData.type = 'application/ld+json';
   structuredData.dataset.romicStructured = '';
-  structuredData.textContent = JSON.stringify({ '@context':'https://schema.org', '@type':'Product', name:`Romic ${product.name}`, description:isHebrew ? product.he : product.en, image:(product.gallery || [product.image]).map(image => `${location.origin}${siteBasePath}/assets/products/${image}`), brand:{ '@type':'Brand', name:'Romic' }, offers:{ '@type':'Offer', priceCurrency:'ILS', price:product.price, availability:'https://schema.org/InStock', url:location.href } });
+  structuredData.textContent = JSON.stringify({ '@context':'https://schema.org', '@type':'Product', name:`Romic ${product.name}`, description:isHebrew ? product.he : product.en, image:(product.gallery || [product.image]).map(image => `${location.origin}${siteBasePath}/assets/products/${image}`), brand:{ '@type':'Brand', name:'Romic' }, offers:{ '@type':'Offer', priceCurrency:'ILS', price:product.price, availability:'https://schema.org/InStock', url:productCanonical } });
   document.head.append(structuredData);
   document.body.style.setProperty('--product-bg', (productDesign[product.id] || ['stone', '#e5ded5'])[1]);
   const gallery = product.gallery || [product.image];

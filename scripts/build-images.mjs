@@ -6,6 +6,7 @@ import sharp from 'sharp';
 import {attachOriginalAlpha} from './image-mask.mjs';
 import {contactShadow} from './image-shadow.mjs';
 import {fullSceneFrame} from './image-scene-frame.mjs';
+import {productHtml} from './product-html.mjs';
 
 const root = process.cwd();
 const site = path.join(root, 'site');
@@ -157,7 +158,7 @@ for (const product of products) for (const [folder, width] of Object.entries(pol
 // Version all image requests so returning browsers load the current assets.
 const versionHash = crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy));
 // Rendering changes must invalidate image caches even when source photos are unchanged.
-for (const name of ['build-images.mjs', 'image-mask.mjs', 'image-shadow.mjs','image-scene-frame.mjs']) versionHash.update(await fs.readFile(new URL(name, import.meta.url)));
+for (const name of ['build-images.mjs', 'image-mask.mjs', 'image-shadow.mjs','image-scene-frame.mjs','product-html.mjs']) versionHash.update(await fs.readFile(new URL(name, import.meta.url)));
 for (const name of ['app.js', 'styles.css', 'documents.js', 'data.js']) {
   versionHash.update(await fs.readFile(path.join(site, name)).catch(error => {
     if (error.code !== 'ENOENT') throw error;
@@ -203,7 +204,11 @@ for (const language of ['he','en']) {
     html = html.replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${routeUrl}">`);
     html = html.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${imageUrl}">`);
     html = html.replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${escapeHtml(imageAlt)}">`);
-    html = html.replace('</head>', `<link rel="canonical" href="${routeUrl}"></head>`);
+    html = html.replace(/<link[^>]*rel="canonical"[^>]*>/g, '');
+    html = html.replace('</head>', `<link rel="canonical" data-romic-canonical href="${routeUrl}"></head>`);
+    const primaryImage = webpName(product.image);
+    const content = productHtml(product, language, `../assets/products/${primaryImage}?v=${assetVersion}`, imageSizes[primaryImage]);
+    html = html.replace(/(<main\b[^>]*\bdata-product[^>]*>)[\s\S]*?(<\/main>)/, (_, open, close) => open + content + close);
     if (!html.includes(`content="${imageUrl}"`) || !html.includes(`content="${routeUrl}"`)) throw new Error(`Product metadata missing for ${language}/${product.id}`);
     await fs.writeFile(path.join(output, language, filename), html);
     productSharePages.push(routeUrl);
