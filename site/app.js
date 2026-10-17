@@ -24,7 +24,7 @@ const COPY = {
     readyTitle:'FROM THE COLLECTION', readyCopy:'Delivery within 7 business days.', customTitle:'MAKE IT YOURS', customCopy:'Choose a model and colour. Delivery within 7 business days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪30 delivery · free pickup in Givatayim.',
     privacy:'Privacy', accessibility:'Accessibility', terms:'Terms & offers', rights:'© 2026 Romic. All rights reserved.', handmade:'Handmade bags · Israel', email:'Email',
     back:'BACK TO COLLECTION', size:'SIZE', dimensions:'BAG BODY', order:'ADD TO BAG', save:'ADD TO BAG', saved:'IN YOUR BAG',
-    dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Delivery within 7 business days · Israel delivery ₪30 · free pickup in Givatayim.', dmNote:'Choose WhatsApp and Romic in the share menu, review your message and tap Send.',
+    dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Delivery within 7 business days · Israel delivery ₪30 · free pickup in Givatayim.', dmNote:'Your selection opens in Romi’s WhatsApp chat. Review your message and tap Send.',
     personalTitle:'WANT A DIFFERENT COLOUR?', personalCopy:'Choose a Romic model, then make it yours.', personalLink:'EXPLORE MAKE IT YOURS', invalid:'Bag not found', invalidCopy:'This design may no longer be available.',
     finderHint:'NEED HELP CHOOSING?', finderOpen:'FIND YOUR BAG', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
     model:'CHOOSE A MODEL', colour:'CHOOSE A COLOUR', basePrice:'BASE PRICE', bagBody:'BAG BODY', messageRomic:'SEND YOUR SELECTION ON WHATSAPP', extraNote:'Extras cost more.', detailsLabel:'More details', customLead:'Choose a model. Choose a colour.', customNote:'Base price: one solid colour with the standard handle and hardware. Straps, colour combinations, extra handles and accessories cost extra.', customVisual:'Visualisation for reference. Handmade colour and measurements may vary slightly.',
@@ -39,7 +39,7 @@ const COPY = {
     readyTitle:'תיק מהקולקציה', readyCopy:'אספקה עד 7 ימי עסקים.', customTitle:'תיקים בעיצוב אישי', customCopy:'בחרי דגם וצבע. אספקה עד 7 ימי עסקים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪30 · איסוף עצמי מגבעתיים ללא עלות.',
     privacy:'מדיניות פרטיות', accessibility:'הצהרת נגישות', terms:'תנאים ומבצעים', rights:'© 2026 Romic. כל הזכויות שמורות.', handmade:'תיקים בעבודת יד · ישראל', email:'אימייל',
     back:'חזרה לקולקציה', size:'מידה', dimensions:'מידות גוף התיק', order:'הוסיפי לסל שלי', save:'הוסיפי לסל שלי', saved:'נוסף לסל',
-    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'אספקה עד 7 ימי עסקים · משלוח בישראל ₪30 · איסוף עצמי מגבעתיים ללא עלות.', dmNote:'ייפתח מסך שיתוף. בחרי WhatsApp ואת השיחה עם Romic, בדקי ולחצי על שליחה.',
+    dimsNote:'המידות מתייחסות לגוף התיק בלבד, ללא ידיות ורצועות. כל תיק נסרג בעבודת יד ולכן ייתכנו הבדלים קטנים.', deliveryNote:'אספקה עד 7 ימי עסקים · משלוח בישראל ₪30 · איסוף עצמי מגבעתיים ללא עלות.', dmNote:'הבחירה שלך תיפתח בצ׳אט של רומי בוואטסאפ. בדקי את ההודעה ולחצי על שליחה.',
     personalTitle:'רוצה את התיק בצבע אחר?', personalCopy:'בחרי דגם וצבע ועצבי את ה־Romic שלך.', personalLink:'לעיצוב אישי', invalid:'התיק לא נמצא', invalidCopy:'ייתכן שהדגם כבר אינו זמין.',
     finderHint:'לא בטוחה?', finderOpen:'מצאי את התיק שלך', finderClose:'סגירת שאלון התאמה', finderCarry:'איך תרצי לשאת את התיק?', finderSize:'איזה גודל תרצי?', finderDetail:'איזה גימור את אוהבת?', hand:'ביד', onShoulder:'על הכתף', clutch:'קלאץ׳', small:'קטן', medium:'בינוני', large:'גדול', clean:'נקי', chain:'שרשרת', pearls:'פנינים', matches:'התיקים שמתאימים לך', yourRomic:'YOUR ROMIC.', noExact:'לא מצאנו התאמה מדויקת. אולי תמצאי את התיק שלך בעיצוב האישי.', makeYours:'לעיצוב אישי',
     model:'בחירת דגם', colour:'בחירת צבע', basePrice:'מחיר בסיס', bagBody:'מידות גוף התיק', messageRomic:'שלחי את הבחירה שלך בוואטסאפ', extraNote:'תוספות כרוכות בתשלום.', detailsLabel:'פרטים נוספים', customLead:'בחרי דגם. בחרי צבע.', customNote:'מחיר הבסיס כולל צבע אחיד, ידית ואבזור סטנדרטיים. רצועות, שילובי צבעים, ידיות נוספות ואביזרים מתומחרים בנפרד.', customVisual:'ההדמיה להמחשה. בעבודת יד ייתכנו הבדלים קטנים בגוון ובמידות.',
@@ -302,28 +302,10 @@ function primeShareFiles(items) {
   });
 }
 function shareImagesOrWhatsApp(event, items, message) {
-  event.preventDefault();
-  const files = items.map(item => preparedShareFiles.get(new URL(item.url, location.href).href));
-  const fallback = whatsappUrl(message);
-  let canShareFiles = false;
-  try {
-    canShareFiles = files.length > 0 && files.every(Boolean)
-      && typeof navigator.share === 'function'
-      && typeof navigator.canShare === 'function'
-      && navigator.canShare({ files });
-  } catch (_) {}
-  if (!canShareFiles) {
-    location.assign(fallback);
-    return;
-  }
-  try {
-    navigator.share({ files, text: message, title: isHebrew ? 'הבחירה שלך ב־Romic' : 'Your Romic selection' })
-      .catch(error => {
-        if (error?.name !== 'AbortError') location.assign(fallback);
-      });
-  } catch (_) {
-    location.assign(fallback);
-  }
+  // Keep a native, user-initiated link to the configured business chat.
+  // File sharing opens a recipient picker and cannot select Romi automatically.
+  event.currentTarget.href = whatsappUrl(message);
+  event.currentTarget.target = '_self';
 }
 
 function icon(name) {
