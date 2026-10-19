@@ -900,7 +900,7 @@ function renderCollection() {
     filterPanel.hidden = isOpen;
   });
   document.addEventListener('click', event => {
-    if (filterPanel.hidden || event.target.closest('.collection-tool-shell')) return;
+    if (filterPanel.hidden || event.target.closest('.collection-tool-shell, [data-global-search]')) return;
     filterPanel.hidden = true;
     filterToggle.setAttribute('aria-expanded', 'false');
     filterToggle.lastElementChild.textContent = '+';

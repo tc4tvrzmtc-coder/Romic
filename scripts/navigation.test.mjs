@@ -4,6 +4,19 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const source = fs.readFileSync(new URL('../site/app.js',import.meta.url),'utf8');
+test('opening search from the header survives bubbling while outside clicks still close it', () => {
+  const start=source.indexOf("  document.addEventListener('click', event => {", source.indexOf('function renderCollection()'));
+  const end=source.indexOf("\n  document.querySelector('.collection-tool-shell')",start);
+  const filterPanel={hidden:false};
+  const filterToggle={setAttribute(){},lastElementChild:{textContent:'−'}};
+  let click;
+  const context={filterPanel,filterToggle,document:{addEventListener(type,fn){click=fn;}}};
+  vm.runInNewContext(source.slice(start,end),context);
+  click({target:{closest:selector=>selector.includes('[data-global-search]')?{}:null}});
+  assert.equal(filterPanel.hidden,false);
+  click({target:{closest:()=>null}});
+  assert.equal(filterPanel.hidden,true);
+});
 test('global search and business telephone render in both languages without browser globals failing', () => {
   for (const lang of ['he','en']) {
     const context = {
