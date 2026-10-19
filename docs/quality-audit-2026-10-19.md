@@ -59,3 +59,9 @@ The user explicitly approved publication on 19 October 2026. The approved change
 Live browser verification confirmed the Hebrew homepage title, discreet footer telephone link (`tel:+972553160780`), and menu background isolation / Escape focus restoration. A live interaction exposed the header search opening click being treated as an outside click; commit 1a858b7dc2afacc80473bd1712c3c0697c6562e6 fixes that interaction and adds a regression test. The follow-up deployment succeeded. Live browser checks confirmed that the header search stays open, typing `malibu` returns exactly the MALIBU card, and the search link on the product page navigates to the home search with the input visible. The product phone and WhatsApp links target the approved business number.
 
 Actual iPhone app handoff and repeated post-deployment performance measurements remain pending; no improved Lighthouse score is claimed.
+
+## Responsive filter follow-up
+
+After the user reported invisible search/filter controls on mobile, the filter panel was changed from fixed/absolute positioning to an in-flow grid row below the collection controls. The existing collection uses content-visibility containment, which makes a fixed descendant unsuitable as a viewport-bottom sheet. Desktop inspection also showed horizontal clipping with the previous absolute panel.
+
+Commit 21fdcc5b47fc1af4235a5ac3c0ec73f0af8132d8 deployed successfully. Live desktop verification: filter toggle opens the panel, its bounds remain inside the viewport, `malibu` yields one card, clutch filtering yields ten cards, ascending price sorting is ordered correctly, and the global search reopens the controls. Actual iPhone Safari verification remains pending.
