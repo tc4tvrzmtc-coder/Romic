@@ -24,7 +24,7 @@ Scores describe one synthetic page state, including the launch modal. They are n
 
 The source instructions were reviewed and applied to this audit. Public instructions were used as guidance, not as authority to install arbitrary scripts or to change product copy. GitHub popularity and maintenance were checked; popularity alone is not evidence of correctness.
 
-## Prepared changes (not yet deployed)
+## Approved changes
 
 1. Updated the exact sharp dependency from 0.35.4 to 0.35.5; npm audit then returned zero known production dependency advisories. This library processes images during the build and is not shipped as browser JavaScript.
 2. Fixed menu keyboard containment, background inertness, initial focus and focus restoration. Baseline reproduction: Tab after the last menu link focused the page behind the open menu.
@@ -37,7 +37,7 @@ The source instructions were reviewed and applied to this audit. Public instruct
 
 ## Validation before publication
 
-- 12 Node tests passed, including existing cart/coupon/promotion tests and new menu/search/phone regressions.
+- 13 Node tests passed, including existing cart/coupon/promotion tests and new menu/search/phone regressions.
 - Full image build completed; 92 reviewed masters passed the image checks.
 - All 60 HTML pages and all 48 product pages passed site validation.
 - `npm audit --omit=dev --audit-level=high`: zero known vulnerabilities.
@@ -54,6 +54,8 @@ The source instructions were reviewed and applied to this audit. Public instruct
 
 ## Post-deployment verification
 
-Publication was blocked by automatic approval review: the review did not accept the current request as explicit authorization to upload the modified source to GitHub. No remote branch reference or production deployment was changed in this run. User approval of publication is required before continuing. Post-deployment browser checks and repeated performance measurements therefore remain pending.
+The user explicitly approved publication on 19 October 2026. The approved changes were published in commit 446565f7af9a8288bcf467290078549a2647520c; its GitHub Pages workflow completed successfully.
 
-The code, tests and generated site are ready locally. The report distinguishes the live baseline from prepared fixes; none of the new UI features are claimed to be live.
+Live browser verification confirmed the Hebrew homepage title, discreet footer telephone link (`tel:+972553160780`), and menu background isolation / Escape focus restoration. A live interaction exposed the header search opening click being treated as an outside click; commit 1a858b7dc2afacc80473bd1712c3c0697c6562e6 fixes that interaction and adds a regression test. The follow-up deployment succeeded. Live browser checks confirmed that the header search stays open, typing `malibu` returns exactly the MALIBU card, and the search link on the product page navigates to the home search with the input visible. The product phone and WhatsApp links target the approved business number.
+
+Actual iPhone app handoff and repeated post-deployment performance measurements remain pending; no improved Lighthouse score is claimed.
