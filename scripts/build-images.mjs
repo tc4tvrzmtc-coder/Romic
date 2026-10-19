@@ -174,6 +174,17 @@ for (const entry of prepared) {
 let compiledData = code + '\nconst ROMIC_IMAGE_SIZES = ' + JSON.stringify(imageSizes) + ';\n';
 for (const p of products) for (const name of new Set([p.image, ...p.gallery])) compiledData = compiledData.replaceAll(`'${name}'`, `'${webpName(name)}?v=${assetVersion}'`);
 await fs.writeFile(path.join(output, 'data.js'), compiledData);
+// Serve the popup at its displayed size; keep source photography untouched.
+for (const name of ['bags-in-sun','launch-black-model','launch-miami-model']) {
+  const original = path.join(site,'assets/promo',`${name}.webp`);
+  try { await fs.access(original); } catch { continue; }
+  for (const width of [320,640]) {
+    const dir = path.join(output,'assets/promo/responsive',String(width));
+    await fs.mkdir(dir,{recursive:true});
+    await sharp(original).rotate().resize({width,withoutEnlargement:true}).webp({quality:85,effort:4}).toFile(path.join(dir,`${name}.webp`));
+  }
+}
+
 const appFile = path.join(output,'app.js');
 try {
   const appCode = await fs.readFile(appFile,'utf8');
@@ -193,7 +204,7 @@ for (const language of ['he','en']) {
     const imageSource = (product.gallery || []).find(name => /(?:model|worn|held|lifestyle|styled|real)/i.test(name)) || product.image;
     const imageFile = webpName(imageSource);
     const imageUrl = `https://romic.co.il/assets/products/${imageFile}?v=${assetVersion}`;
-    const title = `${product.name} | ROMIC`;
+    const title = language === 'he' && product.seoTitleHe ? product.seoTitleHe : `${product.name} | ROMIC`;
     const description = product[language] || product.name;
     const imageAlt = language === 'he' ? `תיק ${product.name} של ROMIC` : `${product.name} bag by ROMIC`;
     let html = template.replaceAll('product.html', filename);
@@ -237,6 +248,19 @@ const installGoogleTagManager = async dir => {
     }
   }
 };
+// Make the first visible conveyor image discoverable before app.js executes.
+const sourceApp = await fs.readFile(path.join(site,'app.js'),'utf8').catch(() => '');
+const order = sourceApp.match(/const catalogOrder = (\[[^\]]+\])/);
+const heroId = order ? vm.runInNewContext(order[1],{}).find(id => products.some(product => product.id === id)) : null;
+if (heroId) for (const language of ['he','en']) {
+  const file = path.join(output,language,'index.html');
+  try {
+    const html = await fs.readFile(file,'utf8');
+    const preload = `<link rel="preload" as="image" href="../assets/conveyor/480/${heroId}.webp?v=${assetVersion}" imagesrcset="../assets/conveyor/480/${heroId}.webp?v=${assetVersion} 480w, ../assets/conveyor/720/${heroId}.webp?v=${assetVersion} 720w" imagesizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" fetchpriority="high">`;
+    await fs.writeFile(file,html.replace('</head>',preload+'</head>'));
+  } catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
+
 await installGoogleTagManager(output);
 
 const versionHtml = async dir => {

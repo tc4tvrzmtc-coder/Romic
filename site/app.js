@@ -73,7 +73,7 @@ const HOME_LOCALE = {
     instagramKicker:'THE LATEST FROM ROMIC', instagramTitle:'FOLLOW THE<br>MAKING.', instagramButton:'OPEN @ROMIC_BRAND'
   },
   he: {
-    title:"ROMIC | רומיק — תיקים סרוגים בעבודת יד ובעיצוב אישי",
+    title:"ROMIC — רומיק | תיקים סרוגים בעבודת יד",
     description:"רומיק (ROMIC) — תיקים סרוגים בעבודת יד בישראל. גלי תיקי יד, תיקי כתף וקלאצ׳ים מחוטי טריקו, או בחרי דגם וצבע לתיק בעיצוב אישי.",
     conveyorLabel:'קולקציית Romic בתנועה. החליקי לצדדים כדי לגלות את הדגמים.',
     searchLabel:'חיפוש תיקים', toolsLabel:'חיפוש ומיון תיקים', categoriesLabel:'סינון לפי סוג תיק',
@@ -149,9 +149,9 @@ function showLaunchOfferOnce(freshEntry = false) {
   const dialog = document.createElement('dialog');
   dialog.className = 'launch-dialog';
   dialog.setAttribute('aria-labelledby', 'launch-offer-title');
-  const photos = `<img class="launch-photo-main" src="../assets/promo/bags-in-sun.webp" alt="${isHebrew ? 'ארבעה תיקי ROMIC באור טבעי' : 'Four ROMIC bags in natural light'}" width="650" height="1140" decoding="async">
-    <img class="launch-model launch-model-black" src="../assets/promo/launch-black-model.webp" alt="${isHebrew ? 'דוגמנית עם תיק ROMIC שחור' : 'Model carrying a black ROMIC bag'}" width="1158" height="1536" decoding="async">
-    <img class="launch-model launch-model-miami" src="../assets/promo/launch-miami-model.webp" alt="${isHebrew ? 'דוגמנית עם תיק Miami ורוד ולבן' : 'Model carrying the pink and white Miami bag'}" width="1031" height="1536" decoding="async">`;
+  const photos = `<img class="launch-photo-main" src="../assets/promo/responsive/640/bags-in-sun.webp" srcset="../assets/promo/responsive/320/bags-in-sun.webp 320w, ../assets/promo/responsive/640/bags-in-sun.webp 640w" sizes="(max-width:600px) 50vw, 320px" alt="${isHebrew ? 'ארבעה תיקי ROMIC באור טבעי' : 'Four ROMIC bags in natural light'}" width="650" height="1140" decoding="async">
+    <img class="launch-model launch-model-black" src="../assets/promo/responsive/640/launch-black-model.webp" srcset="../assets/promo/responsive/320/launch-black-model.webp 320w, ../assets/promo/responsive/640/launch-black-model.webp 640w" sizes="(max-width:600px) 50vw, 320px" alt="${isHebrew ? 'דוגמנית עם תיק ROMIC שחור' : 'Model carrying a black ROMIC bag'}" width="1158" height="1536" decoding="async">
+    <img class="launch-model launch-model-miami" src="../assets/promo/responsive/640/launch-miami-model.webp" srcset="../assets/promo/responsive/320/launch-miami-model.webp 320w, ../assets/promo/responsive/640/launch-miami-model.webp 640w" sizes="(max-width:600px) 50vw, 320px" alt="${isHebrew ? 'דוגמנית עם תיק Miami ורוד ולבן' : 'Model carrying the pink and white Miami bag'}" width="1031" height="1536" decoding="async">`;
   dialog.innerHTML = `<div class="launch-dialog-layout">
     <button class="launch-dialog-close" type="button" aria-label="${copy.offerClose}" data-offer-close>${icon('close')}</button>
     <div class="launch-dialog-copy">
@@ -284,23 +284,6 @@ function setCoupon(code) {
 }
 function whatsappUrl(message) { return `${whatsappBase}?text=${encodeURIComponent(message)}`; }
 
-const preparedShareFiles = new Map();
-function primeShareFiles(items) {
-  if (typeof File !== 'function') return;
-  items.forEach(item => {
-    const url = new URL(item.url, location.href).href;
-    if (preparedShareFiles.has(url)) return;
-    preparedShareFiles.set(url, null);
-    fetch(url, { cache: 'force-cache' }).then(response => {
-      if (!response.ok) throw new Error('Image could not be loaded for sharing');
-      return response.blob();
-    }).then(blob => {
-      const extension = new URL(url).pathname.split('.').pop()?.toLowerCase() || 'jpg';
-      const type = blob.type || (extension === 'png' ? 'image/png' : 'image/jpeg');
-      preparedShareFiles.set(url, new File([blob], `${item.name}.${extension}`, { type }));
-    }).catch(() => preparedShareFiles.delete(url));
-  });
-}
 function shareImagesOrWhatsApp(event, items, message) {
   // Keep a native, user-initiated link to the configured business chat.
   // File sharing opens a recipient picker and cannot select Romi automatically.
@@ -316,6 +299,7 @@ function icon(name) {
     down:'<path d="M12 5v14M6 13l6 6 6-6"/>',
     bag:'<path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
     instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
+    search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
     whatsapp:'<path d="M20.3 11.6a8.3 8.3 0 0 1-12.2 7.3L4 20l1.2-4A8.3 8.3 0 1 1 20.3 11.6Z"/><path d="M8.7 8.5c.3-.5.6-.5.9-.5h.4c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4 0 .6.4.7 1 1.3 1.7 1.7.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.6.8c.3.1.4.3.3.6-.1.6-.4 1.1-.9 1.4-.5.3-1.1.4-1.7.2-1-.3-2.3-.8-3.6-2.1s-1.8-2.6-2.1-3.6c-.2-.5-.1-1.1.2-1.6Z"/>'
   };
   return `<svg class="icon icon-${name}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ''}</svg>`;
@@ -410,7 +394,6 @@ function renderCartContents() {
   const body = dialog?.querySelector('[data-cart-content]');
   if (!body) return;
   const products = getSavedPicks().map(id => ROMIC_PRODUCTS.find(product => product.id === id)).filter(Boolean);
-  primeShareFiles(products.map(product => ({ url: `../assets/products/${product.image}`, name: `romic-${product.id}` })));
   const applied = activeCoupon();
   const couponDraft = body.querySelector('#cart-coupon-code')?.value || '';
   const method = getDeliveryMethod();
@@ -706,14 +689,14 @@ function header() {
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
     <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
-    <div class="header-actions"><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
+    <div class="header-actions"><a class="site-search" href="./?search=1#collection" aria-label="${HOME_LOCALE[language].searchLabel}" data-global-search>${icon('search')}</a><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
     <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}<button class="menu-cart-row" type="button" data-open-cart>${bagIcon()}<span data-cart-label>${copy.bag}</span><span data-cart-count>0</span></button></nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
 function footer() {
   return `<footer class="site-footer"><img class="footer-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="300" height="110"><a class="footer-about" href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'הכירי את ROMIC' : 'Meet ROMIC'}</a><div class="footer-grid">
     <div><p>${copy.handmade}</p><p>${copy.rights}</p></div>
-    <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}<a href="terms.html#returns" data-returns-link>${isHebrew ? 'החזרות וביטולים' : 'Returns & cancellations'}</a></nav>
+    <nav class="footer-links" aria-label="${isHebrew ? 'קישורי מידע' : 'Information links'}"><a href="privacy.html">${copy.privacy}</a><a href="accessibility.html">${copy.accessibility}</a><a href="terms.html">${copy.terms}</a><a href="mailto:romic.brand@gmail.com">${copy.email}</a>${instagramLink(copy.instagram)}<a href="terms.html#returns" data-returns-link>${isHebrew ? 'החזרות וביטולים' : 'Returns & cancellations'}</a><a class="footer-phone" href="tel:+972553160780" dir="ltr">055-316-0780</a></nav>
   </div></footer>`;
 }
 
@@ -723,6 +706,11 @@ function renderShell() {
   try { localStorage.setItem('romic:language', language); } catch (_) {}
   enableImageFallbacks();
   initMenu();
+  document.querySelector('[data-global-search]')?.addEventListener('click', event => {
+    if (document.body.dataset.page !== 'home') return;
+    event.preventDefault();
+    openCollectionSearch();
+  });
   initAbout();
   initCart();
 }
@@ -743,6 +731,7 @@ function localizeShellInPlace() {
     link.dataset.languageLink = targetLanguage;
     link.href = localeUrl(targetLanguage);
   });
+  document.querySelector('[data-global-search]')?.setAttribute('aria-label', HOME_LOCALE[language].searchLabel);
   document.querySelectorAll('.instagram-link').forEach(link => link.setAttribute('aria-label', `${copy.instagram} — ${copy.openInstagram}`));
   document.querySelectorAll('[data-cart-label]').forEach(label => label.textContent = copy.bag);
   document.querySelectorAll('[data-open-cart]').forEach(button => button.setAttribute('aria-label', copy.bag));
@@ -765,14 +754,54 @@ function initMenu() {
   const menu = document.querySelector('[data-mobile-menu]');
   const backdrop = document.querySelector('[data-menu-backdrop]');
   if (!toggle || !menu || !backdrop) return;
-  const close = () => { toggle.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); backdrop.hidden = true; document.body.classList.remove('menu-open'); toggle.focus(); };
-  const open = () => { toggle.setAttribute('aria-expanded','true'); menu.setAttribute('aria-hidden','false'); backdrop.hidden = false; document.body.classList.add('menu-open'); menu.querySelector('a,button')?.focus(); };
+  const inertBeforeOpen = new Map();
+  const restoreBackground = () => {
+    inertBeforeOpen.forEach((value, element) => { element.inert = value; });
+    inertBeforeOpen.clear();
+  };
+  const close = () => {
+    toggle.setAttribute('aria-expanded','false');
+    menu.setAttribute('aria-hidden','true');
+    menu.removeAttribute('aria-modal');
+    backdrop.hidden = true;
+    document.body.classList.remove('menu-open');
+    restoreBackground();
+    toggle.focus();
+  };
+  const open = () => {
+    toggle.setAttribute('aria-expanded','true');
+    menu.setAttribute('aria-hidden','false');
+    menu.setAttribute('role','dialog');
+    menu.setAttribute('aria-modal','true');
+    menu.setAttribute('aria-label', copy.menu);
+    backdrop.hidden = false;
+    document.body.classList.add('menu-open');
+    document.querySelectorAll('main,[data-footer],.primary-nav,.header-actions,.brand,.skip-link,.saved-pill').forEach(element => {
+      inertBeforeOpen.set(element, element.inert);
+      element.inert = true;
+    });
+    requestAnimationFrame(() => {
+      if (toggle.getAttribute('aria-expanded') === 'true') menu.querySelector('a,button')?.focus();
+    });
+  };
   toggle.addEventListener('click', () => toggle.getAttribute('aria-expanded') === 'true' ? close() : open());
   menu.querySelector('[data-menu-close]')?.addEventListener('click', close);
   backdrop.addEventListener('click', close);
   menu.querySelectorAll('a,[data-open-cart]').forEach(link => link.addEventListener('click', close));
   if (menuEscapeHandler) document.removeEventListener('keydown', menuEscapeHandler);
-  menuEscapeHandler = event => { if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') close(); };
+  menuEscapeHandler = event => {
+    if (toggle.getAttribute('aria-expanded') !== 'true') return;
+    if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+    if (event.key !== 'Tab') return;
+    const controls = [...menu.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),[tabindex="0"]')];
+    const first = controls[0], last = controls[controls.length - 1];
+    if (!first) return;
+    if (!menu.contains(document.activeElement) || (!event.shiftKey && document.activeElement === last)) {
+      event.preventDefault(); first.focus();
+    } else if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault(); last.focus();
+    }
+  };
   document.addEventListener('keydown', menuEscapeHandler);
 }
 
@@ -876,9 +905,11 @@ function renderCollection() {
     filterToggle.setAttribute('aria-expanded', 'false');
     filterToggle.lastElementChild.textContent = '+';
   });
-  filterToggle.addEventListener('keydown', event => {
+  document.querySelector('.collection-tool-shell')?.addEventListener('keydown', event => {
     if (event.key !== 'Escape' || filterPanel.hidden) return;
+    event.preventDefault();
     filterPanel.hidden = true;
+    filterToggle.focus();
     filterToggle.setAttribute('aria-expanded', 'false');
     filterToggle.lastElementChild.textContent = '+';
   });
@@ -1069,7 +1100,6 @@ function renderCustomizer() {
     const offer = coupon?.custom ? ` ${isHebrew ? 'קוד קופון' : 'Coupon'} ${coupon.code} · ${coupon.percent}%` : '';
     customWhatsappMessage = `${message} ${pricing}${offer}`;
     cta.href = whatsappUrl(customWhatsappMessage);
-    primeShareFiles([{ url: image.src, name: `romic-${selectedModel.id}-${selectedColor.id}` }]);
     root.dataset.selectedModel = selectedModel.id;
     root.dataset.selectedColor = selectedColor.id;
     modelOptions.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.model === selectedModel.id)));
@@ -1236,6 +1266,19 @@ function renderHeroConveyor() {
 
 let homeBelowFoldReady = false;
 
+function openCollectionSearch() {
+  renderHomeBelowFold();
+  const toggle = document.querySelector('[data-filter-toggle]');
+  const panel = document.querySelector('#collection-tools');
+  const input = document.querySelector('[data-product-search]');
+  if (!toggle || !panel || !input) return;
+  panel.hidden = false;
+  toggle.setAttribute('aria-expanded', 'true');
+  toggle.lastElementChild.textContent = '−';
+  document.querySelector('#collection')?.scrollIntoView({behavior:'auto',block:'start'});
+  requestAnimationFrame(() => input.focus({preventScroll:true}));
+}
+
 function renderHomeBelowFold() {
   if (homeBelowFoldReady) return;
   homeBelowFoldReady = true;
@@ -1310,7 +1353,8 @@ function renderHome() {
   });
   if (['#craft','#customize'].includes(location.hash)) navigateToCustomizer(false);
   else scheduleHomeBelowFold();
-  setTimeout(showLaunchOfferOnce, 280);
+  if (new URLSearchParams(location.search).get('search') === '1') openCollectionSearch();
+  else setTimeout(showLaunchOfferOnce, 280);
 }
 
 function renderProduct() {
@@ -1321,7 +1365,7 @@ function renderProduct() {
   const product = ROMIC_PRODUCTS.find(item => item.id === productId);
   const main = document.querySelector('[data-product]');
   if (!product) { main.innerHTML = `<div class="shell doc"><h1>${copy.invalid}</h1><p>${copy.invalidCopy}</p><a href="./">${copy.back}</a></div>`; return; }
-  document.title = `${product.name} | ROMIC`;
+  document.title = isHebrew && product.seoTitleHe ? product.seoTitleHe : `${product.name} | ROMIC`;
   setMetaDescription(isHebrew
     ? `${product.name} של Romic — ${product.he}. מידות גוף התיק: ${product.width} × ${product.height} ס״מ.`
     : `${product.name} by Romic — ${product.en} Bag body: ${product.width} × ${product.height} cm.`);

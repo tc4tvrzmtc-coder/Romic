@@ -3,6 +3,8 @@ name: Deploy Romic to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:
@@ -34,6 +36,8 @@ jobs:
           node --test scripts/*.test.mjs
           npm run build
           npm run check:images
+          npm run check:site
+          npm run check:security
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site

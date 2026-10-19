@@ -634,3 +634,11 @@ html[dir=rtl] .instagram-callout h2{letter-spacing:-.035em;font-size:clamp(2.8re
 /* The supplied reel includes ~5px black bands. Hide only its outer 6px. */
 .instagram-film{aspect-ratio:120/157}
 .instagram-film video{position:absolute;left:0;top:-.955414%;width:100%;height:101.910828%;object-fit:fill}
+
+/* Global search reuses the existing collection controls. */
+.site-search{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;color:inherit;text-decoration:none;touch-action:manipulation}
+.site-search .icon{width:18px;height:18px}
+.footer-phone{unicode-bidi:isolate;white-space:nowrap}
+@media(max-width:600px){.header-actions{gap:6px}.site-search{flex-basis:36px;width:36px;height:44px}}
+@media(max-width:900px){.site-header .header-actions>.site-search{grid-column:1;grid-row:1;justify-self:start;margin-left:44px;width:32px;height:44px}}
+@media(max-width:340px){.site-header .header-actions>.site-search{width:24px}.site-search .icon{width:16px;height:16px}}

@@ -6,9 +6,11 @@
     "build": "node scripts/build-images.mjs",
     "check:images": "node scripts/build-images.mjs --check",
     "review:images": "node scripts/build-images.mjs --review",
-    "prepare:images": "python3 scripts/prepare-image-masks.py"
+    "prepare:images": "python3 scripts/prepare-image-masks.py",
+    "check:site": "node scripts/check-site.mjs",
+    "check:security": "npm audit --omit=dev --audit-level=high"
   },
   "dependencies": {
-    "sharp": "0.35.4"
+    "sharp": "0.35.5"
   }
 }
