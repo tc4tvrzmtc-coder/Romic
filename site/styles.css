@@ -642,3 +642,12 @@ html[dir=rtl] .instagram-callout h2{letter-spacing:-.035em;font-size:clamp(2.8re
 @media(max-width:600px){.header-actions{gap:6px}.site-search{flex-basis:36px;width:36px;height:44px}}
 @media(max-width:900px){.site-header .header-actions>.site-search{grid-column:1;grid-row:1;justify-self:start;margin-left:44px;width:32px;height:44px}}
 @media(max-width:340px){.site-header .header-actions>.site-search{width:24px}.site-search .icon{width:16px;height:16px}}
+
+/* Keep filters in the collection flow: fixed descendants are trapped by
+   content-visibility containment, and wide absolute panels can leave the screen. */
+.section-head .collection-tool-shell{display:contents}
+.section-head .collection-tools{position:static;inset:auto;grid-column:1/-1;width:100%;min-width:0;box-sizing:border-box;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,.8fr);box-shadow:none}
+.collection-tools>*{min-width:0}
+.collection-search input,.collection-sort select{width:100%;min-width:0;box-sizing:border-box}
+@media(max-width:900px){.section-head .collection-tools{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media(max-width:600px){.section-head .collection-tools{grid-template-columns:minmax(0,1fr);padding:14px}.collection-tools .collection-categories{flex-wrap:wrap}}
