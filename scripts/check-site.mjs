@@ -3,11 +3,20 @@ import path from 'node:path';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import sharp from 'sharp';
+import {validateCatalog} from './catalog-integrity.mjs';
 
 const root = path.resolve('_site');
 const walk = dir => fs.readdirSync(dir,{withFileTypes:true}).flatMap(item => item.isDirectory() ? walk(path.join(dir,item.name)) : [path.join(dir,item.name)]);
 const pages = walk(root).filter(file => file.endsWith('.html'));
 const products = vm.runInNewContext(fs.readFileSync('site/data.js','utf8')+';ROMIC_PRODUCTS');
+validateCatalog(products);
+const compiledProducts = vm.runInNewContext(fs.readFileSync(path.join(root,'data.js'),'utf8')+';ROMIC_PRODUCTS');
+assert.deepEqual(Array.from(compiledProducts,p=>p.id),Array.from(products,p=>p.id),'Published catalogue lost a model or changed its order');
+for (const product of compiledProducts) for (const image of new Set([product.image,...product.gallery])) {
+  const file = image.split('?')[0];
+  assert.ok(file.endsWith('.webp'),`${product.id}: unconverted catalogue image ${image}`);
+  for (const folder of ['products','cards/600']) assert.ok(fs.existsSync(path.join(root,'assets',folder,file)),`${product.id}: missing published ${folder}/${file}`);
+}
 for (const file of pages) {
   const html = fs.readFileSync(file,'utf8');
   const relative = path.relative(root,file);

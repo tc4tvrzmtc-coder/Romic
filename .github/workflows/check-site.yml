@@ -1,0 +1,39 @@
+name: Validate Romic changes
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout proposed changes
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned tools
+        run: npm ci --ignore-scripts
+      - name: Test catalogue coverage and interactions
+        run: node --test scripts/*.test.mjs
+      - name: Build site
+        run: npm run build
+      - name: Validate generated site and images
+        run: |
+          npm run check:images
+          npm run check:site
+      - name: Check dependency advisories
+        run: npm run check:security

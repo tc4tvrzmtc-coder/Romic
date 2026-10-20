@@ -643,11 +643,30 @@ html[dir=rtl] .instagram-callout h2{letter-spacing:-.035em;font-size:clamp(2.8re
 @media(max-width:900px){.site-header .header-actions>.site-search{grid-column:1;grid-row:1;justify-self:start;margin-left:44px;width:32px;height:44px}}
 @media(max-width:340px){.site-header .header-actions>.site-search{width:24px}.site-search .icon{width:16px;height:16px}}
 
-/* Keep filters in the collection flow: fixed descendants are trapped by
-   content-visibility containment, and wide absolute panels can leave the screen. */
+/* Collection controls stay local. Global search has its own compact dialog. */
 .section-head .collection-tool-shell{display:contents}
-.section-head .collection-tools{position:static;inset:auto;grid-column:1/-1;width:100%;min-width:0;box-sizing:border-box;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,.8fr);box-shadow:none}
+.section-head .collection-tools{position:static;inset:auto;grid-column:1/-1;width:100%;min-width:0;box-sizing:border-box;grid-template-columns:minmax(0,1fr) minmax(180px,.65fr);box-shadow:none}
 .collection-tools>*{min-width:0}
 .collection-search input,.collection-sort select{width:100%;min-width:0;box-sizing:border-box}
 @media(max-width:900px){.section-head .collection-tools{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 @media(max-width:600px){.section-head .collection-tools{grid-template-columns:minmax(0,1fr);padding:14px}.collection-tools .collection-categories{flex-wrap:wrap}}
+.site-search{border:0;padding:0;background:transparent;cursor:pointer;font:inherit}
+.search-dialog{position:fixed;inset:auto;margin:0;width:min(280px,calc(100vw - 24px));max-width:none;max-height:calc(100dvh - 100px);box-sizing:border-box;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);box-shadow:0 8px 24px #12111220;overflow:auto;overscroll-behavior:contain;z-index:210}
+.search-dialog::backdrop{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none}
+.search-input-row{display:flex;align-items:center;gap:6px;padding:3px 6px}
+.search-input-row>.icon{flex:0 0 18px;width:18px;height:18px}
+.search-input-row input{flex:1 1 0;width:auto;min-width:0;min-height:44px;height:44px;padding:4px 2px;line-height:1.4;appearance:none;-webkit-appearance:none;border:0;border-radius:4px;background:transparent;color:inherit;font:inherit;font-size:16px;outline-offset:2px}
+.search-input-row button{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border:0;background:transparent;color:inherit;cursor:pointer}
+.search-input-row button .icon{width:18px;height:18px}
+.search-status{margin:0;padding:8px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem}
+.search-results{max-height:180px;overflow:auto;overscroll-behavior:contain}
+.search-result{display:flex;align-items:center;gap:12px;min-height:68px;padding:6px 14px;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+.search-result img{flex:0 0 42px;width:42px;height:52px;object-fit:contain;border-radius:4px}
+.search-result>span{display:grid;gap:3px;flex:1;min-width:0}
+.search-result strong{font-size:.95rem;font-weight:650;overflow-wrap:anywhere}
+.search-result small{font-size:.85rem;font-variant-numeric:tabular-nums}
+.search-result>.icon{width:16px;height:16px;flex:0 0 16px}
+.search-dialog[dir=rtl] .search-result>.icon{transform:rotate(180deg)}
+.search-result:hover,.search-result:focus-visible{background:#e4ddf2}
+
+.search-custom-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:52px}.search-custom-icon .icon{width:22px;height:22px}

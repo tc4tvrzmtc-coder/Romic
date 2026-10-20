@@ -172,7 +172,9 @@ for (const entry of prepared) {
   imageSizes[path.basename(entry.target)] = [meta.width, meta.height];
 }
 let compiledData = code + '\nconst ROMIC_IMAGE_SIZES = ' + JSON.stringify(imageSizes) + ';\n';
-for (const p of products) for (const name of new Set([p.image, ...p.gallery])) compiledData = compiledData.replaceAll(`'${name}'`, `'${webpName(name)}?v=${assetVersion}'`);
+for (const p of products) for (const name of new Set([p.image, ...p.gallery])) {
+  for (const quote of ["'", '"']) compiledData = compiledData.replaceAll(`${quote}${name}${quote}`, `${quote}${webpName(name)}?v=${assetVersion}${quote}`);
+}
 await fs.writeFile(path.join(output, 'data.js'), compiledData);
 // Serve the popup at its displayed size; keep source photography untouched.
 for (const name of ['bags-in-sun','launch-black-model','launch-miami-model']) {
@@ -249,9 +251,7 @@ const installGoogleTagManager = async dir => {
   }
 };
 // Make the first visible conveyor image discoverable before app.js executes.
-const sourceApp = await fs.readFile(path.join(site,'app.js'),'utf8').catch(() => '');
-const order = sourceApp.match(/const catalogOrder = (\[[^\]]+\])/);
-const heroId = order ? vm.runInNewContext(order[1],{}).find(id => products.some(product => product.id === id)) : null;
+const heroId = products[0]?.id;
 if (heroId) for (const language of ['he','en']) {
   const file = path.join(output,language,'index.html');
   try {

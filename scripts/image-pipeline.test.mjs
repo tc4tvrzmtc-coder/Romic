@@ -13,7 +13,7 @@ test('publication gate converts source formats, preserves originals and rejects 
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'romic-image-test-'));
   try {
     await fs.mkdir(path.join(root, 'site/assets/products'), { recursive: true });
-    await fs.writeFile(path.join(root, 'site/data.js'), "const ROMIC_PRODUCTS=[{id:'bag',name:'bag',he:'Bag description',en:'Bag description',image:'test.png',gallery:['test.png','model.png']}];");
+    await fs.writeFile(path.join(root, 'site/data.js'), 'const ROMIC_PRODUCTS='+JSON.stringify([{id:'bag',name:'bag',he:'Bag description',en:'Bag description',image:'test.png',gallery:['test.png','model.png']}])+';');
     await fs.writeFile(path.join(root, 'site/index.html'), '<link href="styles.css?v=old"><script src="app.js?v=old"></script>');
     await fs.mkdir(path.join(root, 'site/he'), { recursive: true });
     await fs.mkdir(path.join(root, 'site/en'), { recursive: true });
@@ -45,6 +45,7 @@ test('publication gate converts source formats, preserves originals and rejects 
     assert.equal(run('--review').status, 0);
     const firstBuild = run();
     assert.equal(firstBuild.status, 0, firstBuild.stderr);
+    assert.match(await fs.readFile(path.join(root,'_site/data.js'),'utf8'), /"image":"test\.webp\?v=romic-/);
     const sharePage = await fs.readFile(path.join(root, '_site/he/product-bag.html'), 'utf8');
     assert.match(sharePage, /property="og:title" content="bag \| ROMIC"/);
     assert.match(sharePage, /property="og:image" content="https:\/\/romic\.co\.il\/assets\/products\/model\.webp\?v=romic-/);

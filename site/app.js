@@ -20,7 +20,7 @@ const COPY = {
   en: {
     skip:'Skip to content', collection:'Collection', craft:'Make It Yours', service:'Delivery', faq:'FAQ', instagram:'Instagram', menu:'Menu', close:'Close menu', language:'עברית',
     heroKicker:'HANDMADE IN ISRAEL · BY ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'DISCOVER THE COLLECTION', scroll:'SCROLL TO FIND YOURS',
-    collectionTitle:'FIND YOUR ROMIC.', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Featured', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
+    collectionTitle:'FIND YOUR ROMIC.', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Collection order', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
     readyTitle:'FROM THE COLLECTION', readyCopy:'Delivery within 7 business days.', customTitle:'MAKE IT YOURS', customCopy:'Choose a model and colour. Delivery within 7 business days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪30 delivery · free pickup in Givatayim.',
     privacy:'Privacy', accessibility:'Accessibility', terms:'Terms & offers', rights:'© 2026 Romic. All rights reserved.', handmade:'Handmade bags · Israel', email:'Email',
     back:'BACK TO COLLECTION', size:'SIZE', dimensions:'BAG BODY', order:'ADD TO BAG', save:'ADD TO BAG', saved:'IN YOUR BAG',
@@ -35,7 +35,7 @@ const COPY = {
   he: {
     skip:'דילוג לתוכן', collection:'קולקציה', craft:'עיצוב אישי', service:'משלוחים', faq:'שאלות נפוצות', instagram:'אינסטגרם', menu:'תפריט', close:'סגירת התפריט', language:'EN',
     heroKicker:'עבודת יד ישראלית · ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'לצפייה בקולקציה', scroll:'גלי את התיק שלך',
-    collectionTitle:'FIND YOUR ROMIC.', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'מומלצים', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
+    collectionTitle:'FIND YOUR ROMIC.', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'סדר הקולקציה', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
     readyTitle:'תיק מהקולקציה', readyCopy:'אספקה עד 7 ימי עסקים.', customTitle:'תיקים בעיצוב אישי', customCopy:'בחרי דגם וצבע. אספקה עד 7 ימי עסקים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪30 · איסוף עצמי מגבעתיים ללא עלות.',
     privacy:'מדיניות פרטיות', accessibility:'הצהרת נגישות', terms:'תנאים ומבצעים', rights:'© 2026 Romic. כל הזכויות שמורות.', handmade:'תיקים בעבודת יד · ישראל', email:'אימייל',
     back:'חזרה לקולקציה', size:'מידה', dimensions:'מידות גוף התיק', order:'הוסיפי לסל שלי', save:'הוסיפי לסל שלי', saved:'נוסף לסל',
@@ -57,7 +57,7 @@ const HOME_LOCALE = {
     description:"Discover ROMIC crochet bags handmade in Israel from textile yarn. Explore handbags, shoulder bags and clutches, or choose a design and colour to make it yours.",
     conveyorLabel:'Moving Romic collection. Swipe or drag left and right to explore.',
     searchLabel:'Search bags', toolsLabel:'Find and sort bags', categoriesLabel:'Filter by bag type',
-    categories:['All','Clutches','Top handle','Shoulder'], sortLabel:'Sort', sorts:['Featured','Price: low to high','Price: high to low'],
+    categories:['All','Clutches','Top handle','Shoulder'], sortLabel:'Sort', sorts:['Collection order','Price: low to high','Price: high to low'],
     faqKicker:'ROMIC FAQ', faqTitle:'GOOD TO<br>KNOW.', faqIntro:'A few useful details before you choose your Romic.',
     faqs:[
       ['How do I make a purchase?','Add your chosen bags to My bag, select delivery or pickup and enter a coupon code if you have one. Continue to WhatsApp, review your message and tap Send. We’ll confirm your order and arrange payment with you.'],
@@ -77,7 +77,7 @@ const HOME_LOCALE = {
     description:"רומיק (ROMIC) — תיקים סרוגים בעבודת יד בישראל. גלי תיקי יד, תיקי כתף וקלאצ׳ים מחוטי טריקו, או בחרי דגם וצבע לתיק בעיצוב אישי.",
     conveyorLabel:'קולקציית Romic בתנועה. החליקי לצדדים כדי לגלות את הדגמים.',
     searchLabel:'חיפוש תיקים', toolsLabel:'חיפוש ומיון תיקים', categoriesLabel:'סינון לפי סוג תיק',
-    categories:['הכול','קלאצ׳ים','תיקי יד','תיקי כתף'], sortLabel:'מיון', sorts:['מומלצים','מחיר: מהנמוך לגבוה','מחיר: מהגבוה לנמוך'],
+    categories:['הכול','קלאצ׳ים','תיקי יד','תיקי כתף'], sortLabel:'מיון', sorts:['סדר הקולקציה','מחיר: מהנמוך לגבוה','מחיר: מהגבוה לנמוך'],
     faqKicker:'שאלות נפוצות', faqTitle:'טוב<br>לדעת.', faqIntro:'כמה תשובות קצרות לפני שתבחרי תיק.',
     faqs:[
       ['איך לבצע רכישה?','הוסיפי את התיקים שבחרת לסל, בחרי משלוח או איסוף עצמי והזיני קוד קופון אם יש לך. המשיכי לוואטסאפ, בדקי את ההודעה ולחצי על שליחה. את אישור ההזמנה והתשלום נתאם איתך בשיחה.'],
@@ -101,7 +101,20 @@ const productDesign = {
   mykonos: ['stone', '#eee9e4'], milan: ['stone', '#eee9e4'], venice: ['wine', '#8e1d2b'], dubai: ['charcoal', '#423d3c'], florence:['sand','#a57961'], marrakech:['gold','#bd9c54']
 };
 
-const catalogOrder = ['marrakech','rio','ibiza','soho','porto','florence','paris','miami','monaco','madrid','malibu','cannes','jerus','venice','dubai','sahara','tulum','mykonos','milan','lisbon','bali','tokyo','corfu','maldives'];
+function catalogProducts() { return ROMIC_PRODUCTS; }
+function collectionProducts({ expanded = false, query = '', category = 'all', sort = 'featured' } = {}) {
+  let products = catalogProducts().filter(product => (expanded || query || category !== 'all' || sort !== 'featured' || product.homeFeatured)
+    && (category === 'all' || (product.types || []).includes(category)));
+  if (query) { const matches = new Set(searchProducts(query).map(product => product.id)); products = products.filter(product => matches.has(product.id)); }
+  if (sort === 'price-asc') products = products.slice().sort((a,b) => a.price - b.price || a.name.localeCompare(b.name));
+  if (sort === 'price-desc') products = products.slice().sort((a,b) => b.price - a.price || a.name.localeCompare(b.name));
+  return products;
+}
+function finderProducts({ type, size, detail } = {}) {
+  return catalogProducts().filter(product => (!type || product.types.includes(type))
+    && (!size || (size === 'L' ? ['L','XL'].includes(product.size) : product.size === size))
+    && (!detail || product.detail === detail));
+}
 
 function formatPrice(price) { return `₪${Number(price.toFixed(2)).toLocaleString('he-IL', {maximumFractionDigits:2})}`; }
 function promoIsActive() { const now = Date.now(); return now >= promoStartsAt && now < promoEndsAt; }
@@ -141,6 +154,7 @@ function isInternalHomeReturn() {
 }
 function showLaunchOfferOnce(freshEntry = false) {
   if (!promoIsActive()) return;
+  if (document.querySelector('dialog[open], .search-dialog[data-open]')) return;
   // Review links reopen the real offer without changing live-site navigation.
   const launchPreview = location.hostname === 'raw.githack.com' && new URLSearchParams(location.search).get('preview') === 'launch';
   if (!freshEntry && !launchPreview && isInternalHomeReturn()) return;
@@ -689,7 +703,7 @@ function header() {
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
     <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
-    <div class="header-actions"><a class="site-search" href="./?search=1#collection" aria-label="${HOME_LOCALE[language].searchLabel}" data-global-search>${icon('search')}</a><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
+    <div class="header-actions"><button class="site-search" type="button" aria-label="${HOME_LOCALE[language].searchLabel}" aria-controls="site-search-dialog" aria-expanded="false" data-global-search>${icon('search')}</button><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
     <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}<button class="menu-cart-row" type="button" data-open-cart>${bagIcon()}<span data-cart-label>${copy.bag}</span><span data-cart-count>0</span></button></nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
@@ -706,11 +720,7 @@ function renderShell() {
   try { localStorage.setItem('romic:language', language); } catch (_) {}
   enableImageFallbacks();
   initMenu();
-  document.querySelector('[data-global-search]')?.addEventListener('click', event => {
-    if (document.body.dataset.page !== 'home') return;
-    event.preventDefault();
-    openCollectionSearch();
-  });
+  initSiteSearch();
   initAbout();
   initCart();
 }
@@ -732,6 +742,14 @@ function localizeShellInPlace() {
     link.href = localeUrl(targetLanguage);
   });
   document.querySelector('[data-global-search]')?.setAttribute('aria-label', HOME_LOCALE[language].searchLabel);
+  const searchDialog = document.querySelector('#site-search-dialog');
+  if (searchDialog) {
+    searchDialog.dir = isHebrew ? 'rtl' : 'ltr';
+    searchDialog.setAttribute('aria-label', HOME_LOCALE[language].searchLabel);
+    searchDialog.querySelector('label').textContent = HOME_LOCALE[language].searchLabel;
+    searchDialog.querySelector('input').placeholder = copy.search;
+    searchDialog.querySelector('[data-search-close]').setAttribute('aria-label',isHebrew ? 'סגירת החיפוש' : 'Close search');
+  }
   document.querySelectorAll('.instagram-link').forEach(link => link.setAttribute('aria-label', `${copy.instagram} — ${copy.openInstagram}`));
   document.querySelectorAll('[data-cart-label]').forEach(label => label.textContent = copy.bag);
   document.querySelectorAll('[data-open-cart]').forEach(button => button.setAttribute('aria-label', copy.bag));
@@ -823,13 +841,11 @@ function productCard(product) {
 function renderCollection() {
   const grid = document.querySelector('[data-products]');
   const button = document.querySelector('[data-show-all]');
-  const search = document.querySelector('[data-product-search]');
   const sort = document.querySelector('[data-product-sort]');
   const categoryButtons = [...document.querySelectorAll('[data-product-category]')];
   const filterToggle = document.querySelector('[data-filter-toggle]');
   const filterPanel = document.querySelector('[data-filter-panel]');
   const results = document.querySelector('[data-product-results]');
-  const firstIds = ['marrakech', 'rio', 'ibiza', 'porto', 'florence', 'paris'];
   const returning = sessionStorage.getItem(collectionReturnKey) === '1' && !['#craft','#customize'].includes(location.hash);
   let state = { expanded: false, query: '', category: 'all', sort: 'featured', scrollY: 0 };
   if (returning) {
@@ -840,21 +856,7 @@ function renderCollection() {
     sessionStorage.setItem(collectionStorageKey, JSON.stringify({ ...state, scrollY: window.scrollY }));
   }
 
-  function visibleProducts() {
-    const query = state.query.trim().toLowerCase();
-    const filtering = query || state.category !== 'all' || state.sort !== 'featured';
-    let products = (state.expanded || filtering)
-      ? catalogOrder.map(id => ROMIC_PRODUCTS.find(product => product.id === id)).filter(Boolean)
-      : firstIds.map(id => ROMIC_PRODUCTS.find(product => product.id === id)).filter(Boolean);
-    products = products.filter(product => {
-      const typeMatch = state.category === 'all' || (product.types || []).includes(state.category);
-      const text = `${product.name} ${(product.types || []).join(' ')} ${product.en} ${product.he}`.toLowerCase();
-      return typeMatch && (!query || text.includes(query));
-    });
-    if (state.sort === 'price-asc') products.sort((a, b) => a.price - b.price || a.name.localeCompare(b.name));
-    if (state.sort === 'price-desc') products.sort((a, b) => b.price - a.price || a.name.localeCompare(b.name));
-    return products;
-  }
+  function visibleProducts() { return collectionProducts(state); }
 
   function drawCollection() {
     const products = visibleProducts();
@@ -882,7 +884,7 @@ function renderCollection() {
     else image.addEventListener('load', reveal, { once:true });
   }
 
-  search.value = state.query;
+  state.query = '';
   sort.value = state.sort;
   button.addEventListener('click', () => {
     state.expanded = true;
@@ -890,7 +892,6 @@ function renderCollection() {
     saveState();
     grid.children[6]?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
   });
-  search.addEventListener('input', () => { state.query = search.value; state.expanded = true; drawCollection(); });
   sort.addEventListener('change', () => { state.sort = sort.value; state.expanded = true; drawCollection(); });
   categoryButtons.forEach(item => item.addEventListener('click', () => { state.category = item.dataset.productCategory; state.expanded = true; drawCollection(); }));
   filterToggle.addEventListener('click', () => {
@@ -900,7 +901,7 @@ function renderCollection() {
     filterPanel.hidden = isOpen;
   });
   document.addEventListener('click', event => {
-    if (filterPanel.hidden || event.target.closest('.collection-tool-shell, [data-global-search]')) return;
+    if (filterPanel.hidden || event.target.closest('.collection-tool-shell')) return;
     filterPanel.hidden = true;
     filterToggle.setAttribute('aria-expanded', 'false');
     filterToggle.lastElementChild.textContent = '+';
@@ -1011,8 +1012,7 @@ function openFinder() {
     { key:'type', title:copy.finderCarry, options:[['top-handle',copy.hand],['shoulder',copy.onShoulder],['clutch',copy.clutch]] },
     { key:'size', title:copy.finderSize, options:[['S',copy.small],['M',copy.medium],['L',copy.large]] }
   ];
-  const matchesSize = product => answers.size === 'L' ? ['L','XL'].includes(product.size) : product.size === answers.size;
-  const getExact = () => catalogOrder.map(id => ROMIC_PRODUCTS.find(product => product.id === id)).filter(Boolean).filter(product => (product.types || []).includes(answers.type) && matchesSize(product));
+  const getExact = () => finderProducts(answers);
   const detailLabels = { clean:copy.clean, chain:copy.chain, pearls:copy.pearls };
   function draw() {
     dialog.querySelector('[data-finder-results]').innerHTML = '';
@@ -1029,10 +1029,10 @@ function openFinder() {
       dialog.querySelector('[data-finder-options]').innerHTML = availableDetails.map(value => `<button type="button" data-finder-detail="${value}">${detailLabels[value]}</button>`).join('');
       return;
     }
-    const matches = (answers.detail ? exactMatches.filter(product => product.detail === answers.detail) : exactMatches).slice(0,3);
+    const matches = finderProducts(answers);
     dialog.querySelector('[data-finder-step]').textContent = copy.matches; dialog.querySelector('[data-finder-title]').textContent = copy.yourRomic; dialog.querySelector('[data-finder-options]').innerHTML = '';
     dialog.querySelector('[data-finder-results]').innerHTML = matches.length
-      ? matches.map(product => `<button type="button" class="finder-match" data-finder-product="${product.id}" style="--match-bg:${productDesign[product.id][1]}"><img src="../assets/products/${product.image}" alt="${product.name}"><span>${product.name}<small>${product.size} · ${product.width} × ${product.height} cm · ${priceMarkup(product)}</small></span></button>`).join('')
+      ? matches.map(product => `<button type="button" class="finder-match" data-finder-product="${product.id}" style="--match-bg:${(productDesign[product.id] || ['stone','#e1d9cf'])[1]}"><img src="../assets/products/${product.image}" alt="${product.name}"><span>${product.name}<small>${product.size} · ${product.width} × ${product.height} cm · ${priceMarkup(product)}</small></span></button>`).join('')
       : `<div class="finder-empty"><p>${copy.noExact}</p><button type="button" data-finder-custom>${copy.makeYours}</button></div>`;
   }
   dialog.querySelector('[data-finder-options]').onclick = event => {
@@ -1116,7 +1116,7 @@ function renderCustomizer() {
 function renderHeroConveyor() {
   const root = document.querySelector('[data-hero-conveyor]');
   if (!root) return;
-  const products = catalogOrder.map(id => ROMIC_PRODUCTS.find(product => product.id === id)).filter(Boolean);
+  const products = catalogProducts();
   const reel = root.closest('.hero-reel');
   const viewport = root.closest('.hero-conveyor-window');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -1266,17 +1266,111 @@ function renderHeroConveyor() {
 
 let homeBelowFoldReady = false;
 
-function openCollectionSearch() {
-  renderHomeBelowFold();
-  const toggle = document.querySelector('[data-filter-toggle]');
-  const panel = document.querySelector('#collection-tools');
-  const input = document.querySelector('[data-product-search]');
-  if (!toggle || !panel || !input) return;
-  panel.hidden = false;
-  toggle.setAttribute('aria-expanded', 'true');
-  toggle.lastElementChild.textContent = '−';
-  document.querySelector('#collection')?.scrollIntoView({behavior:'auto',block:'start'});
-  requestAnimationFrame(() => input.focus({preventScroll:true}));
+function normalizeSearchText(value) {
+  const endings = {'ך':'כ','ם':'מ','ן':'נ','ף':'פ','ץ':'צ'};
+  const forms = {'קלאצימ':'קלאצ','תיקימ':'תיק','תיקי':'תיק','סרוגימ':'סרוג','סרוגה':'סרוג','סרוגות':'סרוג','פנינימ':'פנינה','bags':'bag','clutches':'clutch','handbags':'handbag','pearls':'pearl','chains':'chain'};
+  return String(value).toLowerCase().normalize('NFKD')
+    .replace(/[\u0591-\u05c7\u200e\u200f'’׳״"]/g,'')
+    .replace(/[ךםןףץ]/g, letter => endings[letter])
+    .replace(/[–—-]/g,' ').trim().split(/\s+/).map(word => forms[word] || word).join(' ');
+}
+const searchTypeTerms = {
+  clutch:'קלאץ קלאצ clutch תיק ערב תיק לאירוע תיק יציאה evening occasion',
+  'top-handle':'תיק יד handbag hand bag top handle',
+  shoulder:'תיק כתף תיק צד shoulder bag'
+};
+function searchProducts(query) {
+  const normalized = normalizeSearchText(query);
+  const words = normalized.split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+  const category = words.some(word => ['קלאצ','clutch'].includes(word)) ? 'clutch'
+    : normalized.includes('תיק יד') || words.includes('handbag') ? 'top-handle'
+    : normalized.includes('תיק כתפ') || normalized.includes('תיק צד') || normalized.includes('shoulder') ? 'shoulder' : null;
+  return catalogProducts().filter(p => {
+    if (category && !p.types.includes(category)) return false;
+    const detail = {chain:'שרשרת chain',pearls:'פנינה פנינים pearl',clean:'נקי clean'}[p.detail] || '';
+    const size = {S:'קטן small',M:'בינוני medium',L:'גדול large',XL:'גדול extra large'}[p.size] || '';
+    const text = normalizeSearchText(`${p.name} ${(p.searchTerms || []).join(' ')} ${p.he} ${p.en} ${(p.types || []).map(type => searchTypeTerms[type] || '').join(' ')} ${detail} ${size} ${p.size} תיק תיקים סרוג סרוגה סריגה עבודת יד handmade crochet knitted bag bags`);
+    return words.every(word => text.includes(word));
+  }).sort((a,b) => Number(!normalizeSearchText(`${a.name} ${(a.searchTerms || []).join(' ')}`).startsWith(normalized)) - Number(!normalizeSearchText(`${b.name} ${(b.searchTerms || []).join(' ')}`).startsWith(normalized)));
+}
+function matchesCustomSearch(query) {
+  const text = normalizeSearchText(query);
+  return text.length >= 2 && ['עיצוב אישי','תיק בעיצוב אישי','בעיצוב אישי','עיצוב','אישי','צבע אחר','צבע אישי','custom','custom design','make it yours','personalized'].some(term => normalizeSearchText(term).includes(text) || text.includes(normalizeSearchText(term)));
+}
+
+function searchResultMarkup(product) {
+  return `<a class="search-result" href="product-${product.id}.html"><img src="../assets/cards/600/${product.image}" alt="" width="48" height="60" loading="lazy"><span><strong dir="auto">${product.name}</strong><small>${formatPrice(currentPrice(product))}</small></span>${icon('arrow')}</a>`;
+}
+let searchDismissController;
+function initSiteSearch() {
+  document.querySelector('#site-search-dialog')?.remove();
+  const trigger = document.querySelector('[data-global-search]');
+  const dialog = document.createElement('section');
+  dialog.setAttribute('popover','auto');
+  dialog.setAttribute('role','search');
+  dialog.id = 'site-search-dialog';
+  dialog.className = 'search-dialog';
+  dialog.setAttribute('aria-label', HOME_LOCALE[language].searchLabel);
+  dialog.dir = isHebrew ? 'rtl' : 'ltr';
+  const closeLabel = isHebrew ? 'סגירת החיפוש' : 'Close search';
+  dialog.innerHTML = `<div class="search-input-row">${icon('search')}<label class="visually-hidden" for="site-search-input">${HOME_LOCALE[language].searchLabel}</label><input id="site-search-input" type="search" name="q" dir="auto" placeholder="${copy.search}" autocomplete="off" spellcheck="false" enterkeyhint="search"><button type="button" data-search-close aria-label="${closeLabel}">${icon('close')}</button></div><p class="search-status" role="status" aria-live="polite" hidden></p><div class="search-results" aria-label="${HOME_LOCALE[language].searchLabel}" hidden></div>`;
+  document.body.append(dialog);
+  const input = dialog.querySelector('input');
+  const results = dialog.querySelector('.search-results');
+  const status = dialog.querySelector('.search-status');
+  function draw() {
+    const matches = searchProducts(input.value);
+    const custom = matchesCustomSearch(input.value);
+    results.innerHTML = matches.map(searchResultMarkup).join('') + (custom ? `<a class="search-result search-result-custom" href="./#customize"><span class="search-custom-icon">${icon('bag')}</span><span><strong>${copy.craft}</strong></span>${icon('arrow')}</a>` : '');
+    results.hidden = !matches.length && !custom;
+    status.hidden = !input.value.trim();
+    const count = matches.length + Number(custom);
+    status.textContent = !count ? copy.noResults : (isHebrew ? `${count} תוצאות` : `${count} results`);
+  }
+  const nativePopover = typeof dialog.showPopover === 'function';
+  if (!nativePopover) dialog.hidden = true;
+  function finishClose(restoreFocus = false) {
+    delete dialog.dataset.open;
+    trigger.setAttribute('aria-expanded','false');
+    input.blur();
+    if (restoreFocus) trigger.focus({preventScroll:true});
+  }
+  function close(restoreFocus = false) {
+    if (nativePopover && dialog.matches(':popover-open')) dialog.hidePopover();
+    else dialog.hidden = true;
+    finishClose(restoreFocus);
+  }
+  trigger.addEventListener('click', () => {
+    if (dialog.dataset.open) { close(true); return; }
+    input.value = ''; draw();
+    const anchor = trigger.getBoundingClientRect();
+    const width = Math.min(280, window.innerWidth - 24);
+    const left = Math.max(12, Math.min(window.innerWidth - width - 12, isHebrew ? anchor.right - width : anchor.left));
+    dialog.style.left = `${left}px`;
+    dialog.style.top = `${Math.max(12, anchor.bottom + 8)}px`;
+    if (nativePopover) dialog.showPopover();
+    else dialog.hidden = false;
+    dialog.dataset.open = 'true';
+    trigger.setAttribute('aria-expanded','true');
+    input.focus({preventScroll:true});
+  });
+  results.addEventListener('click', event => { if (event.target.closest('a')) close(); });
+  input.addEventListener('input', draw);
+  input.addEventListener('keydown', event => {
+    if (event.key === 'ArrowDown') { event.preventDefault(); results.querySelector('a')?.focus(); }
+    if (event.key === 'Enter') { const first = results.querySelector('a'); if (first) { event.preventDefault(); first.click(); } }
+  });
+  dialog.querySelector('[data-search-close]').addEventListener('click', () => close(true));
+  dialog.addEventListener('toggle', event => { if (event.newState === 'closed') finishClose(); });
+  dialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { event.preventDefault(); close(true); }
+  });
+  searchDismissController?.abort();
+  searchDismissController = new AbortController();
+  document.addEventListener('pointerdown', event => {
+    if (dialog.dataset.open && !dialog.contains(event.target) && !trigger.contains(event.target)) close();
+  }, {signal:searchDismissController.signal});
 }
 
 function renderHomeBelowFold() {
@@ -1353,7 +1447,7 @@ function renderHome() {
   });
   if (['#craft','#customize'].includes(location.hash)) navigateToCustomizer(false);
   else scheduleHomeBelowFold();
-  if (new URLSearchParams(location.search).get('search') === '1') openCollectionSearch();
+  if (new URLSearchParams(location.search).get('search') === '1') document.querySelector('[data-global-search]').click();
   else setTimeout(showLaunchOfferOnce, 280);
 }
 
