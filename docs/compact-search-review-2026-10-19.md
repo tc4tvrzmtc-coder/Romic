@@ -34,3 +34,11 @@ New functional labels: `סגירת החיפוש` / `Close search`, and a result 
 13 Node tests passed, including Hebrew/English matching and multiword search. Syntax checks passed. Full build and validation of 60 HTML / 48 product pages passed.
 
 The proposed dialog has not been rendered in a live browser or tested on an actual iPhone. The in-conversation preview is a design prototype with three sample products, not evidence of full-site QA. No production deployment is authorized by this report.
+
+## Follow-up — 20 October
+
+The user rejected the modal background and near-full-width field in the initial review build. Search now uses a nonmodal popover (max 280 CSS pixels) anchored to its trigger, with a transparent backdrop, no body scroll lock, and outside-tap dismissal. A regression test exercises opening and outside-tap closing without a modal or body lock.
+
+Hebrew search now normalizes final-letter forms, apostrophe variants and common plurals. The queries קלאצ, קלאץ׳, קלאצ׳ים, clutch and clutches return the same ten catalogue clutches. Shared category terms, accurate per-model colour aliases, size/detail terms and Hebrew/English names are included. A separate custom-design navigation result appears for custom-design intent. Search input uses auto direction and flexible width to preserve room for typed text.
+
+21 tests and the full build/site validation passed locally. Main production remains unchanged. Actual iPhone keyboard and final popover appearance still need user verification.

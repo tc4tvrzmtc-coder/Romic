@@ -36,6 +36,22 @@ test('finder retains all six matching medium clutches, including Bali, Sahara an
   assert.equal(ids.length,6);
   for(const id of ['bali','sahara','mykonos'])assert.ok(ids.includes(id));
 });
+test('Hebrew final letters, apostrophes and plurals resolve the complete correct category',()=>{
+  const c=runtime();
+  const ids=query=>Array.from(vm.runInContext(`searchProducts(${JSON.stringify(query)}).map(p=>p.id)`,c)).sort();
+  const expected=Array.from(vm.runInContext("catalogProducts().filter(p=>p.types.includes('clutch')).map(p=>p.id)",c)).sort();
+  for(const query of ['קלאצ','קלאץ','קלאצ׳','קלאץ׳',"קלאצ'",'קלאצ׳ים','קלאצים','clutch','clutches'])assert.deepEqual(ids(query),expected,query);
+  for(const [query,type] of [['תיק יד','top-handle'],['תיקי יד','top-handle'],['handbags','top-handle'],['תיק כתף','shoulder'],['תיקי צד','shoulder']])assert.deepEqual(ids(query),Array.from(vm.runInContext(`catalogProducts().filter(p=>p.types.includes('${type}')).map(p=>p.id)`,c)).sort(),query);
+  assert.ok(ids('קלאצ תכלת').includes('malibu'));
+  assert.ok(ids('תיק אדום').includes('madrid'));
+  assert.ok(ids('silver clutch').includes('cannes'));
+  assert.deepEqual(ids('תיק עור'),[],'Do not invent leather products');
+});
+test('custom-design search is a separate navigation match',()=>{
+  const c=runtime();
+  for(const query of ['עיצוב אישי','עיצוב','צבע אחר','custom','make it yours'])assert.equal(vm.runInContext(`matchesCustomSearch(${JSON.stringify(query)})`,c),true,query);
+  for(const query of ['','Paris','קלאצ'])assert.equal(vm.runInContext(`matchesCustomSearch(${JSON.stringify(query)})`,c),false,query);
+});
 test('catalogue gate gives actionable failures for incomplete and duplicate models',()=>{
   const products=vm.runInContext('catalogProducts()',runtime());
   const missing=structuredClone(products);delete missing[0].types;

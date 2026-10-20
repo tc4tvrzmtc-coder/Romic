@@ -154,7 +154,7 @@ function isInternalHomeReturn() {
 }
 function showLaunchOfferOnce(freshEntry = false) {
   if (!promoIsActive()) return;
-  if (document.querySelector('dialog[open]')) return;
+  if (document.querySelector('dialog[open], .search-dialog[data-open]')) return;
   // Review links reopen the real offer without changing live-site navigation.
   const launchPreview = location.hostname === 'raw.githack.com' && new URLSearchParams(location.search).get('preview') === 'launch';
   if (!freshEntry && !launchPreview && isInternalHomeReturn()) return;
@@ -703,7 +703,7 @@ function header() {
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
     <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
-    <div class="header-actions"><button class="site-search" type="button" aria-label="${HOME_LOCALE[language].searchLabel}" aria-haspopup="dialog" aria-controls="site-search-dialog" aria-expanded="false" data-global-search>${icon('search')}</button><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
+    <div class="header-actions"><button class="site-search" type="button" aria-label="${HOME_LOCALE[language].searchLabel}" aria-controls="site-search-dialog" aria-expanded="false" data-global-search>${icon('search')}</button><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
     <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}<button class="menu-cart-row" type="button" data-open-cart>${bagIcon()}<span data-cart-label>${copy.bag}</span><span data-cart-count>0</span></button></nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
@@ -1266,60 +1266,111 @@ function renderHeroConveyor() {
 
 let homeBelowFoldReady = false;
 
-function searchProducts(query) {
-  const normalize = value => String(value).toLowerCase().normalize('NFKD').replace(/[\u0591-\u05c7'’׳״]/g,'').trim();
-  const words = normalize(query).split(/\s+/).filter(Boolean);
-  if (!words.length) return [];
-  return catalogProducts().filter(p => {
-    const text = normalize(`${p.name} ${(p.searchTerms || []).join(' ')} ${p.he} ${p.en} ${(p.types || []).join(' ')}`);
-    return words.every(word => text.includes(word));
-  }).sort((a,b) => Number(!normalize(`${a.name} ${(a.searchTerms || []).join(' ')}`).startsWith(words.join(' '))) - Number(!normalize(`${b.name} ${(b.searchTerms || []).join(' ')}`).startsWith(words.join(' '))));
+function normalizeSearchText(value) {
+  const endings = {'ך':'כ','ם':'מ','ן':'נ','ף':'פ','ץ':'צ'};
+  const forms = {'קלאצימ':'קלאצ','תיקימ':'תיק','תיקי':'תיק','סרוגימ':'סרוג','סרוגה':'סרוג','סרוגות':'סרוג','פנינימ':'פנינה','bags':'bag','clutches':'clutch','handbags':'handbag','pearls':'pearl','chains':'chain'};
+  return String(value).toLowerCase().normalize('NFKD')
+    .replace(/[\u0591-\u05c7\u200e\u200f'’׳״"]/g,'')
+    .replace(/[ךםןףץ]/g, letter => endings[letter])
+    .replace(/[–—-]/g,' ').trim().split(/\s+/).map(word => forms[word] || word).join(' ');
 }
+const searchTypeTerms = {
+  clutch:'קלאץ קלאצ clutch תיק ערב תיק לאירוע תיק יציאה evening occasion',
+  'top-handle':'תיק יד handbag hand bag top handle',
+  shoulder:'תיק כתף תיק צד shoulder bag'
+};
+function searchProducts(query) {
+  const normalized = normalizeSearchText(query);
+  const words = normalized.split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+  const category = words.some(word => ['קלאצ','clutch'].includes(word)) ? 'clutch'
+    : normalized.includes('תיק יד') || words.includes('handbag') ? 'top-handle'
+    : normalized.includes('תיק כתפ') || normalized.includes('תיק צד') || normalized.includes('shoulder') ? 'shoulder' : null;
+  return catalogProducts().filter(p => {
+    if (category && !p.types.includes(category)) return false;
+    const detail = {chain:'שרשרת chain',pearls:'פנינה פנינים pearl',clean:'נקי clean'}[p.detail] || '';
+    const size = {S:'קטן small',M:'בינוני medium',L:'גדול large',XL:'גדול extra large'}[p.size] || '';
+    const text = normalizeSearchText(`${p.name} ${(p.searchTerms || []).join(' ')} ${p.he} ${p.en} ${(p.types || []).map(type => searchTypeTerms[type] || '').join(' ')} ${detail} ${size} ${p.size} תיק תיקים סרוג סרוגה סריגה עבודת יד handmade crochet knitted bag bags`);
+    return words.every(word => text.includes(word));
+  }).sort((a,b) => Number(!normalizeSearchText(`${a.name} ${(a.searchTerms || []).join(' ')}`).startsWith(normalized)) - Number(!normalizeSearchText(`${b.name} ${(b.searchTerms || []).join(' ')}`).startsWith(normalized)));
+}
+function matchesCustomSearch(query) {
+  const text = normalizeSearchText(query);
+  return text.length >= 2 && ['עיצוב אישי','תיק בעיצוב אישי','בעיצוב אישי','עיצוב','אישי','צבע אחר','צבע אישי','custom','custom design','make it yours','personalized'].some(term => normalizeSearchText(term).includes(text) || text.includes(normalizeSearchText(term)));
+}
+
 function searchResultMarkup(product) {
   return `<a class="search-result" href="product-${product.id}.html"><img src="../assets/cards/600/${product.image}" alt="" width="48" height="60" loading="lazy"><span><strong dir="auto">${product.name}</strong><small>${formatPrice(currentPrice(product))}</small></span>${icon('arrow')}</a>`;
 }
+let searchDismissController;
 function initSiteSearch() {
   document.querySelector('#site-search-dialog')?.remove();
   const trigger = document.querySelector('[data-global-search]');
-  const dialog = document.createElement('dialog');
+  const dialog = document.createElement('section');
+  dialog.setAttribute('popover','auto');
+  dialog.setAttribute('role','search');
   dialog.id = 'site-search-dialog';
   dialog.className = 'search-dialog';
   dialog.setAttribute('aria-label', HOME_LOCALE[language].searchLabel);
   dialog.dir = isHebrew ? 'rtl' : 'ltr';
   const closeLabel = isHebrew ? 'סגירת החיפוש' : 'Close search';
-  dialog.innerHTML = `<div class="search-input-row">${icon('search')}<label class="visually-hidden" for="site-search-input">${HOME_LOCALE[language].searchLabel}</label><input id="site-search-input" type="search" name="q" placeholder="${copy.search}" autocomplete="off" spellcheck="false" enterkeyhint="search"><button type="button" data-search-close aria-label="${closeLabel}">${icon('close')}</button></div><p class="search-status" role="status" aria-live="polite" hidden></p><div class="search-results" aria-label="${HOME_LOCALE[language].searchLabel}" hidden></div>`;
+  dialog.innerHTML = `<div class="search-input-row">${icon('search')}<label class="visually-hidden" for="site-search-input">${HOME_LOCALE[language].searchLabel}</label><input id="site-search-input" type="search" name="q" dir="auto" placeholder="${copy.search}" autocomplete="off" spellcheck="false" enterkeyhint="search"><button type="button" data-search-close aria-label="${closeLabel}">${icon('close')}</button></div><p class="search-status" role="status" aria-live="polite" hidden></p><div class="search-results" aria-label="${HOME_LOCALE[language].searchLabel}" hidden></div>`;
   document.body.append(dialog);
   const input = dialog.querySelector('input');
   const results = dialog.querySelector('.search-results');
   const status = dialog.querySelector('.search-status');
   function draw() {
     const matches = searchProducts(input.value);
-    results.innerHTML = matches.map(searchResultMarkup).join('');
-    results.hidden = !matches.length;
+    const custom = matchesCustomSearch(input.value);
+    results.innerHTML = matches.map(searchResultMarkup).join('') + (custom ? `<a class="search-result search-result-custom" href="./#customize"><span class="search-custom-icon">${icon('bag')}</span><span><strong>${copy.craft}</strong></span>${icon('arrow')}</a>` : '');
+    results.hidden = !matches.length && !custom;
     status.hidden = !input.value.trim();
-    status.textContent = !matches.length ? copy.noResults : (isHebrew ? `${matches.length} תוצאות` : `${matches.length} results`);
+    const count = matches.length + Number(custom);
+    status.textContent = !count ? copy.noResults : (isHebrew ? `${count} תוצאות` : `${count} results`);
   }
-  const close = () => dialog.close();
+  const nativePopover = typeof dialog.showPopover === 'function';
+  if (!nativePopover) dialog.hidden = true;
+  function finishClose(restoreFocus = false) {
+    delete dialog.dataset.open;
+    trigger.setAttribute('aria-expanded','false');
+    input.blur();
+    if (restoreFocus) trigger.focus({preventScroll:true});
+  }
+  function close(restoreFocus = false) {
+    if (nativePopover && dialog.matches(':popover-open')) dialog.hidePopover();
+    else dialog.hidden = true;
+    finishClose(restoreFocus);
+  }
   trigger.addEventListener('click', () => {
-    // Search is independent of collection filters and never scrolls the page.
+    if (dialog.dataset.open) { close(true); return; }
     input.value = ''; draw();
-    dialog.showModal();
-    document.body.classList.add('search-open');
+    const anchor = trigger.getBoundingClientRect();
+    const width = Math.min(280, window.innerWidth - 24);
+    const left = Math.max(12, Math.min(window.innerWidth - width - 12, isHebrew ? anchor.right - width : anchor.left));
+    dialog.style.left = `${left}px`;
+    dialog.style.top = `${Math.max(12, anchor.bottom + 8)}px`;
+    if (nativePopover) dialog.showPopover();
+    else dialog.hidden = false;
+    dialog.dataset.open = 'true';
     trigger.setAttribute('aria-expanded','true');
     input.focus({preventScroll:true});
   });
+  results.addEventListener('click', event => { if (event.target.closest('a')) close(); });
   input.addEventListener('input', draw);
   input.addEventListener('keydown', event => {
     if (event.key === 'ArrowDown') { event.preventDefault(); results.querySelector('a')?.focus(); }
     if (event.key === 'Enter') { const first = results.querySelector('a'); if (first) { event.preventDefault(); first.click(); } }
   });
-  dialog.querySelector('[data-search-close]').addEventListener('click', close);
-  dialog.addEventListener('click', event => { if (event.target === dialog) close(); });
-  dialog.addEventListener('close', () => {
-    document.body.classList.remove('search-open');
-    trigger.setAttribute('aria-expanded','false');
-    trigger.focus({preventScroll:true});
+  dialog.querySelector('[data-search-close]').addEventListener('click', () => close(true));
+  dialog.addEventListener('toggle', event => { if (event.newState === 'closed') finishClose(); });
+  dialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { event.preventDefault(); close(true); }
   });
+  searchDismissController?.abort();
+  searchDismissController = new AbortController();
+  document.addEventListener('pointerdown', event => {
+    if (dialog.dataset.open && !dialog.contains(event.target) && !trigger.contains(event.target)) close();
+  }, {signal:searchDismissController.signal});
 }
 
 function renderHomeBelowFold() {
