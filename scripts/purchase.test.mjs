@@ -46,11 +46,13 @@ test('promotion expires at the agreed Israel time and refreshes without reloadin
     assert.equal(a.run('promoIsActive()'),false);
     a.at('2026-10-02T20:45:00+03:00');
     assert.equal(a.run('promoIsActive()'),true);
-    a.at('2026-10-22T23:59:59.999+03:00');
+    a.at('2026-10-23T00:00:00+03:00');
+    assert.equal(a.run('isCouponApplied()'),true);
+    a.at('2026-10-31T23:59:59.999+02:00');
     assert.equal(a.run('isCouponApplied()'),true);
     a.run('refreshPromotionState()');
     assert.equal(a.timer().delay,1);
-    a.at('2026-10-23T00:00:00+03:00');
+    a.at('2026-11-01T00:00:00+02:00');
     a.timer().fn();
     assert.equal(a.run('isCouponApplied()'),false);
     assert.equal(a.closes(),1);
@@ -67,7 +69,7 @@ test('friend offer includes custom designs, excludes shipping and never stacks w
     assert.equal(a.run('currentPrice({price:400},true)'),280);
     assert.equal(a.run('currentPrice({price:460})'),322);
     assert.equal(a.run("calculateCart([{price:400,custom:true}],activeCoupon(),'delivery').total"),310);
-    a.at('2026-10-23T00:00:00+03:00');
+    a.at('2026-11-01T00:00:00+02:00');
     assert.equal(a.run('activeCoupon().percent'),30);
     assert.equal(a.run('couponByCode("ROMIC2026")'),null);
     assert.equal(a.run('couponByCode("unknown")'),null);

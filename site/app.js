@@ -5,7 +5,7 @@ const whatsappNumber = '972553160780';
 const whatsappBase = `https://wa.me/${whatsappNumber}`;
 const promoCode = 'ROMIC2026';
 const promoStartsAt = Date.parse('2026-10-02T20:45:00+03:00');
-const promoEndsAt = Date.parse('2026-10-23T00:00:00+03:00');
+const promoEndsAt = Date.parse('2026-11-01T00:00:00+02:00');
 const deliveryPrice = 30;
 const friendCouponCode = 'ROMICGIRLS30';
 const instagramReel = 'https://www.instagram.com/reel/DdbnlpQMoNE/';
@@ -29,8 +29,8 @@ const COPY = {
     finderHint:'NEED HELP CHOOSING?', finderOpen:'FIND YOUR BAG', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
     model:'CHOOSE A MODEL', colour:'CHOOSE A COLOUR', basePrice:'BASE PRICE', bagBody:'BAG BODY', messageRomic:'SEND YOUR SELECTION ON WHATSAPP', extraNote:'Extras cost more.', detailsLabel:'More details', customLead:'Choose a model. Choose a colour.', customNote:'Base price: one solid colour with the standard handle and hardware. Straps, colour combinations, extra handles and accessories cost extra.', customVisual:'Visualisation for reference. Handmade colour and measurements may vary slightly.',
     copied:'Your message is ready in WhatsApp. Tap Send when you’re ready.', picksCopied:'Your bag is ready in WhatsApp. Tap Send when you’re ready.', picksLabel:'IN YOUR BAG', viewImage:'View', remove:'Remove', openInstagram:'open Romic on Instagram',
-    bag:'My bag', bagTitle:'Your bag', bagEmpty:'Your bag is empty.', keepBrowsing:'KEEP BROWSING', subtotal:'Subtotal', discount:'Launch offer · 20%', total:'Final total', receiving:'Delivery or pickup', delivery:'Delivery in Israel', pickup:'Pickup in Givatayim', free:'Free', shipping:'Delivery', couponLabel:'Coupon code', couponPlaceholder:'Enter code', applyCoupon:'Apply', couponDone:'Applied', couponApplied:'20% applied to ready-made bags', couponInvalid:'That code doesn’t match. Check it and try again.', couponExpired:'The launch offer has ended.', whatsapp:'SHARE YOUR SELECTION', offerTitle:'CELEBRATING OUR LAUNCH', offerSubtitle:'Off the collection', offerCodeLabel:'Your launch code', offerTerms:'20% off ready-made collection bags · Through 22 October 2026, inclusive. Custom designs and delivery are excluded.', offerAction:'EXPLORE THE COLLECTION', offerClose:'Close offer',
-    addConfirmation:'Added to your bag.', removeConfirmation:'Removed from your bag.', openWhatsapp:'Open WhatsApp to message Romic', couponUsed:'Coupon code ROMIC2026 applied.', promoMessage:'Launch offer: 20% off ready-made collection bags with ROMIC2026. Excludes custom designs and delivery. Through 22 October 2026, inclusive.'
+    bag:'My bag', bagTitle:'Your bag', bagEmpty:'Your bag is empty.', keepBrowsing:'KEEP BROWSING', subtotal:'Subtotal', discount:'Launch offer · 20%', total:'Final total', receiving:'Delivery or pickup', delivery:'Delivery in Israel', pickup:'Pickup in Givatayim', free:'Free', shipping:'Delivery', couponLabel:'Coupon code', couponPlaceholder:'Enter code', applyCoupon:'Apply', couponDone:'Applied', couponApplied:'20% applied to ready-made bags', couponInvalid:'That code doesn’t match. Check it and try again.', couponExpired:'The launch offer has ended.', whatsapp:'SHARE YOUR SELECTION', offerTitle:'CELEBRATING OUR LAUNCH', offerSubtitle:'Off the collection', offerCodeLabel:'Your launch code', offerTerms:'20% off ready-made collection bags · Through 31 October 2026, inclusive. Custom designs and delivery are excluded.', offerAction:'EXPLORE THE COLLECTION', offerClose:'Close offer',
+    addConfirmation:'Added to your bag.', removeConfirmation:'Removed from your bag.', openWhatsapp:'Open WhatsApp to message Romic', couponUsed:'Coupon code ROMIC2026 applied.', promoMessage:'Launch offer: 20% off ready-made collection bags with ROMIC2026. Excludes custom designs and delivery. Through 31 October 2026, inclusive.'
   },
   he: {
     skip:'דילוג לתוכן', collection:'קולקציה', craft:'עיצוב אישי', service:'משלוחים', faq:'שאלות נפוצות', instagram:'אינסטגרם', menu:'תפריט', close:'סגירת התפריט', language:'EN',
@@ -44,8 +44,8 @@ const COPY = {
     finderHint:'לא בטוחה?', finderOpen:'מצאי את התיק שלך', finderClose:'סגירת שאלון התאמה', finderCarry:'איך תרצי לשאת את התיק?', finderSize:'איזה גודל תרצי?', finderDetail:'איזה גימור את אוהבת?', hand:'ביד', onShoulder:'על הכתף', clutch:'קלאץ׳', small:'קטן', medium:'בינוני', large:'גדול', clean:'נקי', chain:'שרשרת', pearls:'פנינים', matches:'התיקים שמתאימים לך', yourRomic:'YOUR ROMIC.', noExact:'לא מצאנו התאמה מדויקת. אולי תמצאי את התיק שלך בעיצוב האישי.', makeYours:'לעיצוב אישי',
     model:'בחירת דגם', colour:'בחירת צבע', basePrice:'מחיר בסיס', bagBody:'מידות גוף התיק', messageRomic:'שלחי את הבחירה שלך בוואטסאפ', extraNote:'תוספות כרוכות בתשלום.', detailsLabel:'פרטים נוספים', customLead:'בחרי דגם. בחרי צבע.', customNote:'מחיר הבסיס כולל צבע אחיד, ידית ואבזור סטנדרטיים. רצועות, שילובי צבעים, ידיות נוספות ואביזרים מתומחרים בנפרד.', customVisual:'ההדמיה להמחשה. בעבודת יד ייתכנו הבדלים קטנים בגוון ובמידות.',
     copied:'ההודעה מוכנה בוואטסאפ. כשתרצי, לחצי על שליחה.', picksCopied:'הסל שלך מוכן בוואטסאפ. כשתרצי, לחצי על שליחה.', picksLabel:'בסל שלי', viewImage:'תמונה', remove:'הסרה', openInstagram:'פתיחת Romic באינסטגרם',
-    bag:'הסל שלי', bagTitle:'הבחירות שלך', bagEmpty:'עוד לא הוספת תיק לסל.', keepBrowsing:'חזרה לקולקציה', subtotal:'סכום ביניים', discount:'הטבת השקה · 20%', total:'מחיר סופי', receiving:'איך תרצי לקבל את התיק?', delivery:'משלוח בישראל', pickup:'איסוף עצמי מגבעתיים', free:'ללא עלות', shipping:'משלוח', couponLabel:'קוד קופון', couponPlaceholder:'הזיני קוד', applyCoupon:'החילי קוד', couponDone:'הקוד הופעל', couponApplied:'20% הנחה על תיקי הקולקציה הקיימים', couponInvalid:'הקוד לא זוהה. בדקי ונסי שוב.', couponExpired:'הטבת ההשקה הסתיימה.', whatsapp:'שתפי את הבחירה בוואטסאפ', offerTitle:'חוגגות את ההשקה', offerSubtitle:'הנחה על הקולקציה', offerCodeLabel:'קוד הטבת ההשקה', offerTerms:'20% הנחה על התיקים שבקולקציה · בתוקף עד 22.10.2026 כולל. לא כולל עיצוב אישי ומשלוח.', offerAction:'לצפייה בקולקציה', offerClose:'סגירת ההטבה',
-    addConfirmation:'נוסף לסל שלך.', removeConfirmation:'הוסר מהסל.', openWhatsapp:'פתיחת וואטסאפ ושליחת הודעה ל־Romic', couponUsed:'קוד הקופון ROMIC2026 הופעל.', promoMessage:'הטבת השקה: 20% הנחה על תיקי הקולקציה הקיימים בקוד ROMIC2026. לא כולל עיצוב אישי ומשלוח. בתוקף עד 22.10.2026 כולל.'
+    bag:'הסל שלי', bagTitle:'הבחירות שלך', bagEmpty:'עוד לא הוספת תיק לסל.', keepBrowsing:'חזרה לקולקציה', subtotal:'סכום ביניים', discount:'הטבת השקה · 20%', total:'מחיר סופי', receiving:'איך תרצי לקבל את התיק?', delivery:'משלוח בישראל', pickup:'איסוף עצמי מגבעתיים', free:'ללא עלות', shipping:'משלוח', couponLabel:'קוד קופון', couponPlaceholder:'הזיני קוד', applyCoupon:'החילי קוד', couponDone:'הקוד הופעל', couponApplied:'20% הנחה על תיקי הקולקציה הקיימים', couponInvalid:'הקוד לא זוהה. בדקי ונסי שוב.', couponExpired:'הטבת ההשקה הסתיימה.', whatsapp:'שתפי את הבחירה בוואטסאפ', offerTitle:'חוגגות את ההשקה', offerSubtitle:'הנחה על הקולקציה', offerCodeLabel:'קוד הטבת ההשקה', offerTerms:'20% הנחה על התיקים שבקולקציה · בתוקף עד 31.10.2026 כולל. לא כולל עיצוב אישי ומשלוח.', offerAction:'לצפייה בקולקציה', offerClose:'סגירת ההטבה',
+    addConfirmation:'נוסף לסל שלך.', removeConfirmation:'הוסר מהסל.', openWhatsapp:'פתיחת וואטסאפ ושליחת הודעה ל־Romic', couponUsed:'קוד הקופון ROMIC2026 הופעל.', promoMessage:'הטבת השקה: 20% הנחה על תיקי הקולקציה הקיימים בקוד ROMIC2026. לא כולל עיצוב אישי ומשלוח. בתוקף עד 31.10.2026 כולל.'
   }
 };
 let copy = COPY[language];
@@ -66,7 +66,7 @@ const HOME_LOCALE = {
       ['Can I choose a model and colour?','Yes. In Romic Your Way, choose from the available models and colours. Straps, colour combinations and extra details may cost more.'],
       ['When will my bag arrive?','Delivery within 7 business days for both collection bags and custom designs.'],
       ['What are the delivery and pickup options?','Delivery is available within Israel for ₪30. Pickup in Givatayim is free.'],
-      ['How does the launch offer work?','Enter ROMIC2026 in My bag for 20% off ready-made collection bags through 22 October 2026. It excludes custom designs and delivery, and can’t be combined with another offer.'],
+      ['How does the launch offer work?','Enter ROMIC2026 in My bag for 20% off ready-made collection bags through 31 October 2026. It excludes custom designs and delivery, and can’t be combined with another offer.'],
       ['Can I return or cancel an order?','Returns and cancellations follow Israeli consumer law. Change-of-mind cancellations are subject to the statutory cancellation fee and return shipping is at the customer’s expense. See the returns and cancellation terms in the footer.']
     ],
     faqContact:'HAVE A QUESTION? MESSAGE ROMIC ON WHATSAPP', faqMessage:'Hi Romic! I have a question about the bags on your website.',
@@ -86,7 +86,7 @@ const HOME_LOCALE = {
       ['אפשר לבחור דגם וצבע?','כן. בעיצוב האישי בחרי דגם וצבע מתוך האפשרויות הקיימות. רצועות, שילובי צבעים ותוספות עשויים להיות בתוספת תשלום.'],
       ['מה זמן האספקה של התיקים?','אספקה עד 7 ימי עסקים, לתיקים מהקולקציה ולתיקים בעיצוב אישי.'],
       ['מהן אפשרויות המשלוח והאיסוף?','משלוחים בישראל בלבד בעלות ₪30, או איסוף עצמי מגבעתיים ללא עלות.'],
-      ['איך מקבלים את הטבת ההשקה?','הזיני את הקוד ROMIC2026 בסל שלי וקבלי 20% הנחה על תיקי הקולקציה הקיימים, עד 22.10.2026. ההטבה לא כוללת עיצוב אישי או משלוח, ואינה מצטרפת למבצע אחר.'],
+      ['איך מקבלים את הטבת ההשקה?','הזיני את הקוד ROMIC2026 בסל שלי וקבלי 20% הנחה על תיקי הקולקציה הקיימים, עד 31.10.2026. ההטבה לא כוללת עיצוב אישי או משלוח, ואינה מצטרפת למבצע אחר.'],
       ['אפשר להחזיר או לבטל הזמנה?','ביטול והחזרה בהתאם לחוק הגנת הצרכן. בביטול עקב חרטה ייגבו דמי ביטול כחוק והחזרת התיק תהיה על חשבון הלקוחה. לפרטים עברי לתנאי ההחזרות והביטולים בתחתית האתר.']
     ],
     faqContact:'יש לך שאלה? כתבי ל־ROMIC בוואטסאפ', faqMessage:'היי Romic! יש לי שאלה לגבי התיקים באתר.',
@@ -120,7 +120,7 @@ function formatPrice(price) { return `₪${Number(price.toFixed(2)).toLocaleStri
 function promoIsActive() { const now = Date.now(); return now >= promoStartsAt && now < promoEndsAt; }
 function currentFaqs() {
   return HOME_LOCALE[language].faqs.map((entry, index) => index === 6 && Date.now() >= promoEndsAt
-    ? [entry[0], isHebrew ? 'הטבת ההשקה הסתיימה ב־22.10.2026. המחירים המוצגים באתר הם המחירים הנוכחיים, והקוד ROMIC2026 אינו פעיל.' : 'The launch offer ended on 22 October 2026. The prices shown on the website are the current prices, and ROMIC2026 is no longer active.']
+    ? [entry[0], isHebrew ? 'הטבת ההשקה הסתיימה ב־31.10.2026. המחירים המוצגים באתר הם המחירים הנוכחיים, והקוד ROMIC2026 אינו פעיל.' : 'The launch offer ended on 31 October 2026. The prices shown on the website are the current prices, and ROMIC2026 is no longer active.']
     : entry);
 }
 let promotionTimer;
