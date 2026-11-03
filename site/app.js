@@ -130,7 +130,7 @@ function renderSaleBanner() {
   if (!host) return;
   host.querySelector('[data-sale-banner]')?.remove();
   if (!novemberIsActive()) return;
-  host.insertAdjacentHTML('afterbegin', `<aside class="sale-banner" data-sale-banner aria-label="${isHebrew ? 'מבצע נובמבר' : 'November sale'}" dir="${isHebrew ? 'rtl' : 'ltr'}"><span class="sale-banner-name" dir="ltr">NOVEMBER SALE</span><span class="sale-banner-offer">${isHebrew ? '25% הנחה על כל האתר' : '25% OFF SITEWIDE'}</span><span class="sale-banner-date">${isHebrew ? 'עד 8.11 כולל' : 'THROUGH 8 NOV'}</span></aside>`);
+  host.insertAdjacentHTML('afterbegin', `<aside class="sale-banner" data-sale-banner aria-label="${isHebrew ? 'מבצע נובמבר' : 'November sale'}" dir="${isHebrew ? 'rtl' : 'ltr'}"><span class="sale-banner-name" dir="ltr">NOVEMBER SALE</span><span class="sale-banner-offer">${isHebrew ? '25% הנחה על כל האתר' : '25% OFF SITEWIDE'}</span><span class="sale-banner-date">${isHebrew ? 'עד 08.11.2026' : 'THROUGH 08.11.2026'}</span></aside>`);
 }
 function currentFaqs() {
   return HOME_LOCALE[language].faqs.map((entry, index) => {
@@ -1103,7 +1103,7 @@ function renderCustomizer() {
     <div class="customizer-visual"><img data-custom-image src="" alt="" loading="lazy" decoding="async" width="1200" height="1500"><span class="customizer-live" aria-live="polite" data-custom-live></span></div>
     <div class="customizer-controls"><fieldset><legend>01 · ${copy.model}</legend><div class="model-options" data-model-options></div></fieldset><fieldset><legend>02 · ${copy.colour}</legend><div class="color-options" data-color-options></div></fieldset>
     <div class="customizer-summary"><div><span>${copy.basePrice}</span><strong data-custom-price data-refresh-custom-price></strong></div><div><span>${copy.bagBody}</span><strong data-custom-size></strong></div></div>
-    <p class="customizer-sale-note" data-custom-sale-note ${novemberIsActive() ? '' : 'hidden'}>${isHebrew ? '25% הנחה גם על עיצוב אישי · עד 8.11 כולל' : '25% off custom designs too · Through 8 Nov'}</p><p class="customizer-extras">${copy.extraNote}</p><a class="button button-light customizer-cta" href="${whatsappBase}" target="_blank" rel="external noopener" data-custom-whatsapp>${icon('whatsapp')} ${copy.messageRomic}</a><details class="customizer-details"><summary>${copy.detailsLabel}</summary><div><p class="customizer-note">${copy.customNote}</p><p class="customizer-visual-note">${copy.customVisual}</p></div></details></div></div>`;
+    <p class="customizer-sale-note" data-custom-sale-note ${novemberIsActive() ? '' : 'hidden'}>${isHebrew ? '25% הנחה גם על עיצוב אישי · עד 08.11.2026' : '25% off custom designs too · Through 08.11.2026'}</p><p class="customizer-extras">${copy.extraNote}</p><a class="button button-light customizer-cta" href="${whatsappBase}" target="_blank" rel="external noopener" data-custom-whatsapp>${icon('whatsapp')} ${copy.messageRomic}</a><details class="customizer-details"><summary>${copy.detailsLabel}</summary><div><p class="customizer-note">${copy.customNote}</p><p class="customizer-visual-note">${copy.customVisual}</p></div></details></div></div>`;
   const image = root.querySelector('[data-custom-image]'), live = root.querySelector('[data-custom-live]'), price = root.querySelector('[data-custom-price]'), size = root.querySelector('[data-custom-size]'), modelOptions = root.querySelector('[data-model-options]'), colorOptions = root.querySelector('[data-color-options]');
   const cta = root.querySelector('[data-custom-whatsapp]');
   let customWhatsappMessage = '';
