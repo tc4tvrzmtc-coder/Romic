@@ -670,3 +670,15 @@ html[dir=rtl] .instagram-callout h2{letter-spacing:-.035em;font-size:clamp(2.8re
 .search-result:hover,.search-result:focus-visible{background:#e4ddf2}
 
 .search-custom-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:52px}.search-custom-icon .icon{width:22px;height:22px}
+
+/* November campaign: a compact, static strip above the existing navigation. */
+.sale-banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 20px;min-height:38px;padding:9px 18px;background:var(--ink);color:var(--paper);text-align:center;font-size:12px;line-height:1.5}
+.sale-banner-name{font-size:11px;letter-spacing:.15em;font-weight:500;white-space:nowrap}
+.sale-banner-offer{font-weight:600;white-space:nowrap}
+.sale-banner-date{font-size:11px;white-space:nowrap;opacity:.85}
+.customizer-sale-note{margin:0;color:#fff;font-size:.9rem}
+.customizer-sale-note[hidden]{display:none}
+.sale-coupon-details{margin-block:18px;border-top:1px solid var(--line);padding-top:12px}
+.sale-coupon-details>summary{width:fit-content;min-height:44px;display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.sale-coupon-details .cart-coupon{margin-top:0}
+@media(max-width:600px){.sale-banner{gap:2px 10px;padding:8px 12px}.sale-banner-date{flex-basis:100%}.sale-banner-name{font-size:10px;letter-spacing:.12em}.sale-banner-offer{font-size:12px}}

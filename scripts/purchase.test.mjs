@@ -90,3 +90,44 @@ test('launch offer leaves custom prices intact; pickup is default; empty cart ca
   assert.match(a.run("priceMarkup({price:320},'price',true)"),/₪224/);
   assert.equal(a.run('formatPrice(224.0199999999)'),'₪224.02');
 });
+
+test('November sale is automatic across languages, products and custom designs, with no stacking', () => {
+  for (const language of ['he','en']) {
+    const a = app(language);
+    a.at('2026-11-03T12:00:00+02:00');
+    a.run("setCoupon('')");
+    assert.equal(a.run('activeCoupon().automatic'),true);
+    assert.equal(a.run('currentPrice({price:400})'),300);
+    assert.equal(a.run('currentPrice({price:400},true)'),300);
+    assert.equal(a.run('currentPrice({price:350})'),262.5);
+    assert.equal(a.run("calculateCart([{price:400},{price:320,custom:true}],activeCoupon(),'delivery').total"),570);
+    const message = a.run("makeWhatsappMessage([{name:'Dubai',size:'M',price:400}],activeCoupon(),'delivery')");
+    assert.ok(message.includes('₪300'));
+    assert.ok(message.endsWith('₪330'));
+    assert.ok(!message.includes('Coupon') && !message.includes('קוד קופון'));
+    assert.match(a.run("priceMarkup({price:400})"),/<del[^>]*>₪400<\/del>/);
+    a.run("setCoupon('ROMICGIRLS30')");
+    assert.equal(a.run('currentPrice({price:400},true)'),280);
+    a.run("setCoupon('')");
+    assert.equal(a.run('currentPrice({price:400},true)'),300);
+  }
+});
+
+test('November sale starts and ends at Israel midnight and reprices an open page', () => {
+  for (const language of ['he','en']) {
+    const a = app(language);
+    a.at('2026-11-02T23:59:59.999+02:00');
+    assert.equal(a.run('novemberIsActive()'),false);
+    a.at('2026-11-03T00:00:00+02:00');
+    assert.equal(a.run('novemberIsActive()'),true);
+    a.at('2026-11-08T23:59:59.999+02:00');
+    a.run('refreshPromotionState()');
+    assert.equal(a.timer().delay,1);
+    a.at('2026-11-09T00:00:00+02:00');
+    a.timer().fn();
+    assert.equal(a.run('activeCoupon()'),null);
+    assert.equal(a.run('currentPrice({price:400},true)'),400);
+    assert.match(a.run('currentFaqs()[6][1]'),language === 'he' ? /הסתיים/ : /ended/);
+    assert.ok(a.run("makeWhatsappMessage([{name:'Dubai',size:'M',price:400}],activeCoupon(),'delivery')").endsWith('₪430'));
+  }
+});

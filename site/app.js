@@ -6,6 +6,8 @@ const whatsappBase = `https://wa.me/${whatsappNumber}`;
 const promoCode = 'ROMIC2026';
 const promoStartsAt = Date.parse('2026-10-02T20:45:00+03:00');
 const promoEndsAt = Date.parse('2026-11-01T00:00:00+02:00');
+const novemberStartsAt = Date.parse('2026-11-03T00:00:00+02:00');
+const novemberEndsAt = Date.parse('2026-11-09T00:00:00+02:00');
 const deliveryPrice = 30;
 const friendCouponCode = 'ROMICGIRLS30';
 const instagramReel = 'https://www.instagram.com/reel/DdbnlpQMoNE/';
@@ -118,18 +120,36 @@ function finderProducts({ type, size, detail } = {}) {
 
 function formatPrice(price) { return `₪${Number(price.toFixed(2)).toLocaleString('he-IL', {maximumFractionDigits:2})}`; }
 function promoIsActive() { const now = Date.now(); return now >= promoStartsAt && now < promoEndsAt; }
+function novemberIsActive() { const now = Date.now(); return now >= novemberStartsAt && now < novemberEndsAt; }
+function novemberOffer() { return novemberIsActive() ? { code:'NOVEMBER', percent:25, custom:true, automatic:true } : null; }
+function novemberTerms() {
+  return isHebrew ? '25% הנחה על כל האתר, כולל עיצוב אישי. עד 8.11.2026 כולל, לפי שעון ישראל. משלוח בתשלום נפרד. אין כפל הטבות.' : '25% off sitewide, including custom designs. Through 8 November 2026, inclusive, Israel time. Delivery charged separately. Offers cannot be combined.';
+}
+function renderSaleBanner() {
+  const host = document.querySelector('[data-header]');
+  if (!host) return;
+  host.querySelector('[data-sale-banner]')?.remove();
+  if (!novemberIsActive()) return;
+  host.insertAdjacentHTML('afterbegin', `<aside class="sale-banner" data-sale-banner aria-label="${isHebrew ? 'מבצע נובמבר' : 'November sale'}" dir="${isHebrew ? 'rtl' : 'ltr'}"><span class="sale-banner-name" dir="ltr">NOVEMBER SALE</span><span class="sale-banner-offer">${isHebrew ? '25% הנחה על כל האתר' : '25% OFF SITEWIDE'}</span><span class="sale-banner-date">${isHebrew ? 'עד 8.11 כולל' : 'THROUGH 8 NOV'}</span></aside>`);
+}
 function currentFaqs() {
-  return HOME_LOCALE[language].faqs.map((entry, index) => index === 6 && Date.now() >= promoEndsAt
-    ? [entry[0], isHebrew ? 'הטבת ההשקה הסתיימה ב־31.10.2026. המחירים המוצגים באתר הם המחירים הנוכחיים, והקוד ROMIC2026 אינו פעיל.' : 'The launch offer ended on 31 October 2026. The prices shown on the website are the current prices, and ROMIC2026 is no longer active.']
-    : entry);
+  return HOME_LOCALE[language].faqs.map((entry, index) => {
+    if (index !== 6) return entry;
+    if (novemberIsActive()) return [isHebrew ? 'מה כולל מבצע נובמבר?' : 'What’s included in the November Sale?', novemberTerms()];
+    if (Date.now() >= novemberEndsAt) return [isHebrew ? 'האם יש מבצע פעיל?' : 'Is there a sale running?', isHebrew ? 'מבצע נובמבר הסתיים ב־8.11.2026. המחירים המוצגים באתר הם המחירים הנוכחיים.' : 'The November Sale ended on 8 November 2026. The prices displayed are the current prices.'];
+    return Date.now() >= promoEndsAt ? [entry[0], isHebrew ? 'הטבת ההשקה הסתיימה ב־31.10.2026. המחירים המוצגים באתר הם המחירים הנוכחיים, והקוד ROMIC2026 אינו פעיל.' : 'The launch offer ended on 31 October 2026. The prices shown on the website are the current prices, and ROMIC2026 is no longer active.'] : entry;
+  });
 }
 let promotionTimer;
 let previousPromotionState;
 function refreshPromotionState() {
-  const active = promoIsActive();
+  const active = `${promoIsActive()}:${novemberIsActive()}`;
   if (active !== previousPromotionState) {
     previousPromotionState = active;
-    if (!active) document.querySelectorAll('.launch-dialog').forEach(dialog => dialog.close());
+    if (!promoIsActive()) document.querySelectorAll('.launch-dialog').forEach(dialog => dialog.close());
+    renderSaleBanner();
+    document.querySelectorAll('[data-custom-sale-note]').forEach(note => { note.hidden = !novemberIsActive(); });
+    if (document.body?.dataset.doc === 'terms') { const root = document.querySelector('[data-doc-content]'); if (root) root.innerHTML = getDocuments(language).terms; }
     const entries = currentFaqs();
     document.querySelectorAll('.faq-item').forEach((item, index) => {
       if (!entries[index]) return;
@@ -140,7 +160,7 @@ function refreshPromotionState() {
   }
   window.clearTimeout(promotionTimer);
   const now = Date.now();
-  const boundary = now < promoStartsAt ? promoStartsAt : promoEndsAt;
+  const boundary = [promoStartsAt, promoEndsAt, novemberStartsAt, novemberEndsAt].find(time => time > now);
   if (boundary > now) promotionTimer = window.setTimeout(refreshPromotionState, Math.min(boundary - now, 2147483647));
 }
 function isInternalHomeReturn() {
@@ -259,7 +279,9 @@ function couponByCode(code) {
 function activeCoupon() {
   let code = couponMemory;
   if (code === undefined) { try { code = sessionStorage.getItem(appliedCouponStorageKey); } catch (_) {} }
-  return couponByCode(code);
+  const manual = couponByCode(code);
+  const automatic = novemberOffer();
+  return automatic && (!manual || automatic.percent > manual.percent) ? automatic : manual;
 }
 function discountedPrice(price, coupon, custom = false) {
   return coupon && (!custom || coupon.custom) ? Math.round(price * (100 - coupon.percent)) / 100 : price;
@@ -276,7 +298,7 @@ function priceMarkup(product, className = 'price', custom = false) {
   return `<span class="${className}${discounted ? ' is-discounted' : ''}" data-price-base="${product.price}" data-price-custom="${custom}">${discounted ? `<del title="${isHebrew ? 'מחיר מקורי' : 'Original price'}">${formatPrice(product.price)}</del>` : ''}<strong>${formatPrice(price)}</strong>${discounted ? `<span class="price-offer" dir="auto">${isHebrew ? `${coupon.percent}% הנחה` : `${coupon.percent}% off`}</span>` : ''}</span>`;
 }
 function couponLabel(coupon) {
-  return isHebrew ? `הנחה · ${coupon.percent}%` : `Offer · ${coupon.percent}%`;
+  return coupon.automatic ? (isHebrew ? 'מבצע נובמבר · 25%' : 'November Sale · 25%') : (isHebrew ? `הנחה · ${coupon.percent}%` : `Offer · ${coupon.percent}%`);
 }
 function refreshPriceDisplays() {
   document.querySelectorAll('[data-price-base]').forEach(element => {
@@ -390,7 +412,7 @@ function makeWhatsappMessage(products, couponApplied = activeCoupon(), method = 
   const lines = products.map(product => `${product.name} · ${product.size} · ${formatPrice(cartPrice(product, couponApplied))}`);
   const intro = isHebrew ? 'היי, אשמח להזמין:' : 'Hi, I’d like to order:';
   const coupon = couponApplied === true ? couponByCode(promoCode) : couponApplied;
-  const offer = coupon ? `\n${isHebrew ? 'קוד קופון' : 'Coupon'} ${coupon.code} · ${coupon.percent}%` : '';
+  const offer = coupon ? `\n${coupon.automatic ? (isHebrew ? 'מבצע נובמבר' : 'November Sale') : `${isHebrew ? 'קוד קופון' : 'Coupon'} ${coupon.code}`} · ${coupon.percent}%` : '';
   const totals = calculateCart(products, couponApplied, method);
   const receiving = method === 'pickup' ? `${copy.pickup} · ${copy.free}` : `${copy.delivery} · ${formatPrice(totals.shipping)}`;
   return `${intro}\n${lines.join('\n')}${offer}\n${receiving}\n${copy.total}: ${formatPrice(totals.total)}`;
@@ -413,11 +435,11 @@ function renderCartContents() {
   const method = getDeliveryMethod();
   const { subtotal, total, shipping, discount: discountAmount } = calculateCart(products, applied, method);
   const items = products.map(product => `<article class="cart-line"><a class="cart-thumb" href="product-${encodeURIComponent(product.id)}.html"><img src="../assets/gallery-thumbs/${product.image}" data-fallback-src="../assets/products/${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="240" height="300"></a><div class="cart-line-info"><a href="product-${encodeURIComponent(product.id)}.html">${product.name}</a><small>${product.size} · ${product.width} × ${product.height} cm</small>${priceMarkup(product,'price')}</div><button type="button" class="cart-remove" data-cart-remove="${product.id}" aria-label="${copy.remove} ${product.name}">${copy.remove}</button></article>`).join('');
-  const escapedDraft = (applied?.code || couponDraft).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const statusText = applied ? (isHebrew ? `הקוד הופעל · ${applied.percent}% הנחה${applied.custom ? ' על הקולקציה ועל עיצוב אישי' : ' על הקולקציה'}` : `${applied.percent}% applied to ${applied.custom ? 'collection and custom designs' : 'the collection'}`) : '';
-  const couponMarkup = `<div class="cart-coupon"><label for="cart-coupon-code">${copy.couponLabel}</label><div><input id="cart-coupon-code" type="text" value="${escapedDraft}" placeholder="${copy.couponPlaceholder}" autocomplete="off" autocapitalize="characters" dir="ltr" aria-describedby="cart-coupon-status"><button type="button" data-apply-coupon>${copy.applyCoupon}</button></div><span id="cart-coupon-status" data-coupon-status role="status" aria-live="polite">${statusText}</span>${applied ? `<button class="coupon-remove" type="button" data-remove-coupon>${isHebrew ? 'הסירי את ההטבה' : 'Remove offer'}</button>` : ''}</div>`;
+  const escapedDraft = ((applied?.automatic ? '' : applied?.code) || couponDraft).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const statusText = applied?.automatic ? (isHebrew ? 'מבצע נובמבר · 25% הנחה' : 'November Sale · 25% off') : applied ? (isHebrew ? `הקוד הופעל · ${applied.percent}% הנחה${applied.custom ? ' על הקולקציה ועל עיצוב אישי' : ' על הקולקציה'}` : `${applied.percent}% applied to ${applied.custom ? 'collection and custom designs' : 'the collection'}`) : '';
+  const couponMarkup = `${novemberIsActive() ? `<details class="sale-coupon-details" ${applied && !applied.automatic ? 'open' : ''}><summary>${isHebrew ? 'יש לך קוד קופון?' : 'Have a coupon code?'}</summary>` : ''}<div class="cart-coupon"><label for="cart-coupon-code">${copy.couponLabel}</label><div><input id="cart-coupon-code" type="text" value="${escapedDraft}" placeholder="${copy.couponPlaceholder}" autocomplete="off" autocapitalize="characters" dir="ltr" aria-describedby="cart-coupon-status"><button type="button" data-apply-coupon>${copy.applyCoupon}</button></div><span id="cart-coupon-status" data-coupon-status role="status" aria-live="polite">${statusText}</span>${applied && !applied.automatic ? `<button class="coupon-remove" type="button" data-remove-coupon>${isHebrew ? 'הסירי את ההטבה' : 'Remove offer'}</button>` : ''}</div>${novemberIsActive() ? '</details>' : ''}`;
   const emptyMarkup = `<div class="cart-empty"><p>${copy.bagEmpty}</p><button class="button" type="button" data-cart-continue>${copy.keepBrowsing}</button></div>`;
-  const totalsMarkup = `<fieldset class="cart-delivery"><legend>${copy.receiving}</legend><div class="cart-delivery-options">${['pickup','delivery'].map(value => `<label><input type="radio" name="cart-delivery" value="${value}" ${method === value ? 'checked' : ''}><span>${value === 'delivery' ? copy.delivery : copy.pickup}<strong>${value === 'delivery' ? formatPrice(deliveryPrice) : copy.free}</strong></span></label>`).join('')}</div></fieldset><dl class="cart-totals" aria-live="polite" aria-atomic="true"><div><dt>${copy.subtotal}</dt><dd>${formatPrice(subtotal)}</dd></div>${discountAmount ? `<div><dt>${couponLabel(applied)}</dt><dd>−${formatPrice(discountAmount)}</dd></div>` : ''}<div><dt>${method === 'pickup' ? copy.pickup : copy.shipping}</dt><dd>${shipping ? formatPrice(shipping) : copy.free}</dd></div><div class="cart-total"><dt>${copy.total}</dt><dd>${formatPrice(total)}</dd></div></dl><a class="button cart-whatsapp" href="${whatsappUrl(makeWhatsappMessage(products, applied, method))}" target="_blank" rel="external noopener" aria-label="${copy.openWhatsapp}">${icon('whatsapp')} ${copy.whatsapp}</a><p class="cart-terms">${applied?.code === promoCode ? copy.promoMessage : ''} <a href="terms.html">${copy.terms}</a></p>`;
+  const totalsMarkup = `<fieldset class="cart-delivery"><legend>${copy.receiving}</legend><div class="cart-delivery-options">${['pickup','delivery'].map(value => `<label><input type="radio" name="cart-delivery" value="${value}" ${method === value ? 'checked' : ''}><span>${value === 'delivery' ? copy.delivery : copy.pickup}<strong>${value === 'delivery' ? formatPrice(deliveryPrice) : copy.free}</strong></span></label>`).join('')}</div></fieldset><dl class="cart-totals" aria-live="polite" aria-atomic="true"><div><dt>${copy.subtotal}</dt><dd>${formatPrice(subtotal)}</dd></div>${discountAmount ? `<div><dt>${couponLabel(applied)}</dt><dd>−${formatPrice(discountAmount)}</dd></div>` : ''}<div><dt>${method === 'pickup' ? copy.pickup : copy.shipping}</dt><dd>${shipping ? formatPrice(shipping) : copy.free}</dd></div><div class="cart-total"><dt>${copy.total}</dt><dd>${formatPrice(total)}</dd></div></dl><a class="button cart-whatsapp" href="${whatsappUrl(makeWhatsappMessage(products, applied, method))}" target="_blank" rel="external noopener" aria-label="${copy.openWhatsapp}">${icon('whatsapp')} ${copy.whatsapp}</a><p class="cart-terms">${novemberIsActive() ? novemberTerms() : applied?.code === promoCode ? copy.promoMessage : ''} <a href="terms.html">${copy.terms}</a></p>`;
   body.innerHTML = (products.length ? `<div class="cart-lines">${items}</div>` : emptyMarkup) + couponMarkup + (products.length ? totalsMarkup : '');
   body.querySelectorAll('input[name=cart-delivery]').forEach(input => input.addEventListener('change', () => {
     if (!input.checked) return;
@@ -664,6 +686,7 @@ function setLanguage(nextLanguage, historyMode = 'replace') {
   }
   if (page === 'product') renderProduct();
   if (page === 'document') renderDocument();
+  refreshPriceDisplays();
   const restoreScroll = () => {
     const previousBehavior = document.documentElement.style.scrollBehavior;
     document.documentElement.style.scrollBehavior = 'auto';
@@ -716,6 +739,7 @@ function footer() {
 
 function renderShell() {
   document.querySelector('[data-header]').innerHTML = header();
+  renderSaleBanner();
   document.querySelector('[data-footer]').innerHTML = footer();
   try { localStorage.setItem('romic:language', language); } catch (_) {}
   enableImageFallbacks();
@@ -726,6 +750,7 @@ function renderShell() {
 }
 
 function localizeShellInPlace() {
+  renderSaleBanner();
   const navigationLabels = [copy.collection, copy.craft, copy.faq];
   const skipLink = document.querySelector('.skip-link');
   if (skipLink) skipLink.textContent = copy.skip;
@@ -750,7 +775,7 @@ function localizeShellInPlace() {
     searchDialog.querySelector('input').placeholder = copy.search;
     searchDialog.querySelector('[data-search-close]').setAttribute('aria-label',isHebrew ? 'סגירת החיפוש' : 'Close search');
   }
-  document.querySelectorAll('.instagram-link').forEach(link => link.setAttribute('aria-label', `${copy.instagram} — ${copy.openInstagram}`));
+  document.querySelectorAll('.instagram-link').forEach(link => { link.setAttribute('aria-label', `${copy.instagram} — ${copy.openInstagram}`); link.textContent = copy.instagram; });
   document.querySelectorAll('[data-cart-label]').forEach(label => label.textContent = copy.bag);
   document.querySelectorAll('[data-open-cart]').forEach(button => button.setAttribute('aria-label', copy.bag));
   const cartTitle = document.querySelector('#cart-title');
@@ -1078,7 +1103,7 @@ function renderCustomizer() {
     <div class="customizer-visual"><img data-custom-image src="" alt="" loading="lazy" decoding="async" width="1200" height="1500"><span class="customizer-live" aria-live="polite" data-custom-live></span></div>
     <div class="customizer-controls"><fieldset><legend>01 · ${copy.model}</legend><div class="model-options" data-model-options></div></fieldset><fieldset><legend>02 · ${copy.colour}</legend><div class="color-options" data-color-options></div></fieldset>
     <div class="customizer-summary"><div><span>${copy.basePrice}</span><strong data-custom-price data-refresh-custom-price></strong></div><div><span>${copy.bagBody}</span><strong data-custom-size></strong></div></div>
-    <p class="customizer-extras">${copy.extraNote}</p><a class="button button-light customizer-cta" href="${whatsappBase}" target="_blank" rel="external noopener" data-custom-whatsapp>${icon('whatsapp')} ${copy.messageRomic}</a><details class="customizer-details"><summary>${copy.detailsLabel}</summary><div><p class="customizer-note">${copy.customNote}</p><p class="customizer-visual-note">${copy.customVisual}</p></div></details></div></div>`;
+    <p class="customizer-sale-note" data-custom-sale-note ${novemberIsActive() ? '' : 'hidden'}>${isHebrew ? '25% הנחה גם על עיצוב אישי · עד 8.11 כולל' : '25% off custom designs too · Through 8 Nov'}</p><p class="customizer-extras">${copy.extraNote}</p><a class="button button-light customizer-cta" href="${whatsappBase}" target="_blank" rel="external noopener" data-custom-whatsapp>${icon('whatsapp')} ${copy.messageRomic}</a><details class="customizer-details"><summary>${copy.detailsLabel}</summary><div><p class="customizer-note">${copy.customNote}</p><p class="customizer-visual-note">${copy.customVisual}</p></div></details></div></div>`;
   const image = root.querySelector('[data-custom-image]'), live = root.querySelector('[data-custom-live]'), price = root.querySelector('[data-custom-price]'), size = root.querySelector('[data-custom-size]'), modelOptions = root.querySelector('[data-model-options]'), colorOptions = root.querySelector('[data-color-options]');
   const cta = root.querySelector('[data-custom-whatsapp]');
   let customWhatsappMessage = '';
@@ -1097,7 +1122,7 @@ function renderCustomizer() {
     const coupon = activeCoupon();
     const finalPrice = currentPrice(selectedModel, true);
     const pricing = isHebrew ? `מחיר בסיס ${formatPrice(finalPrice)}. תוספות יתומחרו בנפרד.` : `Base price ${formatPrice(finalPrice)}. Extras are priced separately.`;
-    const offer = coupon?.custom ? ` ${isHebrew ? 'קוד קופון' : 'Coupon'} ${coupon.code} · ${coupon.percent}%` : '';
+    const offer = coupon?.custom ? ` ${coupon.automatic ? (isHebrew ? 'מבצע נובמבר' : 'November Sale') : `${isHebrew ? 'קוד קופון' : 'Coupon'} ${coupon.code}`} · ${coupon.percent}%` : '';
     customWhatsappMessage = `${message} ${pricing}${offer}`;
     cta.href = whatsappUrl(customWhatsappMessage);
     root.dataset.selectedModel = selectedModel.id;
