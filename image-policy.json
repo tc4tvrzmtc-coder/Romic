@@ -39,7 +39,8 @@
     "soho": "#423d3c",
     "cannes": "#b8afa7",
     "jerus": "#bc955e",
-    "malibu": "#a9cdef"
+    "malibu": "#a9cdef",
+    "cloud-nine": "#eee9e4"
   },
   "derivatives": {
     "cards/600": 600,
@@ -63,13 +64,29 @@
     "assets/products/jerus.jpg",
     "assets/products/jerus-held.jpg",
     "assets/products/malibu.jpg",
-    "assets/products/malibu-model.jpg"
+    "assets/products/malibu-model.jpg",
+    "assets/products/cloud-nine-black.jpg",
+    "assets/products/cloud-nine-black-open.jpg",
+    "assets/products/cloud-nine-white.jpg",
+    "assets/products/cloud-nine-white-open.jpg",
+    "assets/products/cloud-nine-beige.jpg",
+    "assets/products/cloud-nine-beige-open.jpg",
+    "assets/products/cloud-nine-sage.jpg",
+    "assets/products/cloud-nine-sage-open.jpg",
+    "assets/products/cloud-nine-pink.jpg",
+    "assets/products/cloud-nine-pink-open.jpg",
+    "assets/products/cloud-nine-black-worn.jpg",
+    "assets/products/cloud-nine-white-worn.jpg",
+    "assets/products/cloud-nine-beige-worn.jpg",
+    "assets/products/cloud-nine-sage-worn.jpg",
+    "assets/products/cloud-nine-pink-worn.jpg"
   ],
   "preserveSceneProducts": [
     "paris",
     "soho",
     "cannes",
     "jerus",
-    "malibu"
+    "malibu",
+    "cloud-nine"
   ]
 }
