@@ -22,3 +22,13 @@ The build validates reviewed master images, derivatives, local resources, produc
 Browser checks include Hebrew desktop homepage and product, pink selection, automatic and BLACK20 pricing, and 375px homepage. A mobile title overflow found during QA was corrected before deployment. Further final checks are recorded below.
 
 The existing WhatsApp-based ordering process remains in place. No payment or real order is submitted during QA. Touch swipe is implemented but requires a physical touch-device acceptance check; desktop browser QA cannot certify device gestures.
+
+## Final deployment and acceptance results
+
+Production source commit: `304dd2393eb750b24746e363c60a0c77f04d718a`. The uploaded Git tree exactly matched the locally tested tree (`e47c0bf3547f1d3afd527fe95a741d683f24ad7e`).
+
+GitHub Actions deployment [44194231899](https://github.com/tc4tvrzmtc-coder/Romic/actions/runs/44194231899) completed successfully. All build, image validation, site integrity, test and audit gates passed. Final output: 62 HTML pages, 50 product pages, 107 reviewed image masters, zero known production dependency vulnerabilities.
+
+Verified live at https://romic.co.il/he/: Black Friday banner, black CLOUD NINE hero, automatic 20% prices and custom-design discount. Verified the live CLOUD NINE white variant, correct 23 × 14 × 8 cm dimensions, ₪280 bag total, selected colour in WhatsApp, and English switching retaining the white selection. Removed the test selection afterwards; no order/message/payment submitted.
+
+Responsive browser QA at 375px covered both languages, homepage, product gallery and two-colour cart. Two CLOUD NINE colours total ₪560 and delivery is free; BLACK20 leaves the total unchanged. Physical iPhone gesture testing remains outside the browser verification performed here.
