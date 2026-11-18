@@ -25,13 +25,13 @@ const COPY = {
   en: {
     skip:'Skip to content', collection:'Collection', craft:'Make It Yours', service:'Delivery', faq:'FAQ', instagram:'Instagram', menu:'Menu', close:'Close menu', language:'עברית',
     heroKicker:'HANDMADE IN ISRAEL · BY ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'DISCOVER THE COLLECTION', scroll:'SCROLL TO FIND YOURS',
-    collectionTitle:'FIND YOUR ROMIC.', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Collection order', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
+    collectionTitle:'The collection', search:'Search by name or style', noResults:'No bags match your search.', filters:'FILTER & SORT', all:'All', clutches:'Clutches', topHandle:'Top handle', shoulder:'Shoulder', sort:'Sort', featured:'Collection order', lowHigh:'Price: low to high', highLow:'Price: high to low', fullCollection:'VIEW THE FULL COLLECTION',
     readyTitle:'FROM THE COLLECTION', readyCopy:'Delivery within 7 business days.', customTitle:'MAKE IT YOURS', customCopy:'Choose a model and colour. Delivery within 7 business days.', shippingTitle:'DELIVERY', shippingCopy:'Israel only · ₪30 delivery · free over ₪500 after discounts · free pickup in Givatayim.',
     privacy:'Privacy', accessibility:'Accessibility', terms:'Terms & offers', rights:'© 2026 Romic. All rights reserved.', handmade:'Handmade bags · Israel', email:'Email',
     back:'BACK TO COLLECTION', size:'SIZE', dimensions:'BAG BODY', order:'ADD TO BAG', save:'ADD TO BAG', saved:'IN YOUR BAG',
     dimsNote:'Measurements refer to the bag body only, excluding handles and straps. As every bag is handmade, slight variations may occur.', deliveryNote:'Delivery within 7 business days · Israel delivery ₪30 · free over ₪500 after discounts · free pickup in Givatayim.', dmNote:'Your selection opens in Romi’s WhatsApp chat. Review your message and tap Send.',
     personalTitle:'WANT A DIFFERENT COLOUR?', personalCopy:'Choose a Romic model, then make it yours.', personalLink:'EXPLORE MAKE IT YOURS', invalid:'Bag not found', invalidCopy:'This design may no longer be available.',
-    finderHint:'NEED HELP CHOOSING?', finderOpen:'FIND YOUR BAG', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
+    finderHint:'NEED HELP CHOOSING?', finderOpen:'Find your bag', finderClose:'Close bag finder', finderCarry:'HOW DO YOU WANT TO CARRY IT?', finderSize:'WHAT SIZE DO YOU WANT?', finderDetail:'PICK A DETAIL', hand:'In hand', onShoulder:'On shoulder', clutch:'Clutch', small:'Small', medium:'Medium', large:'Large', clean:'Clean', chain:'Chain', pearls:'Pearls', matches:'YOUR MATCHES', yourRomic:'YOUR ROMIC.', noExact:'No exact match in the ready-made collection.', makeYours:'MAKE IT YOURS',
     model:'CHOOSE A MODEL', colour:'CHOOSE A COLOUR', basePrice:'BASE PRICE', bagBody:'BAG BODY', messageRomic:'SEND YOUR SELECTION ON WHATSAPP', extraNote:'Extras cost more.', detailsLabel:'More details', customLead:'Choose a model. Choose a colour.', customNote:'Base price: one solid colour with the standard handle and hardware. Straps, colour combinations, extra handles and accessories cost extra.', customVisual:'Visualisation for reference. Handmade colour and measurements may vary slightly.',
     copied:'Your message is ready in WhatsApp. Tap Send when you’re ready.', picksCopied:'Your bag is ready in WhatsApp. Tap Send when you’re ready.', picksLabel:'IN YOUR BAG', viewImage:'View', remove:'Remove', openInstagram:'open Romic on Instagram',
     bag:'My bag', bagTitle:'Your bag', bagEmpty:'Your bag is empty.', keepBrowsing:'KEEP BROWSING', subtotal:'Subtotal', discount:'Launch offer · 20%', total:'Final total', receiving:'Delivery or pickup', delivery:'Delivery in Israel', pickup:'Pickup in Givatayim', free:'Free', shipping:'Delivery', couponLabel:'Coupon code', couponPlaceholder:'Enter code', applyCoupon:'Apply', couponDone:'Applied', couponApplied:'20% applied to ready-made bags', couponInvalid:'That code doesn’t match. Check it and try again.', couponExpired:'The launch offer has ended.', whatsapp:'SHARE YOUR SELECTION', offerTitle:'CELEBRATING OUR LAUNCH', offerSubtitle:'Off the collection', offerCodeLabel:'Your launch code', offerTerms:'20% off ready-made collection bags · Through 31 October 2026, inclusive. Custom designs and delivery are excluded.', offerAction:'EXPLORE THE COLLECTION', offerClose:'Close offer',
@@ -40,7 +40,7 @@ const COPY = {
   he: {
     skip:'דילוג לתוכן', collection:'קולקציה', craft:'עיצוב אישי', service:'משלוחים', faq:'שאלות נפוצות', instagram:'אינסטגרם', menu:'תפריט', close:'סגירת התפריט', language:'EN',
     heroKicker:'עבודת יד ישראלית · ROMI COHEN', heroTitle:'CHOOSE YOUR\nROMIC.', heroIntro:'', heroButton:'לצפייה בקולקציה', scroll:'גלי את התיק שלך',
-    collectionTitle:'FIND YOUR ROMIC.', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'סדר הקולקציה', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
+    collectionTitle:'הקולקציה', search:'חיפוש לפי שם או סוג', noResults:'לא נמצאו תיקים שמתאימים לחיפוש.', filters:'סינון ומיון', all:'הכול', clutches:'קלאצ׳ים', topHandle:'תיקי יד', shoulder:'תיקי כתף', sort:'מיון', featured:'סדר הקולקציה', lowHigh:'מחיר: מהנמוך לגבוה', highLow:'מחיר: מהגבוה לנמוך', fullCollection:'לכל הקולקציה',
     readyTitle:'תיק מהקולקציה', readyCopy:'אספקה עד 7 ימי עסקים.', customTitle:'תיקים בעיצוב אישי', customCopy:'בחרי דגם וצבע. אספקה עד 7 ימי עסקים.', shippingTitle:'משלוחים', shippingCopy:'משלוחים בישראל בלבד · ₪30 · חינם מעל ₪500 לאחר הנחות · איסוף עצמי מגבעתיים ללא עלות.',
     privacy:'מדיניות פרטיות', accessibility:'הצהרת נגישות', terms:'תנאים ומבצעים', rights:'© 2026 Romic. כל הזכויות שמורות.', handmade:'תיקים בעבודת יד · ישראל', email:'אימייל',
     back:'חזרה לקולקציה', size:'מידה', dimensions:'מידות גוף התיק', order:'הוסיפי לסל שלי', save:'הוסיפי לסל שלי', saved:'נוסף לסל',
@@ -660,6 +660,7 @@ function applyHomeCopy() {
   document.querySelector('[data-hero-button]').textContent = isHebrew ? 'לגלות את הקולקציה' : 'EXPLORE THE COLLECTION';
   document.querySelector('.cloud-hero-price').textContent = blackIsActive() ? (isHebrew ? 'עד 30.11.2026 · BLACK20 · ללא כפל הנחות' : 'Through 30.11.2026 · BLACK20 · Offers cannot be combined') : '';
   document.querySelector('[data-collection-title]').textContent = copy.collectionTitle;
+  document.querySelector('[data-collection-title]').lang = language;
   document.querySelector('[data-scroll-cue]')?.replaceChildren(document.createTextNode(copy.scroll), document.createRange().createContextualFragment(icon('down')));
   document.querySelector('[data-open-finder] span').textContent = copy.finderHint;
   document.querySelector('[data-open-finder] strong').textContent = copy.finderOpen;
@@ -921,7 +922,7 @@ function productCard(product) {
     <button class="save-pick" type="button" data-add-to-bag="${product.id}" aria-label="${added ? copy.saved : copy.save} ${displayName}" aria-pressed="${added}">${bagIcon()}</button>
     <a class="product-card-link" data-quick-product="${product.id}" href="${bagProductUrl(product)}" aria-label="${displayName}, ${formatPrice(currentPrice(product))}, ${product.size}, ${product.width} × ${product.height} cm">
       <div class="product-image"><img class="product-image-primary" src="../assets/cards/600/${product.image}" srcset="../assets/cards/600/${product.image} 600w, ../assets/cards/900/${product.image} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.image}" alt="${product.name} — ${isHebrew ? product.he : product.en}" loading="lazy" decoding="async" width="900" height="1125">${alternateImage}</div>
-      <div class="product-meta"><h3>${product.name}</h3>${product.color ? `<span class="product-card-color">${isHebrew ? product.color.he : product.color.en}</span>` : ''}${priceMarkup(product)}<span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
+      <div class="product-meta"><h3>${product.name}</h3><span class="product-card-color"${product.color ? '' : ' aria-hidden="true"'}>${product.color ? (isHebrew ? product.color.he : product.color.en) : '&nbsp;'}</span>${priceMarkup(product)}<span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
     </a></article>`;
 }
 
@@ -993,16 +994,16 @@ function renderCollection() {
     filterPanel.hidden = isOpen;
   });
   document.addEventListener('click', event => {
-    if (filterPanel.hidden || event.target.closest('.collection-tool-shell')) return;
+    if (filterPanel.hidden || event.target.closest('.collection-tool-shell, .collection-tools, .collection-tool-toggle')) return;
     filterPanel.hidden = true;
     filterToggle.setAttribute('aria-expanded', 'false');
     filterToggle.lastElementChild.textContent = '+';
   });
   document.addEventListener('focusin', event => {
-    if (filterPanel.hidden || event.target.closest('.collection-tool-shell')) return;
+    if (filterPanel.hidden || event.target.closest('.collection-tool-shell, .collection-tools, .collection-tool-toggle')) return;
     filterPanel.hidden = true; filterToggle.setAttribute('aria-expanded','false'); filterToggle.lastElementChild.textContent = '+';
   });
-  document.querySelector('.collection-tool-shell')?.addEventListener('keydown', event => {
+  document.querySelector('.section-head')?.addEventListener('keydown', event => {
     if (event.key !== 'Escape' || filterPanel.hidden) return;
     event.preventDefault();
     filterPanel.hidden = true;
@@ -1578,6 +1579,7 @@ function renderProduct() {
   const imageBackdrop = image => typeof ROMIC_IMAGE_BACKDROPS !== 'undefined' ? ROMIC_IMAGE_BACKDROPS[image.split('?')[0]] || '#e4d8d3' : '#e4d8d3';
   const [initialWidth, initialHeight] = imageSize(gallery[0]);
   const galleryMarkup = `<div class="product-gallery" data-product-gallery>
+    ${product.variants ? `<fieldset class="cloud-colors"><legend>${isHebrew ? 'בחרי צבע' : 'Choose a colour'}: <strong data-chosen-color aria-live="polite">${isHebrew ? selected.he : selected.en}</strong></legend><div>${product.variants.map(v => `<button type="button" class="cloud-swatch" data-color="${v.id}" aria-label="${isHebrew ? v.he : v.en}" aria-pressed="${v.id === selected.id}"><img src="../assets/gallery-thumbs/${v.image}" data-fallback-src="../assets/products/${v.image}" alt="" width="64" height="64"></button>`).join('')}</div></fieldset>` : ''}
     <div class="product-hero-image" style="aspect-ratio:4/5;--gallery-surface:${imageBackdrop(gallery[0])}"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name}${selected ? ' · '+(isHebrew ? selected.he : selected.en) : ''} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"><span class="gallery-count" aria-live="polite">1 / ${gallery.length}</span><button class="gallery-control gallery-prev" type="button" data-gallery-step="-1" aria-label="${isHebrew ? 'תמונה קודמת' : 'Previous image'}">‹</button><button class="gallery-control gallery-next" type="button" data-gallery-step="1" aria-label="${isHebrew ? 'תמונה הבאה' : 'Next image'}">›</button><button class="gallery-control gallery-zoom" type="button" data-gallery-zoom aria-label="${isHebrew ? 'הגדלת התמונה' : 'Enlarge image'}">＋</button></div>
     ${gallery.length > 1 ? `<div class="product-thumbnails" aria-label="${isHebrew ? `גלריית תמונות של ${product.name}` : `${product.name} image gallery`}">${gallery.map((image, index) => `<button type="button" class="product-thumbnail" data-gallery-image="${image}" data-gallery-index="${index}" aria-label="${copy.viewImage} ${index + 1} / ${gallery.length}" aria-pressed="${index === 0}"><img src="../assets/gallery-thumbs/${image}" data-fallback-src="../assets/products/${image}" alt="" loading="lazy" decoding="async" width="240" height="300"></button>`).join('')}</div>` : ''}
   </div>`;
@@ -1586,7 +1588,7 @@ function renderProduct() {
     ${galleryMarkup}
     <section class="product-info" aria-labelledby="product-name">
     <div class="product-purchase"><dl class="product-specs"><div><dt>${copy.size}</dt><dd>${product.size}</dd></div><div><dt>${copy.dimensions}</dt><dd>${product.width} × ${product.height}${product.depth ? ` × ${product.depth}` : ''} cm</dd></div></dl>
-    ${product.variants ? `<fieldset class="cloud-colors"><legend>${isHebrew ? 'בחרי צבע' : 'Choose a colour'}: <strong data-chosen-color aria-live="polite">${isHebrew ? selected.he : selected.en}</strong></legend><div>${product.variants.map(v => `<button type="button" class="cloud-swatch" data-color="${v.id}" aria-label="${isHebrew ? v.he : v.en}" aria-pressed="${v.id === selected.id}"><img src="../assets/gallery-thumbs/${v.image}" data-fallback-src="../assets/products/${v.image}" alt="" width="64" height="64"></button>`).join('')}</div></fieldset>` : ''}
+
     <div class="product-actions"><button class="button product-cta" type="button" data-add-to-bag="${product.id}${selected ? ':' + selected.id : ''}" data-open-bag-after-add aria-label="${copy.save} ${product.name}">${bagIcon()} ${copy.order}</button></div><p class="dm-note">${copy.dmNote}</p><p class="product-note">${copy.dimsNote}</p><p class="delivery-note">${copy.deliveryNote}</p><details class="product-details"><summary>${isHebrew ? 'משלוחים, איסוף ושירות' : 'Delivery, collection and support'}</summary><p>${isHebrew ? 'אספקה עד 7 ימי עסקים. משלוח בישראל ₪30; חינם מעל ₪500 לאחר הנחה. איסוף עצמי מגבעתיים ללא עלות.' : 'Ready within 7 business days. Israel delivery ₪30; free over ₪500 after discounts. Free collection in Givatayim.'}</p><a href="terms.html">${isHebrew ? 'תנאי הזמנה והחזרות' : 'Order and return terms'}</a></details></div></section></div><aside class="product-buy-bar" aria-label="${copy.order}"><div>${priceMarkup(product)}<small data-buy-color>${product.name}${selected ? ' · '+(isHebrew?selected.he:selected.en) : ''}</small></div><button class="button" type="button" data-add-to-bag="${product.id}${selected ? ':'+selected.id : ''}" data-open-bag-after-add>${copy.order}</button></aside>
     <a class="product-custom-link" href="./#customize"><span>${copy.personalTitle}</span><strong>${copy.personalCopy}</strong><em>${copy.personalLink} ${icon('arrow')}</em></a></div>`;
   const mainImage = main.querySelector('[data-gallery-main]');
@@ -1598,7 +1600,11 @@ function renderProduct() {
     history.back();
   });
   let galleryIndex = 0;
-  const thumbnails = [...main.querySelectorAll('[data-gallery-image]')];
+  let thumbnails = [...main.querySelectorAll('[data-gallery-image]')];
+  function bindThumbnails() {
+    thumbnails = [...main.querySelectorAll('[data-gallery-image]')];
+    thumbnails.forEach((button,index)=>button.addEventListener('click',()=>showImage(index)));
+  }
   function showImage(index) {
     galleryIndex = (index + gallery.length) % gallery.length;
     const [width,height] = imageSize(gallery[galleryIndex]);
@@ -1609,7 +1615,7 @@ function renderProduct() {
     main.querySelector('.gallery-count').textContent=`${galleryIndex+1} / ${gallery.length}`;
     thumbnails.forEach((button,index)=>button.setAttribute('aria-pressed', String(index===galleryIndex)));
   }
-  thumbnails.forEach((button,index)=>button.addEventListener('click',()=>showImage(index)));
+  bindThumbnails();
   main.querySelectorAll('[data-gallery-step]').forEach(button=>{
     button.hidden=gallery.length<2;
     button.addEventListener('click',()=>showImage(galleryIndex+Number(button.dataset.galleryStep)));
@@ -1645,9 +1651,10 @@ function renderProduct() {
     main.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
     main.querySelectorAll('[data-open-bag-after-add]').forEach(b=>b.dataset.addToBag=`${baseProduct.id}:${selected.id}`);
     main.querySelector('[data-buy-color]').textContent=`${product.name} · ${isHebrew?selected.he:selected.en}`;
-    thumbnails.forEach((b,i)=>{b.dataset.galleryImage=gallery[i];b.querySelector('img').src=`../assets/gallery-thumbs/${gallery[i]}`;b.querySelector('img').dataset.fallbackSrc=`../assets/products/${gallery[i]}`;});
+    main.querySelector('.product-thumbnails').innerHTML=gallery.map((image,i)=>`<button type="button" class="product-thumbnail" data-gallery-image="${image}" data-gallery-index="${i}" aria-label="${copy.viewImage} ${i+1} / ${gallery.length}" aria-pressed="${i===0}"><img src="../assets/gallery-thumbs/${image}" data-fallback-src="../assets/products/${image}" alt="" loading="lazy" decoding="async" width="240" height="300"></button>`).join('');
+    bindThumbnails();
     structuredData.textContent=JSON.stringify({...JSON.parse(structuredData.textContent),image:gallery.map(image=>`${location.origin}${siteBasePath}/assets/products/${image}`)});
-    showImage(galleryIndex);enableImageFallbacks();
+    showImage(0);enableImageFallbacks();
   }));
 }
 

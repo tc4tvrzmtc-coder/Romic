@@ -6,6 +6,7 @@ import sharp from 'sharp';
 import {attachOriginalAlpha} from './image-mask.mjs';
 import {contactShadow} from './image-shadow.mjs';
 import {fullSceneFrame} from './image-scene-frame.mjs';
+import {replaceBackgroundOnly} from './image-background.mjs';
 import {productHtml} from './product-html.mjs';
 
 const root = process.cwd();
@@ -27,7 +28,8 @@ const webpName = name => safeName(name).replace(/\.[^.]+$/, '.webp');
 const sources = new Map();
 const add = (source, target, background, needsMask = false) => {
   if (sources.has(target) && sources.get(target).source !== source) throw new Error(`Duplicate output ${target}`);
-  sources.set(target, { source, target, background, needsMask });
+  const backgroundOnly=policy.backgroundOnlySources?.includes(source);
+  sources.set(target, { source, target, background:policy.sourceBackgrounds?.[source] || background, needsMask:needsMask || backgroundOnly, backgroundOnly });
 };
 for (const product of products) {
   if (!product.image || !product.gallery?.includes(product.image)) throw new Error(`Missing primary/gallery image for ${product.id}`);
@@ -87,8 +89,8 @@ const validate = async (file, width, height) => {
 };
 if (checkOnly) {
   for (const entry of prepared) {
-    const width = entry.needsMask ? 1200 : Math.min(1200, entry.meta.width, Math.floor(1500 * entry.meta.width / entry.meta.height));
-    const height = entry.needsMask ? 1500 : Math.round(width * entry.meta.height / entry.meta.width);
+    const width = entry.needsMask && !entry.backgroundOnly ? 1200 : Math.min(1200, entry.meta.width, Math.floor(1500 * entry.meta.width / entry.meta.height));
+    const height = entry.needsMask && !entry.backgroundOnly ? 1500 : Math.round(width * entry.meta.height / entry.meta.width);
     await validate(path.join(output, entry.target), width, height);
     if (entry.target.startsWith('assets/products/')) {
       const name = path.basename(entry.target);
@@ -111,13 +113,15 @@ for (const entry of prepared) {
   const innerWidth = Math.round(1200 * (1 - policy.margin * 2));
   const innerHeight = Math.round(1500 * (1 - policy.margin * 2));
   let original = sharp(entry.bytes).rotate();
-  if (entry.maskBytes) {
+  if (entry.backgroundOnly) {
+    original=sharp(await replaceBackgroundOnly(entry.bytes,entry.maskBytes,entry.background));
+  } else if (entry.maskBytes) {
     // Attach only alpha to decoded original RGB. Never generate or repaint product pixels.
     const rgba = await attachOriginalAlpha(entry.bytes,entry.maskBytes);
     const [x1,y1,x2,y2] = entry.maskEntry.bbox;
     original = sharp(rgba).extract({left:x1,top:y1,width:x2-x1,height:y2-y1});
   }
-  if (!entry.maskBytes) {
+  if (!entry.maskBytes || entry.backgroundOnly) {
     // Full photographs retain their native aspect ratio: no crop, generated detail or pale frame.
     const width = Math.min(1200, entry.meta.width, Math.floor(1500 * entry.meta.width / entry.meta.height));
     const height = Math.round(width * entry.meta.height / entry.meta.width);
@@ -168,7 +172,7 @@ if (documentSource) for (const language of ['he','en']) {
 // Version all image requests so returning browsers load the current assets.
 const versionHash = crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy));
 // Rendering changes must invalidate image caches even when source photos are unchanged.
-for (const name of ['build-images.mjs', 'image-mask.mjs', 'image-shadow.mjs','image-scene-frame.mjs','product-html.mjs']) versionHash.update(await fs.readFile(new URL(name, import.meta.url)));
+for (const name of ['build-images.mjs', 'image-mask.mjs', 'image-shadow.mjs','image-scene-frame.mjs','image-background.mjs','product-html.mjs']) versionHash.update(await fs.readFile(new URL(name, import.meta.url)));
 for (const name of ['app.js', 'styles.css', 'documents.js', 'data.js']) {
   versionHash.update(await fs.readFile(path.join(site, name)).catch(error => {
     if (error.code !== 'ENOENT') throw error;
