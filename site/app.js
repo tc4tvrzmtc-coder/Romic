@@ -113,7 +113,7 @@ function collectionProducts({ expanded = false, query = '', category = 'all', so
   if (query) { const matches = new Set(searchProducts(query).map(product => product.id)); products = products.filter(product => matches.has(product.id)); }
   if (sort === 'price-asc') products = products.slice().sort((a,b) => a.price - b.price || a.name.localeCompare(b.name));
   if (sort === 'price-desc') products = products.slice().sort((a,b) => b.price - a.price || a.name.localeCompare(b.name));
-  return products;
+  return products.flatMap(product => product.variants ? product.variants.map(v => ({...product, id: `${product.id}:${v.id}`, baseId: product.id, color: v, image:v.image, gallery:v.gallery})) : [product]);
 }
 function finderProducts({ type, size, detail } = {}) {
   return catalogProducts().filter(product => (!type || product.types.includes(type))
@@ -175,7 +175,7 @@ function refreshPromotionState() {
       item.querySelector('p').textContent = entries[index][1];
     });
     refreshPriceDisplays();
-    const heroPrice = document.querySelector('.cloud-hero-price'); if (heroPrice && typeof ROMIC_PRODUCTS !== 'undefined') heroPrice.innerHTML = priceMarkup(ROMIC_PRODUCTS[0]);
+    const heroPrice = document.querySelector('.cloud-hero-price'); if (heroPrice) { heroPrice.textContent = blackIsActive() ? (isHebrew ? 'עד 30.11.2026 · BLACK20 · ללא כפל הנחות' : 'Through 30.11.2026 · BLACK20 · Offers cannot be combined') : ''; const offer=document.querySelector('[data-hero-offer]'); if(offer) offer.innerHTML=blackIsActive() ? `<strong>20%</strong> ${isHebrew?'הנחה על כל האתר':'off sitewide'}` : (isHebrew?'הקולקציה החדשה':'The new collection'); }
   }
   window.clearTimeout(promotionTimer);
   const now = Date.now();
@@ -328,7 +328,7 @@ function refreshPriceDisplays() {
     element.outerHTML = priceMarkup({price}, element.classList.contains('product-price') ? 'product-price' : 'price', custom);
   });
   document.querySelectorAll('[data-quick-product]').forEach(link => {
-    const product = ROMIC_PRODUCTS.find(item => item.id === link.dataset.quickProduct);
+    const product = resolveBag(link.dataset.quickProduct);
     if (product) link.setAttribute('aria-label', `${product.name}, ${formatPrice(currentPrice(product))}, ${product.size}`);
   });
   document.querySelector('[data-refresh-custom-price]')?.dispatchEvent(new Event('romic:price-refresh'));
@@ -625,13 +625,14 @@ function applyHomeCopy() {
   setMetaDescription(locale.description);
   replaceCanonical(`${location.origin}${siteBasePath}/${language}/`);
   updateAlternateLinks();
-  document.querySelector('[data-hero-kicker]').textContent = isHebrew ? 'הקולקציה החדשה · עבודת יד בישראל' : 'THE NEW COLLECTION · HANDMADE IN ISRAEL';
-  document.querySelector('[data-hero-title]').innerHTML = 'CLOUD<br>NINE.';
+  document.querySelector('[data-hero-kicker]').textContent = 'ROMIC / HANDMADE IN ISRAEL';
+  document.querySelector('[data-hero-title]').innerHTML = blackIsActive() ? 'Black <i>Friday</i>' : 'CLOUD <i>NINE</i>';
+  document.querySelector('[data-hero-offer]').innerHTML = blackIsActive() ? `<strong>20%</strong> ${isHebrew ? 'הנחה על כל האתר' : 'off sitewide'}` : (isHebrew ? 'הקולקציה החדשה' : 'The new collection');
   const heroIntro = document.querySelector('[data-hero-intro]');
-  heroIntro.textContent = isHebrew ? 'חמישה צבעים. עבודת יד. תחושה של ענן.' : 'Five colours. Made by hand. A softer kind of statement.';
+  heroIntro.textContent = isHebrew ? 'תיקים בעבודת יד. הפרטים שעושים את ההבדל.' : 'Handmade bags. Details that make the difference.';
   heroIntro.hidden = false;
-  document.querySelector('[data-hero-button]').textContent = isHebrew ? 'לגלות את CLOUD NINE' : 'DISCOVER CLOUD NINE';
-  document.querySelector('.cloud-hero-price').innerHTML = priceMarkup(ROMIC_PRODUCTS[0]);
+  document.querySelector('[data-hero-button]').textContent = isHebrew ? 'לגלות את הקולקציה' : 'EXPLORE THE COLLECTION';
+  document.querySelector('.cloud-hero-price').textContent = blackIsActive() ? (isHebrew ? 'עד 30.11.2026 · BLACK20 · ללא כפל הנחות' : 'Through 30.11.2026 · BLACK20 · Offers cannot be combined') : '';
   document.querySelector('[data-collection-title]').textContent = copy.collectionTitle;
   document.querySelector('[data-scroll-cue]')?.replaceChildren(document.createTextNode(copy.scroll), document.createRange().createContextualFragment(icon('down')));
   document.querySelector('[data-open-finder] span').textContent = copy.finderHint;
@@ -881,17 +882,18 @@ function initMenu() {
 }
 
 function productCard(product) {
-  const [tone, background] = productDesign[product.id] || ['stone', '#e1d9cf'];
+  const [tone, background] = productDesign[product.baseId || product.id] || ['stone', '#e1d9cf'];
+  const displayName = product.name + (product.color ? ` · ${isHebrew ? product.color.he : product.color.en}` : '');
   const added = getSavedPicks().includes(product.id);
   const supportsHoverPreview = matchMedia('(hover:hover) and (pointer:fine)').matches;
   const alternateImage = supportsHoverPreview && product.gallery?.[1]
     ? `<img class="product-image-alt" data-alt-src="../assets/cards/600/${product.gallery[1]}" data-alt-srcset="../assets/cards/600/${product.gallery[1]} 600w, ../assets/cards/900/${product.gallery[1]} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.gallery[1]}" alt="" decoding="async" width="900" height="1125">`
     : '';
   return `<article class="product-card" data-tone="${tone}" data-product-id="${product.id}" style="--card-bg:${background}">
-    <button class="save-pick" type="button" data-add-to-bag="${product.id}" aria-label="${added ? copy.saved : copy.save} ${product.name}" aria-pressed="${added}">${bagIcon()}</button>
-    <a class="product-card-link" data-quick-product="${product.id}" href="product-${product.id}.html" aria-label="${product.name}, ${formatPrice(currentPrice(product))}, ${product.size}, ${product.width} × ${product.height} cm">
+    <button class="save-pick" type="button" data-add-to-bag="${product.id}" aria-label="${added ? copy.saved : copy.save} ${displayName}" aria-pressed="${added}">${bagIcon()}</button>
+    <a class="product-card-link" data-quick-product="${product.id}" href="${bagProductUrl(product)}" aria-label="${displayName}, ${formatPrice(currentPrice(product))}, ${product.size}, ${product.width} × ${product.height} cm">
       <div class="product-image"><img class="product-image-primary" src="../assets/cards/600/${product.image}" srcset="../assets/cards/600/${product.image} 600w, ../assets/cards/900/${product.image} 900w" sizes="(max-width:900px) 48vw, (max-width:1500px) 31vw, 460px" data-fallback-src="../assets/products/${product.image}" alt="${product.name} — ${isHebrew ? product.he : product.en}" loading="lazy" decoding="async" width="900" height="1125">${alternateImage}</div>
-      <div class="product-meta"><h3>${product.name}</h3>${priceMarkup(product)}<span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
+      <div class="product-meta"><h3>${product.name}</h3>${product.color ? `<span class="product-card-color">${isHebrew ? product.color.he : product.color.en}</span>` : ''}${priceMarkup(product)}<span class="product-card-size">${product.size} · ${product.width} × ${product.height} cm</span></div>
     </a></article>`;
 }
 
@@ -1514,8 +1516,8 @@ function renderProduct() {
   document.querySelectorAll('link[data-romic-canonical],script[data-romic-structured]').forEach(element => element.remove());
   const productId = new URLSearchParams(location.search).get('id') || location.pathname.match(/\/product-([a-z0-9-]+)\.html$/i)?.[1];
   const baseProduct = ROMIC_PRODUCTS.find(item => item.id === productId);
-  const selected = baseProduct?.variants?.find(v => v.id === new URLSearchParams(location.search).get('color')) || baseProduct?.variants?.[0];
-  const product = selected ? {...baseProduct,image:selected.image,gallery:selected.gallery} : baseProduct;
+  let selected = baseProduct?.variants?.find(v => v.id === new URLSearchParams(location.search).get('color')) || baseProduct?.variants?.[0];
+  let product = selected ? {...baseProduct,image:selected.image,gallery:selected.gallery} : baseProduct;
   const main = document.querySelector('[data-product]');
   if (!product) { main.innerHTML = `<div class="shell doc"><h1>${copy.invalid}</h1><p>${copy.invalidCopy}</p><a href="./">${copy.back}</a></div>`; return; }
   document.title = isHebrew && product.seoTitleHe ? product.seoTitleHe : `${product.name} | ROMIC`;
@@ -1530,19 +1532,19 @@ function renderProduct() {
   structuredData.textContent = JSON.stringify({ '@context':'https://schema.org', '@type':'Product', name:`Romic ${product.name}`, description:isHebrew ? product.he : product.en, image:(product.gallery || [product.image]).map(image => `${location.origin}${siteBasePath}/assets/products/${image}`), brand:{ '@type':'Brand', name:'Romic' }, offers:{ '@type':'Offer', priceCurrency:'ILS', price:currentPrice(product), availability:'https://schema.org/InStock', url:productCanonical } });
   document.head.append(structuredData);
   document.body.style.setProperty('--product-bg', (productDesign[product.id] || ['stone', '#e5ded5'])[1]);
-  const gallery = product.gallery || [product.image];
+  let gallery = product.gallery || [product.image];
   const imageSize = image => typeof ROMIC_IMAGE_SIZES !== 'undefined' ? ROMIC_IMAGE_SIZES[image.split('?')[0]] || [1200,1500] : [1200,1500];
   const [initialWidth, initialHeight] = imageSize(gallery[0]);
   const galleryMarkup = `<div class="product-gallery" data-product-gallery>
-    <div class="product-hero-image" style="aspect-ratio:${initialWidth}/${initialHeight}"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"></div>
+    <div class="product-hero-image" style="aspect-ratio:4/5"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"><span class="gallery-count" aria-live="polite">1 / ${gallery.length}</span><button class="gallery-control gallery-prev" type="button" data-gallery-step="-1" aria-label="${isHebrew ? 'תמונה קודמת' : 'Previous image'}">‹</button><button class="gallery-control gallery-next" type="button" data-gallery-step="1" aria-label="${isHebrew ? 'תמונה הבאה' : 'Next image'}">›</button><button class="gallery-control gallery-zoom" type="button" data-gallery-zoom aria-label="${isHebrew ? 'הגדלת התמונה' : 'Enlarge image'}">＋</button></div>
     ${gallery.length > 1 ? `<div class="product-thumbnails" aria-label="${isHebrew ? `גלריית תמונות של ${product.name}` : `${product.name} image gallery`}">${gallery.map((image, index) => `<button type="button" class="product-thumbnail" data-gallery-image="${image}" data-gallery-index="${index}" aria-label="${copy.viewImage} ${index + 1} / ${gallery.length}" aria-pressed="${index === 0}"><img src="../assets/gallery-thumbs/${image}" data-fallback-src="../assets/products/${image}" alt="" loading="lazy" decoding="async" width="240" height="300"></button>`).join('')}</div>` : ''}
   </div>`;
   main.innerHTML = `<div class="product-page"><a class="back-link" href="./#collection">${icon('arrow')} ${copy.back}</a><div class="product-layout">
     ${galleryMarkup}
-    <section class="product-info" aria-labelledby="product-name"><h1 class="product-name" id="product-name">${product.name}</h1><p class="product-description">${isHebrew ? product.he : product.en}</p>${priceMarkup(product,'product-price')}
-    <dl class="product-specs"><div><dt>${copy.size}</dt><dd>${product.size}</dd></div><div><dt>${copy.dimensions}</dt><dd>${product.width} × ${product.height}${product.depth ? ` × ${product.depth}` : ''} cm</dd></div></dl>
-    ${product.variants ? `<fieldset class="cloud-colors"><legend>${isHebrew ? 'בחרי צבע' : 'Choose a colour'}: <strong>${isHebrew ? selected.he : selected.en}</strong></legend><div>${product.variants.map(v => `<a class="cloud-swatch ${v.id === selected.id ? 'is-selected' : ''}" href="product-${product.id}.html?color=${v.id}" style="--swatch:${v.hex}" aria-label="${isHebrew ? v.he : v.en}" ${v.id === selected.id ? 'aria-current="true"' : ''}><span></span></a>`).join('')}</div></fieldset>` : ''}
-    <div class="product-actions"><button class="button product-cta" type="button" data-add-to-bag="${product.id}${selected ? ':' + selected.id : ''}" data-open-bag-after-add aria-label="${copy.save} ${product.name}">${bagIcon()} ${copy.order}</button></div><p class="dm-note">${copy.dmNote}</p><p class="product-note">${copy.dimsNote}</p><p class="delivery-note">${copy.deliveryNote}</p></section></div>
+    <section class="product-info" aria-labelledby="product-name"><div class="product-intro"><h1 class="product-name" id="product-name">${product.name}</h1><p class="product-description">${isHebrew ? product.he : product.en}</p>${priceMarkup(product,'product-price')}</div>
+    <div class="product-purchase"><dl class="product-specs"><div><dt>${copy.size}</dt><dd>${product.size}</dd></div><div><dt>${copy.dimensions}</dt><dd>${product.width} × ${product.height}${product.depth ? ` × ${product.depth}` : ''} cm</dd></div></dl>
+    ${product.variants ? `<fieldset class="cloud-colors"><legend>${isHebrew ? 'בחרי צבע' : 'Choose a colour'}: <strong data-chosen-color aria-live="polite">${isHebrew ? selected.he : selected.en}</strong></legend><div>${product.variants.map(v => `<button type="button" class="cloud-swatch" data-color="${v.id}" aria-label="${isHebrew ? v.he : v.en}" aria-pressed="${v.id === selected.id}"><img src="../assets/gallery-thumbs/${v.image}" data-fallback-src="../assets/products/${v.image}" alt="" width="64" height="64"></button>`).join('')}</div></fieldset>` : ''}
+    <div class="product-actions"><button class="button product-cta" type="button" data-add-to-bag="${product.id}${selected ? ':' + selected.id : ''}" data-open-bag-after-add aria-label="${copy.save} ${product.name}">${bagIcon()} ${copy.order}</button></div><p class="dm-note">${copy.dmNote}</p><p class="product-note">${copy.dimsNote}</p><p class="delivery-note">${copy.deliveryNote}</p><details class="product-details"><summary>${isHebrew ? 'משלוחים, איסוף ושירות' : 'Delivery, collection and support'}</summary><p>${isHebrew ? 'אספקה עד 7 ימי עסקים. משלוח בישראל ₪30; חינם מעל ₪500 לאחר הנחה. איסוף עצמי מגבעתיים ללא עלות.' : 'Ready within 7 business days. Israel delivery ₪30; free over ₪500 after discounts. Free collection in Givatayim.'}</p><a href="terms.html">${isHebrew ? 'תנאי הזמנה והחזרות' : 'Order and return terms'}</a></details></div></section></div><aside class="product-buy-bar" aria-label="${copy.order}"><div>${priceMarkup(product)}<small data-buy-color>${product.name}${selected ? ' · '+(isHebrew?selected.he:selected.en) : ''}</small></div><button class="button" type="button" data-add-to-bag="${product.id}${selected ? ':'+selected.id : ''}" data-open-bag-after-add>${copy.order}</button></aside>
     <a class="product-custom-link" href="./#customize"><span>${copy.personalTitle}</span><strong>${copy.personalCopy}</strong><em>${copy.personalLink} ${icon('arrow')}</em></a></div>`;
   const mainImage = main.querySelector('[data-gallery-main]');
   enableImageFallbacks();
@@ -1552,32 +1554,57 @@ function renderProduct() {
     event.preventDefault();
     history.back();
   });
-  main.querySelectorAll('[data-gallery-image]').forEach(button => button.addEventListener('click', () => {
-    if (button.getAttribute('aria-pressed') === 'true') return;
-    mainImage.classList.add('is-changing');
-    const [width,height] = imageSize(button.dataset.galleryImage);
-    mainImage.width = width;
-    mainImage.height = height;
-    mainImage.parentElement.style.aspectRatio = `${width}/${height}`;
-    mainImage.src = `../assets/products/${button.dataset.galleryImage}`;
-    mainImage.alt = isHebrew
-      ? `${product.name} — תמונה ${Number(button.dataset.galleryIndex) + 1} מתוך ${gallery.length}`
-      : `${product.name} — view ${Number(button.dataset.galleryIndex) + 1} of ${gallery.length}`;
-    main.querySelectorAll('[data-gallery-image]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-    mainImage.onload = () => mainImage.classList.remove('is-changing');
+  let galleryIndex = 0;
+  const thumbnails = [...main.querySelectorAll('[data-gallery-image]')];
+  function showImage(index) {
+    galleryIndex = (index + gallery.length) % gallery.length;
+    const [width,height] = imageSize(gallery[galleryIndex]);
+    mainImage.width=width; mainImage.height=height;
+    mainImage.src=`../assets/products/${gallery[galleryIndex]}`;
+    mainImage.alt=`${product.name}${selected ? ' · '+(isHebrew ? selected.he : selected.en) : ''} — ${galleryIndex+1} / ${gallery.length}`;
+    main.querySelector('.gallery-count').textContent=`${galleryIndex+1} / ${gallery.length}`;
+    thumbnails.forEach((button,index)=>button.setAttribute('aria-pressed', String(index===galleryIndex)));
+  }
+  thumbnails.forEach((button,index)=>button.addEventListener('click',()=>showImage(index)));
+  main.querySelectorAll('[data-gallery-step]').forEach(button=>{
+    button.hidden=gallery.length<2;
+    button.addEventListener('click',()=>showImage(galleryIndex+Number(button.dataset.galleryStep)));
+  });
+  const frame=mainImage.parentElement;
+  frame.tabIndex=0; frame.style.touchAction='pan-y';
+  frame.setAttribute('aria-label',isHebrew ? 'גלריית תמונות; דפדוף במקשי החצים' : 'Image gallery; use arrow keys to browse');
+  frame.addEventListener('keydown',e=>{
+    if(!['ArrowLeft','ArrowRight'].includes(e.key))return;
+    e.preventDefault(); showImage(galleryIndex+(e.key==='ArrowLeft' ? (isHebrew?1:-1) : (isHebrew?-1:1)));
+  });
+  let startX=0,startY=0;
+  frame.addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX;startY=e.changedTouches[0].clientY;},{passive:true});
+  frame.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;
+    if(Math.abs(dx)<45 || Math.abs(dx)<=Math.abs(dy))return;
+    showImage(galleryIndex+(dx<0?1:-1)*(isHebrew?-1:1));
+  },{passive:true});
+  main.querySelector('[data-gallery-zoom]').addEventListener('click',()=>{
+    const dialog=document.createElement('dialog');dialog.className='product-zoom';
+    dialog.setAttribute('aria-label',isHebrew?'תמונת התיק בהגדלה':'Enlarged product image');
+    dialog.innerHTML=`<button type="button" aria-label="${isHebrew?'סגירה':'Close'}">×</button><img src="${mainImage.src}" alt="${mainImage.alt}">`;
+    dialog.querySelector('button').onclick=()=>dialog.close();
+    dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+    dialog.addEventListener('close',()=>{dialog.remove();main.querySelector('[data-gallery-zoom]').focus();});
+    document.body.append(dialog);dialog.showModal();
+  });
+  main.querySelectorAll('[data-color]').forEach(button=>button.addEventListener('click',()=>{
+    selected=baseProduct.variants.find(v=>v.id===button.dataset.color);
+    product={...baseProduct,image:selected.image,gallery:selected.gallery};gallery=selected.gallery;
+    const url=new URL(location.href);url.searchParams.set('color',selected.id);history.replaceState(null,'',url);
+    main.querySelector('[data-chosen-color]').textContent=isHebrew?selected.he:selected.en;
+    main.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+    main.querySelectorAll('[data-open-bag-after-add]').forEach(b=>b.dataset.addToBag=`${baseProduct.id}:${selected.id}`);
+    main.querySelector('[data-buy-color]').textContent=`${product.name} · ${isHebrew?selected.he:selected.en}`;
+    thumbnails.forEach((b,i)=>{b.dataset.galleryImage=gallery[i];b.querySelector('img').src=`../assets/gallery-thumbs/${gallery[i]}`;b.querySelector('img').dataset.fallbackSrc=`../assets/products/${gallery[i]}`;});
+    structuredData.textContent=JSON.stringify({...JSON.parse(structuredData.textContent),image:gallery.map(image=>`${location.origin}${siteBasePath}/assets/products/${image}`)});
+    showImage(galleryIndex);enableImageFallbacks();
   }));
-  let startX = 0;
-  mainImage.parentElement.style.touchAction = 'pan-y';
-  mainImage.parentElement.addEventListener('touchstart', e => { startX = e.changedTouches[0].clientX; }, {passive:true});
-  mainImage.parentElement.addEventListener('touchend', e => {
-    const delta = e.changedTouches[0].clientX - startX;
-    if (Math.abs(delta) < 45) return;
-    const buttons = [...main.querySelectorAll('[data-gallery-image]')];
-    if (!buttons.length) return;
-    const index = buttons.findIndex(b => b.getAttribute('aria-pressed') === 'true');
-    buttons[(index + (delta < 0 ? 1 : -1) + buttons.length) % buttons.length].click();
-  }, {passive:true});
-  observeReveals(main);
 }
 
 function renderDocument() {

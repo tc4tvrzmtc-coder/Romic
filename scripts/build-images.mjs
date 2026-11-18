@@ -256,7 +256,7 @@ if (heroId) for (const language of ['he','en']) {
   const file = path.join(output,language,'index.html');
   try {
     const html = await fs.readFile(file,'utf8');
-    const preload = html.includes('class="hero cloud-hero"') ? `<link rel="preload" as="image" href="../assets/products/cloud-nine-black-worn.webp?v=${assetVersion}" fetchpriority="high">` : `<link rel="preload" as="image" href="../assets/conveyor/480/${heroId}.webp?v=${assetVersion}" imagesrcset="../assets/conveyor/480/${heroId}.webp?v=${assetVersion} 480w, ../assets/conveyor/720/${heroId}.webp?v=${assetVersion} 720w" imagesizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" fetchpriority="high">`;
+    const preload = html.includes('class="hero cloud-hero"') ? `<link rel="preload" as="image" href="../assets/products/cloud-nine-pink-worn.webp?v=${assetVersion}" fetchpriority="high">` : `<link rel="preload" as="image" href="../assets/conveyor/480/${heroId}.webp?v=${assetVersion}" imagesrcset="../assets/conveyor/480/${heroId}.webp?v=${assetVersion} 480w, ../assets/conveyor/720/${heroId}.webp?v=${assetVersion} 720w" imagesizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" fetchpriority="high">`;
     await fs.writeFile(file,html.replace('</head>',preload+'</head>'));
   } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }

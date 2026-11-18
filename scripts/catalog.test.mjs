@@ -14,7 +14,7 @@ function checkEveryProduct(c) {
   const products=vm.runInContext('catalogProducts()',c);
   validateCatalog(products);
   const ids=Array.from(products,p=>p.id).sort();
-  assert.deepEqual(Array.from(vm.runInContext('collectionProducts({expanded:true}).map(p=>p.id)',c)).sort(),ids);
+  assert.deepEqual(Array.from(vm.runInContext('[...new Set(collectionProducts({expanded:true}).map(p=>p.baseId || p.id))]',c)).sort(),ids);
   for (const p of products) {
     for (const query of [p.name,...p.searchTerms]) assert.ok(vm.runInContext(`searchProducts(${JSON.stringify(query)}).some(p=>p.id===${JSON.stringify(p.id)})`,c),`${p.id}: not searchable with ${query}`);
     for (const type of p.types) {
