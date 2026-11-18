@@ -69,7 +69,7 @@ body {
   width: min(100%, 360px);
 }
 
-.language-choice a {
+.language-choice [data-language-choice] {
   min-height: 64px;
   display: flex;
   align-items: center;
@@ -85,14 +85,14 @@ body {
   transition: background-color 140ms ease, color 140ms ease, opacity 140ms ease;
 }
 
-.language-choice a:hover,
-.language-choice a:focus-visible,
-.language-choice a.is-selected {
+.language-choice [data-language-choice]:hover,
+.language-choice [data-language-choice]:focus-visible,
+.language-choice [data-language-choice].is-selected {
   background: #11100f;
   color: #fff;
 }
 
-.language-choice a:focus-visible {
+.language-choice [data-language-choice]:focus-visible {
   outline: 3px solid #11100f;
   outline-offset: 4px;
 }
@@ -102,11 +102,12 @@ body {
 @media (max-width: 600px) {
   .language-choice { min-height: 100svh; padding: 28px 18px; gap: clamp(24px, 5vh, 42px); }
   .language-choice h1 { font-size: clamp(3.2rem, 15vw, 4.8rem); }
-  .language-choice a { min-height: 58px; }
+  .language-choice [data-language-choice] { min-height: 58px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .language-choice a { transition: none; }
+  .language-choice [data-language-choice] { transition: none; }
 }
 
-</style></head><body class="language-page"><main id="main" tabindex="-1" class="language-choice" aria-labelledby="language-title"><div class="language-brand"><img src="assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></div><div><p>HANDMADE IN ISRAEL</p><h1 id="language-title">CHOOSE YOUR<br>LANGUAGE.</h1></div><nav aria-label="Choose language"><a href="he/" lang="he" dir="rtl" data-language-choice="he">עברית</a><a href="en/" data-language-choice="en">English</a></nav><div><a href="he/accessibility.html" lang="he" dir="rtl">הצהרת נגישות</a><a href="en/accessibility.html">Accessibility statement</a></div></main><script>(()=>{document.querySelectorAll('[data-language-choice]').forEach(link=>link.addEventListener('click',()=>{document.querySelector('.language-choice')?.setAttribute('aria-busy','true');link.classList.add('is-selected')}))})();</script></body></html>
+.language-footer{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;margin-top:auto;padding-top:12px}.language-footer a{font-size:14px;font-weight:400;text-underline-offset:4px;padding:8px 4px;color:#383032}.language-footer a:focus-visible{outline:2px solid currentColor;outline-offset:3px}.language-choice{gap:clamp(24px,4vh,42px)}
+</style></head><body class="language-page"><main id="main" tabindex="-1" class="language-choice" aria-labelledby="language-title"><div class="language-brand"><img src="assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></div><div><p>HANDMADE IN ISRAEL</p><h1 id="language-title">CHOOSE YOUR<br>LANGUAGE.</h1></div><nav aria-label="Choose language"><a href="he/" lang="he" dir="rtl" data-language-choice="he">עברית</a><a href="en/" data-language-choice="en">English</a></nav><footer class="language-footer" aria-label="Accessibility"><a href="he/accessibility.html" lang="he" dir="rtl">הצהרת נגישות</a><a href="en/accessibility.html">Accessibility statement</a></footer></main><script>(()=>{document.querySelectorAll('[data-language-choice]').forEach(link=>link.addEventListener('click',()=>{document.querySelector('.language-choice')?.setAttribute('aria-busy','true');link.classList.add('is-selected')}))})();</script></body></html>

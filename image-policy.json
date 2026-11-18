@@ -65,9 +65,7 @@
     "assets/products/jerus-held.jpg",
     "assets/products/malibu.jpg",
     "assets/products/malibu-model.jpg",
-    "assets/products/cloud-nine-black.jpg",
     "assets/products/cloud-nine-black-open.jpg",
-    "assets/products/cloud-nine-white.jpg",
     "assets/products/cloud-nine-white-open.jpg",
     "assets/products/cloud-nine-beige.jpg",
     "assets/products/cloud-nine-beige-open.jpg",
@@ -88,5 +86,13 @@
     "jerus",
     "malibu",
     "cloud-nine"
-  ]
+  ],
+  "backgroundOnlySources": [
+    "assets/products/cloud-nine-black.jpg",
+    "assets/products/cloud-nine-white.jpg"
+  ],
+  "sourceBackgrounds": {
+    "assets/products/cloud-nine-black.jpg": "#e9e5df",
+    "assets/products/cloud-nine-white.jpg": "#e9e5df"
+  }
 }

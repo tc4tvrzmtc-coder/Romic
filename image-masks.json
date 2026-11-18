@@ -526,5 +526,29 @@
     ],
     "model": "u2net",
     "toolVersion": "rembg-2.0.85"
+  },
+  "assets/products/cloud-nine-black.jpg": {
+    "mask": "image-masks/products/cloud-nine-black-background.png",
+    "sourceSha256": "8f0f454bc7b56ce80c2a8f52fedd13413b161d65c4d0d3c6aa82e836f1eed042",
+    "bbox": [
+      0,
+      0,
+      1206,
+      1524
+    ],
+    "model": "reviewed-alpha-extraction-only",
+    "toolVersion": "imagegen-alpha-only-original-rgb"
+  },
+  "assets/products/cloud-nine-white.jpg": {
+    "mask": "image-masks/products/cloud-nine-white-background.png",
+    "sourceSha256": "c85c2b70220d4b01e77587b497101751afedbc214356ff3536b460d44f12ebe3",
+    "bbox": [
+      0,
+      0,
+      1206,
+      1582
+    ],
+    "model": "reviewed-alpha-extraction-only",
+    "toolVersion": "imagegen-alpha-only-original-rgb"
   }
 }

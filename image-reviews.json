@@ -199,5 +199,11 @@
   "assets/products/cloud-nine-white-worn.jpg": "7d7dbb98c694d415bbf9196d473ae98c71bcd751c9730c9094d05880b28e4f35",
   "assets/products/cloud-nine-beige-worn.jpg": "e372316afe98f8de6af18dfda11a1d821c69af20dfe999e050d7417e2ea00f5b",
   "assets/products/cloud-nine-sage-worn.jpg": "c14dfa23f534a3618c4aadfe675ebee53dcea95f3b44e6c1984182ca875f7fdd",
-  "assets/products/cloud-nine-pink-worn.jpg": "f44ce2ee3690adf675b5fa9e5970aec9ba8c3c0936fb1b6ca885018adda3e3b9"
+  "assets/products/cloud-nine-pink-worn.jpg": "f44ce2ee3690adf675b5fa9e5970aec9ba8c3c0936fb1b6ca885018adda3e3b9",
+  "image-masks/products/cloud-nine-black-background.png#metadata": "8b868a670118469cce6949522ea44661d9063b4f1267832c4bbae544c40ce7ed",
+  "image-masks/products/cloud-nine-black-background.png": "64346e191fa0036a51ce7a453063fa9c11a5df3ad954f1d34b1e51cdce10877f",
+  "image-masks/products/cloud-nine-white-background.png#metadata": "964c7f68a011204dd13714075b0a846911af02b43d44ddb08766e055e31cba0c",
+  "image-masks/products/cloud-nine-white-background.png": "24b6b6445fe4648dbfface6be91f7251a12c711972ccd3aff312fe68dd330d26",
+  "assets/products/cloud-nine-white-cafe.jpg": "5fa1908ca3f57bd21771dce3bb40bf6418a8fa713d95339dbdab7cd06e9fa843",
+  "assets/products/cloud-nine-white-coat.jpg": "a89648906a8e689f73f00e0dea3e62659079f7afba9d8738a12700d7864b0b50"
 }
