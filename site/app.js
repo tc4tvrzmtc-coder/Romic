@@ -628,9 +628,6 @@ function applyHomeCopy() {
   document.querySelector('[data-hero-kicker]').textContent = 'ROMIC / HANDMADE IN ISRAEL';
   document.querySelector('[data-hero-title]').innerHTML = blackIsActive() ? 'Black <i>Friday</i>' : 'CLOUD <i>NINE</i>';
   document.querySelector('[data-hero-offer]').innerHTML = blackIsActive() ? `<strong>20%</strong> ${isHebrew ? 'הנחה על כל האתר' : 'off sitewide'}` : (isHebrew ? 'הקולקציה החדשה' : 'The new collection');
-  const heroIntro = document.querySelector('[data-hero-intro]');
-  heroIntro.textContent = isHebrew ? 'תיקים בעבודת יד. הפרטים שעושים את ההבדל.' : 'Handmade bags. Details that make the difference.';
-  heroIntro.hidden = false;
   document.querySelector('[data-hero-button]').textContent = isHebrew ? 'לגלות את הקולקציה' : 'EXPLORE THE COLLECTION';
   document.querySelector('.cloud-hero-price').textContent = blackIsActive() ? (isHebrew ? 'עד 30.11.2026 · BLACK20 · ללא כפל הנחות' : 'Through 30.11.2026 · BLACK20 · Offers cannot be combined') : '';
   document.querySelector('[data-collection-title]').textContent = copy.collectionTitle;
