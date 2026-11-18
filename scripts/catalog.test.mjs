@@ -17,8 +17,8 @@ function checkEveryProduct(c) {
   assert.deepEqual(Array.from(vm.runInContext('[...new Set(collectionProducts({expanded:true}).map(p=>p.baseId || p.id))]',c)).sort(),ids);
   for (const p of products) {
     for (const query of [p.name,...p.searchTerms]) assert.ok(vm.runInContext(`searchProducts(${JSON.stringify(query)}).some(p=>p.id===${JSON.stringify(p.id)})`,c),`${p.id}: not searchable with ${query}`);
-    for (const type of p.types) {
-      const answers={type,size:p.size==='XL'?'L':p.size,detail:p.detail};
+    for (const type of p.types) for (const detail of p.details || [p.detail]) {
+      const answers={type,size:p.size==='XL'?'L':p.size,detail};
       assert.ok(vm.runInContext(`finderProducts(${JSON.stringify(answers)}).some(p=>p.id===${JSON.stringify(p.id)})`,c),`${p.id}: unreachable in finder`);
     }
   }
@@ -31,10 +31,10 @@ test('a newly added model needs no separate search, collection or finder list en
   vm.runInContext(`ROMIC_PRODUCTS.push({...ROMIC_PRODUCTS[0],id:'new-model',name:'New Model',searchTerms:['דגם חדש'],homeFeatured:false});`,c);
   checkEveryProduct(c);
 });
-test('finder retains all six matching medium clutches, including Bali, Sahara and Mykonos',()=>{
+test('finder retains all seven matching medium clutches, including CLOUD NINE',()=>{
   const ids=Array.from(vm.runInContext("finderProducts({type:'clutch',size:'M'}).map(p=>p.id)",runtime()));
-  assert.equal(ids.length,6);
-  for(const id of ['bali','sahara','mykonos'])assert.ok(ids.includes(id));
+  assert.equal(ids.length,7);
+  for(const id of ['bali','sahara','mykonos','cloud-nine'])assert.ok(ids.includes(id));
 });
 test('Hebrew final letters, apostrophes and plurals resolve the complete correct category',()=>{
   const c=runtime();
@@ -59,4 +59,24 @@ test('catalogue gate gives actionable failures for incomplete and duplicate mode
   const aliases=structuredClone(products);delete aliases[0].searchTerms;
   assert.throws(()=>validateCatalog(aliases),/missing Hebrew search alias/);
   assert.throws(()=>validateCatalog([...products,products[0]]),/duplicate product id/);
+});
+
+test('every category uses the complete catalog and preserves all variant cards',()=>{
+ const c=runtime();for(const type of ['all','clutch','top-handle','shoulder']){
+  const expected=Array.from(vm.runInContext(`catalogProducts().filter(p=>'${type}'==='all'||p.types.includes('${type}')).map(p=>p.id)`,c)).sort();
+  const cards=vm.runInContext(`collectionProducts({category:'${type}',expanded:true})`,c);
+  assert.deepEqual([...new Set(Array.from(cards,p=>p.baseId||p.id))].sort(),expected);
+  for(const p of cards)if(p.baseId)assert.ok(p.image.includes(p.color.id));
+ }
+});
+test('catalog descriptions, carrying categories and multiple finder details agree',()=>{
+ const products=vm.runInContext('catalogProducts()',runtime());
+ for(const p of products){const description=p.he+' '+p.en,details=p.details||[p.detail];
+  if(/קלאץ|clutch/i.test(description))assert.ok(p.types.includes('clutch'),p.id+' missing clutch category');
+  if(/שרשרת|chain/i.test(description))assert.ok(details.includes('chain'),p.id+' missing chain detail');
+  if(/פנינ|pearl/i.test(description))assert.ok(details.includes('pearls'),p.id+' missing pearl detail');
+ }
+ const c=runtime();assert.ok(vm.runInContext("finderProducts({type:'clutch',size:'S'}).some(p=>p.id==='marrakech')",c));
+ for(const detail of ['chain','pearls'])assert.ok(vm.runInContext(`finderProducts({type:'shoulder',size:'L',detail:'${detail}'}).some(p=>p.id==='malibu')`,c));
+ assert.equal(vm.runInContext("finderProducts({detail:'chain'}).some(p=>p.id==='maldives')",c),false);
 });

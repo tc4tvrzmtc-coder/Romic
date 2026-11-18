@@ -118,7 +118,7 @@ function collectionProducts({ expanded = false, query = '', category = 'all', so
 function finderProducts({ type, size, detail } = {}) {
   return catalogProducts().filter(product => (!type || product.types.includes(type))
     && (!size || (size === 'L' ? ['L','XL'].includes(product.size) : product.size === size))
-    && (!detail || product.detail === detail));
+    && (!detail || (product.details || [product.detail]).includes(detail)));
 }
 
 function formatPrice(price) { return `₪${Number(price.toFixed(2)).toLocaleString('he-IL', {maximumFractionDigits:2})}`; }
@@ -129,6 +129,8 @@ function novemberTerms() {
   if (blackIsActive()) return isHebrew ? 'BLACK FRIDAY · 20% הנחה אוטומטית על כל האתר, גם על עיצוב אישי. BLACK20 כחלופה, ללא כפל הנחות. עד 30.11.2026 לפי שעון ישראל. משלוח חינם בהזמנה מעל ₪500 לאחר הנחה; אחרת ₪30.' : 'BLACK FRIDAY · 20% automatically off sitewide, including custom designs. BLACK20 is an alternative, never an extra discount. Through 30 November 2026, Israel time. Free delivery on orders over ₪500 after discount; otherwise ₪30.';
   return isHebrew ? '25% הנחה על כל האתר, כולל עיצוב אישי. עד 8.11.2026 כולל, לפי שעון ישראל. משלוח בתשלום נפרד. אין כפל הטבות.' : '25% off sitewide, including custom designs. Through 8 November 2026, inclusive, Israel time. Delivery charged separately. Offers cannot be combined.';
 }
+let bannerPaused = null;
+let bannerMotionQuery, bannerMotionListener;
 function renderSaleBanner() {
   const host = document.querySelector('[data-header]');
   if (!host) return;
@@ -137,12 +139,28 @@ function renderSaleBanner() {
   if (!novemberIsActive()) return;
   if (blackIsActive()) {
     const messages = isHebrew ? ['BLACK FRIDAY · 20% הנחה על כל האתר','משלוח חינם בהזמנה מעל ₪500','עד 30.11.2026 · BLACK20 ללא כפל הנחות'] : ['BLACK FRIDAY · 20% OFF SITEWIDE','FREE DELIVERY ON ORDERS OVER ₪500','THROUGH 30.11.2026 · BLACK20 · NO STACKING'];
-    host.insertAdjacentHTML('afterbegin', `<aside class="sale-banner black-banner" data-sale-banner aria-label="Black Friday"><button type="button" data-banner-prev aria-label="${isHebrew ? 'הודעה קודמת' : 'Previous announcement'}">‹</button><span data-banner-message>${messages[0]}</span><button type="button" data-banner-next aria-label="${isHebrew ? 'הודעה הבאה' : 'Next announcement'}">›</button></aside>`);
+    host.insertAdjacentHTML('afterbegin', `<aside class="sale-banner black-banner" data-sale-banner aria-label="Black Friday"><button type="button" data-banner-prev aria-label="${isHebrew ? 'הודעה קודמת' : 'Previous announcement'}">‹</button><span data-banner-message role="status" aria-live="off">${messages[0]}</span><button type="button" data-banner-pause aria-pressed="false" aria-label="${isHebrew ? 'עצירת החלפת הודעות' : 'Pause rotating announcements'}"><span aria-hidden="true">Ⅱ</span></button><button type="button" data-banner-next aria-label="${isHebrew ? 'הודעה הבאה' : 'Next announcement'}">›</button></aside>`);
     let index = 0; const banner = host.querySelector('[data-sale-banner]');
     const show = step => { index = (index + step + messages.length) % messages.length; banner.querySelector('[data-banner-message]').textContent = messages[index]; };
     banner.querySelector('[data-banner-prev]').onclick = () => show(-1); banner.querySelector('[data-banner-next]').onclick = () => show(1);
     window.clearInterval(window.romicBannerTimer);
-    if (!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) window.romicBannerTimer = window.setInterval(() => { if (!banner.matches(':hover, :focus-within')) show(1); }, 6000);
+    if (bannerMotionListener) bannerMotionQuery?.removeEventListener?.('change',bannerMotionListener);
+    const motion = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const pause = banner.querySelector('[data-banner-pause]');
+    const syncPause = () => {
+      window.clearInterval(window.romicBannerTimer);
+      const paused = bannerPaused ?? Boolean(motion?.matches);
+      pause.setAttribute('aria-pressed', String(paused));
+      pause.setAttribute('aria-label', isHebrew ? 'עצירת החלפת הודעות' : 'Pause rotating announcements');
+      pause.innerHTML = `<span aria-hidden="true">${paused ? '▶' : 'Ⅱ'}</span>`;
+      banner.querySelector('[data-banner-message]').setAttribute('aria-live', paused ? 'polite' : 'off');
+      if (!paused) window.romicBannerTimer = window.setInterval(() => { if (!banner.matches(':hover, :focus-within')) show(1); },6000);
+    };
+    pause.onclick = () => { bannerPaused = !(bannerPaused ?? Boolean(motion?.matches)); syncPause(); };
+    bannerMotionQuery = motion;
+    bannerMotionListener = () => { if (banner.isConnected) syncPause(); };
+    motion?.addEventListener?.('change', bannerMotionListener);
+    syncPause();
     return;
   }
   host.insertAdjacentHTML('afterbegin', `<aside class="sale-banner" data-sale-banner aria-label="${isHebrew ? 'מבצע נובמבר' : 'November sale'}" dir="${isHebrew ? 'rtl' : 'ltr'}"><span class="sale-banner-name" dir="ltr">NOVEMBER SALE</span><span class="sale-banner-offer">${isHebrew ? '25% הנחה על כל האתר' : '25% OFF SITEWIDE'}</span><span class="sale-banner-date">${isHebrew ? 'עד 08.11.2026' : 'THROUGH 08.11.2026'}</span></aside>`);
@@ -376,6 +394,7 @@ function toast(message) {
     element = document.createElement('div'); element.className = 'site-toast'; element.dataset.toast = '';
     element.setAttribute('role', 'status'); element.setAttribute('aria-live', 'polite'); document.body.append(element);
   }
+  element.lang = language;
   element.textContent = message; element.classList.add('is-visible'); clearTimeout(toast.timer);
   toast.timer = setTimeout(() => element.classList.remove('is-visible'), 3600);
 }
@@ -449,9 +468,11 @@ function makeWhatsappMessage(products, couponApplied = activeCoupon(), method = 
   return `${intro}\n${lines.join('\n')}${offer}\n${receiving}\n${copy.total}: ${formatPrice(totals.total)}`;
 }
 
+let cartReturnFocus;
 function openCart() {
   const dialog = document.querySelector('[data-cart-dialog]');
   if (!dialog) return;
+  if (!dialog.open) cartReturnFocus = document.activeElement;
   renderCartContents();
   if (!dialog.open) dialog.showModal();
 }
@@ -470,7 +491,7 @@ function renderCartContents() {
   const statusText = applied?.automatic ? couponLabel(applied) : applied ? (isHebrew ? `הקוד הופעל · ${applied.percent}% הנחה${applied.custom ? ' על הקולקציה ועל עיצוב אישי' : ' על הקולקציה'}` : `${applied.percent}% applied to ${applied.custom ? 'collection and custom designs' : 'the collection'}`) : '';
   const couponMarkup = `${novemberIsActive() ? `<details class="sale-coupon-details" ${applied && !applied.automatic ? 'open' : ''}><summary>${isHebrew ? 'יש לך קוד קופון?' : 'Have a coupon code?'}</summary>` : ''}<div class="cart-coupon"><label for="cart-coupon-code">${copy.couponLabel}</label><div><input id="cart-coupon-code" type="text" value="${escapedDraft}" placeholder="${copy.couponPlaceholder}" autocomplete="off" autocapitalize="characters" dir="ltr" aria-describedby="cart-coupon-status"><button type="button" data-apply-coupon>${copy.applyCoupon}</button></div><span id="cart-coupon-status" data-coupon-status role="status" aria-live="polite">${statusText}</span>${applied && !applied.automatic ? `<button class="coupon-remove" type="button" data-remove-coupon>${isHebrew ? 'הסירי את ההטבה' : 'Remove offer'}</button>` : ''}</div>${novemberIsActive() ? '</details>' : ''}`;
   const emptyMarkup = `<div class="cart-empty"><p>${copy.bagEmpty}</p><button class="button" type="button" data-cart-continue>${copy.keepBrowsing}</button></div>`;
-  const totalsMarkup = `<fieldset class="cart-delivery"><legend>${copy.receiving}</legend><div class="cart-delivery-options">${['pickup','delivery'].map(value => `<label><input type="radio" name="cart-delivery" value="${value}" ${method === value ? 'checked' : ''}><span>${value === 'delivery' ? copy.delivery : copy.pickup}<strong>${value === 'delivery' ? (Date.now() >= blackStartsAt && subtotal - discountAmount > 500 ? copy.free : formatPrice(deliveryPrice)) : copy.free}</strong></span></label>`).join('')}</div></fieldset><dl class="cart-totals" aria-live="polite" aria-atomic="true"><div><dt>${copy.subtotal}</dt><dd>${formatPrice(subtotal)}</dd></div>${discountAmount ? `<div><dt>${couponLabel(applied)}</dt><dd>−${formatPrice(discountAmount)}</dd></div>` : ''}<div><dt>${method === 'pickup' ? copy.pickup : copy.shipping}</dt><dd>${shipping ? formatPrice(shipping) : copy.free}</dd></div><div class="cart-total"><dt>${copy.total}</dt><dd>${formatPrice(total)}</dd></div></dl><a class="button cart-whatsapp" href="${whatsappUrl(makeWhatsappMessage(products, applied, method))}" target="_blank" rel="external noopener" aria-label="${copy.openWhatsapp}">${icon('whatsapp')} ${copy.whatsapp}</a><p class="cart-terms">${novemberIsActive() ? novemberTerms() : applied?.code === promoCode ? copy.promoMessage : ''} <a href="terms.html">${copy.terms}</a></p>`;
+  const totalsMarkup = `<fieldset class="cart-delivery"><legend>${copy.receiving}</legend><div class="cart-delivery-options">${['pickup','delivery'].map(value => `<label><input type="radio" name="cart-delivery" value="${value}" ${method === value ? 'checked' : ''}><span>${value === 'delivery' ? copy.delivery : copy.pickup}<strong>${value === 'delivery' ? (Date.now() >= blackStartsAt && subtotal - discountAmount > 500 ? copy.free : formatPrice(deliveryPrice)) : copy.free}</strong></span></label>`).join('')}</div></fieldset><dl class="cart-totals" aria-live="polite" aria-atomic="true"><div><dt>${copy.subtotal}</dt><dd>${formatPrice(subtotal)}</dd></div>${discountAmount ? `<div><dt>${couponLabel(applied)}</dt><dd>−${formatPrice(discountAmount)}</dd></div>` : ''}<div><dt>${method === 'pickup' ? copy.pickup : copy.shipping}</dt><dd>${shipping ? formatPrice(shipping) : copy.free}</dd></div><div class="cart-total"><dt>${copy.total}</dt><dd>${formatPrice(total)}</dd></div></dl><a class="button cart-whatsapp" href="${whatsappUrl(makeWhatsappMessage(products, applied, method))}" target="_blank" rel="external noopener" aria-label="${copy.whatsapp} — ${copy.openWhatsapp}">${icon('whatsapp')} ${copy.whatsapp}</a><p class="cart-terms">${novemberIsActive() ? novemberTerms() : applied?.code === promoCode ? copy.promoMessage : ''} <a href="terms.html">${copy.terms}</a></p>`;
   body.innerHTML = (products.length ? `<div class="cart-lines">${items}</div>` : emptyMarkup) + couponMarkup + (products.length ? totalsMarkup : '');
   body.querySelectorAll('input[name=cart-delivery]').forEach(input => input.addEventListener('change', () => {
     if (!input.checked) return;
@@ -507,7 +528,12 @@ function renderCartContents() {
     const status = body.querySelector('[data-coupon-status]');
     if (status?.dataset.error) { status.textContent = ''; delete status.dataset.error; }
   });
-  body.querySelectorAll('[data-cart-remove]').forEach(button => button.addEventListener('click', () => setSavedPicks(getSavedPicks().filter(id => id !== button.dataset.cartRemove))));
+  body.querySelectorAll('[data-cart-remove]').forEach(button => button.addEventListener('click', () => {
+    const index = [...body.querySelectorAll('[data-cart-remove]')].indexOf(button);
+    setSavedPicks(getSavedPicks().filter(id => id !== button.dataset.cartRemove));
+    const remaining = [...body.querySelectorAll('[data-cart-remove]')];
+    (remaining[Math.min(index,remaining.length-1)] || body.querySelector('[data-cart-continue]') || dialog.querySelector('.cart-close'))?.focus({preventScroll:true});
+  }));
   body.querySelector('[data-cart-continue]')?.addEventListener('click', () => dialog.close());
   body.querySelector('.cart-whatsapp')?.addEventListener('click', event => {
     const message = makeWhatsappMessage(products, activeCoupon(), getDeliveryMethod());
@@ -525,7 +551,10 @@ function initCart() {
   dialog.innerHTML = `<div class="cart-panel"><header class="cart-head"><h2 id="cart-title">${copy.bagTitle}</h2><button class="cart-close" type="button" aria-label="${isHebrew ? 'סגירת הסל' : 'Close bag'}">${icon('close')}</button></header><div data-cart-content></div></div>`;
   dialog.querySelector('.cart-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
-  dialog.addEventListener('close', () => document.querySelector('[data-open-cart]')?.focus());
+  dialog.addEventListener('close', () => {
+    const target = cartReturnFocus?.isConnected ? cartReturnFocus : document.querySelector('[data-open-cart]');
+    target?.focus({preventScroll:true});
+  });
   document.body.append(dialog);
   document.addEventListener('click', event => {
     const openButton = event.target.closest('[data-open-cart]');
@@ -754,10 +783,10 @@ function header() {
   const aboutLink = `<a href="#about-romic" data-open-about aria-haspopup="dialog">${isHebrew ? 'הכירי את ROMIC' : 'Meet ROMIC'}</a>`;
   const cartButton = `<button class="bag-link" type="button" data-open-cart aria-label="${copy.bag}">${bagIcon()} <span data-cart-label>${copy.bag}</span><span class="bag-count" data-cart-count>0</span></button>`;
   return `<a class="skip-link" href="#main">${copy.skip}</a><header class="site-header">
-    <a class="brand" href="${siteRoot}" aria-label="Romic home"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
+    <a class="brand" href="${siteRoot}" aria-label="${isHebrew ? 'ROMIC — דף הבית' : 'ROMIC home'}"><img class="brand-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="208" height="76"></a>
     <nav class="primary-nav" aria-label="${isHebrew ? 'ניווט ראשי' : 'Primary navigation'}">${navigation}</nav>
-    <div class="header-actions"><button class="site-search" type="button" aria-label="${HOME_LOCALE[language].searchLabel}" aria-controls="site-search-dialog" aria-expanded="false" data-global-search>${icon('search')}</button><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
-    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}<button class="menu-cart-row" type="button" data-open-cart>${bagIcon()}<span data-cart-label>${copy.bag}</span><span data-cart-count>0</span></button></nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
+    <div class="header-actions"><button class="site-search" type="button" aria-label="${HOME_LOCALE[language].searchLabel}" aria-controls="site-search-dialog" aria-expanded="false" data-global-search>${icon('search')}</button><a class="language-link" href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}" lang="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${cartButton}${instagramLink(copy.instagram, 'instagram-link')}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="${copy.menu}" data-menu-toggle>${icon('menu')}</button></div>
+    <div class="menu-backdrop" data-menu-backdrop hidden></div><aside class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu><div class="mobile-menu-head"><img class="menu-wordmark" src="../assets/romic-wordmark-vector.svg" alt="Romic — Handmade Bags" width="164" height="60"><button type="button" aria-label="${copy.close}" data-menu-close>${icon('close')}</button></div><nav aria-label="${isHebrew ? 'ניווט נייד' : 'Mobile navigation'}">${navigation}${aboutLink}<button class="menu-cart-row" type="button" data-open-cart>${bagIcon()}<span data-cart-label>${copy.bag}</span><span data-cart-count>0</span></button></nav><div class="mobile-menu-foot"><a href="${otherLanguage}" data-language-link="${isHebrew ? 'en' : 'he'}" lang="${isHebrew ? 'en' : 'he'}">${copy.language}</a>${instagramLink('@ROMIC_BRAND')}</div></aside></header>`;
 }
 
 function footer() {
@@ -782,6 +811,7 @@ function renderShell() {
 function localizeShellInPlace() {
   renderSaleBanner();
   const navigationLabels = [copy.collection, copy.craft, copy.faq];
+  document.querySelector('.brand')?.setAttribute('aria-label',isHebrew ? 'ROMIC — דף הבית' : 'ROMIC home');
   const skipLink = document.querySelector('.skip-link');
   if (skipLink) skipLink.textContent = copy.skip;
   document.querySelectorAll('.primary-nav a').forEach((link, index) => { if (navigationLabels[index]) link.textContent = navigationLabels[index]; });
@@ -794,6 +824,7 @@ function localizeShellInPlace() {
     const targetLanguage = isHebrew ? 'en' : 'he';
     link.textContent = copy.language;
     link.dataset.languageLink = targetLanguage;
+    link.lang = targetLanguage;
     link.href = localeUrl(targetLanguage);
   });
   document.querySelector('[data-global-search]')?.setAttribute('aria-label', HOME_LOCALE[language].searchLabel);
@@ -915,15 +946,18 @@ function renderCollection() {
   function visibleProducts() { return collectionProducts(state); }
 
   function drawCollection() {
+    const activePick = grid.contains(document.activeElement) ? document.activeElement.closest('[data-add-to-bag]')?.dataset.addToBag : null;
     const products = visibleProducts();
     grid.innerHTML = products.map(productCard).join('');
     grid.hidden = products.length === 0;
-    results.hidden = products.length !== 0;
-    results.textContent = products.length ? '' : copy.noResults;
+    results.hidden = false;
+    results.classList.toggle('visually-hidden', products.length > 0);
+    results.textContent = products.length ? (isHebrew ? `${products.length} תיקים מוצגים` : `${products.length} bags shown`) : copy.noResults;
     button.textContent = copy.fullCollection;
     button.closest('.collection-actions').hidden = state.expanded || state.query || state.category !== 'all' || state.sort !== 'featured';
     categoryButtons.forEach(item => item.setAttribute('aria-pressed', String(item.dataset.productCategory === state.category)));
     observeReveals(grid);
+    if (activePick) grid.querySelector(`[data-add-to-bag="${activePick}"]`)?.focus({preventScroll:true});
   }
 
   function loadAlternateImage(card) {
@@ -943,10 +977,12 @@ function renderCollection() {
   state.query = '';
   sort.value = state.sort;
   button.addEventListener('click', () => {
+    const previous = new Set([...grid.querySelectorAll('[data-product-id]')].map(card=>card.dataset.productId));
     state.expanded = true;
     drawCollection();
     saveState();
-    grid.children[6]?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+    const firstNew = [...grid.querySelectorAll('[data-product-id]')].find(card=>!previous.has(card.dataset.productId));
+    firstNew?.querySelector('.product-card-link')?.focus();
   });
   sort.addEventListener('change', () => { state.sort = sort.value; state.expanded = true; drawCollection(); });
   categoryButtons.forEach(item => item.addEventListener('click', () => { state.category = item.dataset.productCategory; state.expanded = true; drawCollection(); }));
@@ -961,6 +997,10 @@ function renderCollection() {
     filterPanel.hidden = true;
     filterToggle.setAttribute('aria-expanded', 'false');
     filterToggle.lastElementChild.textContent = '+';
+  });
+  document.addEventListener('focusin', event => {
+    if (filterPanel.hidden || event.target.closest('.collection-tool-shell')) return;
+    filterPanel.hidden = true; filterToggle.setAttribute('aria-expanded','false'); filterToggle.lastElementChild.textContent = '+';
   });
   document.querySelector('.collection-tool-shell')?.addEventListener('keydown', event => {
     if (event.key !== 'Escape' || filterPanel.hidden) return;
@@ -1057,10 +1097,12 @@ function renderSavedPicks() {
 }
 
 function openFinder() {
+  const opener = document.activeElement;
   let dialog = document.querySelector('[data-finder]');
   if (!dialog) {
     dialog = document.createElement('dialog'); dialog.className = 'finder'; dialog.dataset.finder = '';
-    dialog.innerHTML = `<button class="sheet-close" type="button" aria-label="${copy.finderClose}">${icon('close')}</button><div class="finder-inner"><p class="finder-step" data-finder-step></p><h2 data-finder-title></h2><div class="finder-options" data-finder-options></div><div class="finder-results" data-finder-results></div></div>`;
+    dialog.setAttribute('aria-labelledby','finder-title');
+    dialog.innerHTML = `<button class="sheet-close" type="button" aria-label="${copy.finderClose}">${icon('close')}</button><div class="finder-inner"><p class="finder-step" data-finder-step></p><h2 id="finder-title" data-finder-title tabindex="-1"></h2><div class="finder-options" data-finder-options></div><div class="finder-results" data-finder-results></div></div>`;
     dialog.querySelector('.sheet-close').addEventListener('click', () => dialog.close()); document.body.append(dialog);
   }
   const answers = {}; let step = 0; let exactMatches = [];
@@ -1078,7 +1120,7 @@ function openFinder() {
       return;
     }
     exactMatches = getExact();
-    const availableDetails = [...new Set(exactMatches.map(product => product.detail))];
+    const availableDetails = [...new Set(exactMatches.flatMap(product => product.details || [product.detail]))];
     if (!answers.detail && exactMatches.length > 1 && availableDetails.length > 1) {
       dialog.querySelector('[data-finder-step]').textContent = '3 / 3';
       dialog.querySelector('[data-finder-title]').textContent = copy.finderDetail;
@@ -1094,8 +1136,8 @@ function openFinder() {
   dialog.querySelector('[data-finder-options]').onclick = event => {
     const answer = event.target.closest('[data-finder-answer]');
     const detail = event.target.closest('[data-finder-detail]');
-    if (detail) { answers.detail = detail.dataset.finderDetail; draw(); return; }
-    if (!answer) return; answers[questions[step].key] = answer.dataset.finderAnswer; step += 1; draw();
+    if (detail) { answers.detail = detail.dataset.finderDetail; draw(); dialog.querySelector('[data-finder-title]').focus(); return; }
+    if (!answer) return; answers[questions[step].key] = answer.dataset.finderAnswer; step += 1; draw(); dialog.querySelector('[data-finder-title]').focus();
   };
   dialog.querySelector('[data-finder-results]').onclick = event => {
     const match = event.target.closest('[data-finder-product]');
@@ -1103,6 +1145,8 @@ function openFinder() {
     if (event.target.closest('[data-finder-custom]')) { dialog.close(); navigateToCustomizer(); }
   };
   draw(); dialog.showModal();
+  dialog.querySelector('[data-finder-title]').focus();
+  dialog.addEventListener('close', () => { if (opener?.isConnected) opener.focus({preventScroll:true}); }, {once:true});
 }
 
 
@@ -1110,11 +1154,11 @@ function renderServiceDetails() {
   const root = document.querySelector('[data-service-details]');
   if (!root) return;
   const items = isHebrew ? [
-    ['משלוחים ואיסוף','משלוחים בישראל בעלות ₪30. איסוף עצמי מגבעתיים ללא עלות, בתיאום מראש.'],
+    ['משלוחים ואיסוף','משלוח בישראל ₪30; חינם בהזמנה מעל ₪500 לאחר הנחות. איסוף עצמי מגבעתיים ללא עלות, בתיאום מראש.'],
     ['זמני אספקה','אספקה עד 7 ימי עסקים, לתיקים מהקולקציה ולתיקים בעיצוב אישי.'],
     ['החזרות וביטולים','ניתן לבטל הזמנה בהתאם לחוק הגנת הצרכן. בביטול עקב חרטה ייגבו דמי ביטול כחוק, והחזרת התיק תהיה על חשבון הלקוחה.']
   ] : [
-    ['Delivery & pickup','Delivery within Israel costs ₪30. Free pickup in Givatayim by prior arrangement.'],
+    ['Delivery & pickup','Israel delivery costs ₪30; free on orders over ₪500 after discounts. Free pickup in Givatayim by prior arrangement.'],
     ['Delivery times','Delivery within 7 business days for both collection bags and custom designs.'],
     ['Returns & cancellations','Orders may be cancelled in accordance with Israeli consumer law. Cancellation fees apply to a change-of-mind cancellation, and return shipping is at the customer’s expense.']
   ];
@@ -1130,7 +1174,7 @@ function renderCustomizer() {
   let selectedColor = colors.find(color => color.id === root.dataset.selectedColor) || colors[3];
   const displayModel = model => isHebrew ? model.he : model.name;
   const displayColor = color => isHebrew ? color.he : color.name;
-  root.innerHTML = `<div class="customizer-head"><p class="eyebrow">ROMIC YOUR WAY</p><h2>MAKE IT<br>YOURS.</h2><p>${copy.customLead}</p></div><div class="customizer-grid" id="customize" tabindex="-1">
+  root.innerHTML = `<div class="customizer-head"><p class="eyebrow" lang="en">ROMIC YOUR WAY</p><h2 lang="en">MAKE IT<br>YOURS.</h2><p>${copy.customLead}</p></div><div class="customizer-grid" id="customize" tabindex="-1">
     <div class="customizer-visual"><img data-custom-image src="" alt="" loading="lazy" decoding="async" width="1200" height="1500"><span class="customizer-live" aria-live="polite" data-custom-live></span></div>
     <div class="customizer-controls"><fieldset><legend>01 · ${copy.model}</legend><div class="model-options" data-model-options></div></fieldset><fieldset><legend>02 · ${copy.colour}</legend><div class="color-options" data-color-options></div></fieldset>
     <div class="customizer-summary"><div><span>${copy.basePrice}</span><strong data-custom-price data-refresh-custom-price></strong></div><div><span>${copy.bagBody}</span><strong data-custom-size></strong></div></div>
@@ -1534,12 +1578,13 @@ function renderProduct() {
   const imageBackdrop = image => typeof ROMIC_IMAGE_BACKDROPS !== 'undefined' ? ROMIC_IMAGE_BACKDROPS[image.split('?')[0]] || '#e4d8d3' : '#e4d8d3';
   const [initialWidth, initialHeight] = imageSize(gallery[0]);
   const galleryMarkup = `<div class="product-gallery" data-product-gallery>
-    <div class="product-hero-image" style="aspect-ratio:4/5;--gallery-surface:${imageBackdrop(gallery[0])}"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"><span class="gallery-count" aria-live="polite">1 / ${gallery.length}</span><button class="gallery-control gallery-prev" type="button" data-gallery-step="-1" aria-label="${isHebrew ? 'תמונה קודמת' : 'Previous image'}">‹</button><button class="gallery-control gallery-next" type="button" data-gallery-step="1" aria-label="${isHebrew ? 'תמונה הבאה' : 'Next image'}">›</button><button class="gallery-control gallery-zoom" type="button" data-gallery-zoom aria-label="${isHebrew ? 'הגדלת התמונה' : 'Enlarge image'}">＋</button></div>
+    <div class="product-hero-image" style="aspect-ratio:4/5;--gallery-surface:${imageBackdrop(gallery[0])}"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name}${selected ? ' · '+(isHebrew ? selected.he : selected.en) : ''} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"><span class="gallery-count" aria-live="polite">1 / ${gallery.length}</span><button class="gallery-control gallery-prev" type="button" data-gallery-step="-1" aria-label="${isHebrew ? 'תמונה קודמת' : 'Previous image'}">‹</button><button class="gallery-control gallery-next" type="button" data-gallery-step="1" aria-label="${isHebrew ? 'תמונה הבאה' : 'Next image'}">›</button><button class="gallery-control gallery-zoom" type="button" data-gallery-zoom aria-label="${isHebrew ? 'הגדלת התמונה' : 'Enlarge image'}">＋</button></div>
     ${gallery.length > 1 ? `<div class="product-thumbnails" aria-label="${isHebrew ? `גלריית תמונות של ${product.name}` : `${product.name} image gallery`}">${gallery.map((image, index) => `<button type="button" class="product-thumbnail" data-gallery-image="${image}" data-gallery-index="${index}" aria-label="${copy.viewImage} ${index + 1} / ${gallery.length}" aria-pressed="${index === 0}"><img src="../assets/gallery-thumbs/${image}" data-fallback-src="../assets/products/${image}" alt="" loading="lazy" decoding="async" width="240" height="300"></button>`).join('')}</div>` : ''}
   </div>`;
   main.innerHTML = `<div class="product-page"><a class="back-link" href="./#collection">${icon('arrow')} ${copy.back}</a><div class="product-layout">
+    <div class="product-intro"><h1 class="product-name" id="product-name" lang="en">${product.name}</h1><p class="product-description">${isHebrew ? product.he : product.en}</p>${priceMarkup(product,'product-price')}</div>
     ${galleryMarkup}
-    <section class="product-info" aria-labelledby="product-name"><div class="product-intro"><h1 class="product-name" id="product-name">${product.name}</h1><p class="product-description">${isHebrew ? product.he : product.en}</p>${priceMarkup(product,'product-price')}</div>
+    <section class="product-info" aria-labelledby="product-name">
     <div class="product-purchase"><dl class="product-specs"><div><dt>${copy.size}</dt><dd>${product.size}</dd></div><div><dt>${copy.dimensions}</dt><dd>${product.width} × ${product.height}${product.depth ? ` × ${product.depth}` : ''} cm</dd></div></dl>
     ${product.variants ? `<fieldset class="cloud-colors"><legend>${isHebrew ? 'בחרי צבע' : 'Choose a colour'}: <strong data-chosen-color aria-live="polite">${isHebrew ? selected.he : selected.en}</strong></legend><div>${product.variants.map(v => `<button type="button" class="cloud-swatch" data-color="${v.id}" aria-label="${isHebrew ? v.he : v.en}" aria-pressed="${v.id === selected.id}"><img src="../assets/gallery-thumbs/${v.image}" data-fallback-src="../assets/products/${v.image}" alt="" width="64" height="64"></button>`).join('')}</div></fieldset>` : ''}
     <div class="product-actions"><button class="button product-cta" type="button" data-add-to-bag="${product.id}${selected ? ':' + selected.id : ''}" data-open-bag-after-add aria-label="${copy.save} ${product.name}">${bagIcon()} ${copy.order}</button></div><p class="dm-note">${copy.dmNote}</p><p class="product-note">${copy.dimsNote}</p><p class="delivery-note">${copy.deliveryNote}</p><details class="product-details"><summary>${isHebrew ? 'משלוחים, איסוף ושירות' : 'Delivery, collection and support'}</summary><p>${isHebrew ? 'אספקה עד 7 ימי עסקים. משלוח בישראל ₪30; חינם מעל ₪500 לאחר הנחה. איסוף עצמי מגבעתיים ללא עלות.' : 'Ready within 7 business days. Israel delivery ₪30; free over ₪500 after discounts. Free collection in Givatayim.'}</p><a href="terms.html">${isHebrew ? 'תנאי הזמנה והחזרות' : 'Order and return terms'}</a></details></div></section></div><aside class="product-buy-bar" aria-label="${copy.order}"><div>${priceMarkup(product)}<small data-buy-color>${product.name}${selected ? ' · '+(isHebrew?selected.he:selected.en) : ''}</small></div><button class="button" type="button" data-add-to-bag="${product.id}${selected ? ':'+selected.id : ''}" data-open-bag-after-add>${copy.order}</button></aside>

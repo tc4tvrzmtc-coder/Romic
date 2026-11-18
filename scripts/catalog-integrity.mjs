@@ -12,6 +12,7 @@ export function validateCatalog(products) {
     assert.ok(['S','M','L','XL'].includes(product.size), `${label}: missing finder size`);
     assert.ok(product.types?.length && product.types.every(type => ['clutch','top-handle','shoulder'].includes(type)), `${label}: missing or invalid finder types`);
     assert.ok(['clean','chain','pearls'].includes(product.detail), `${label}: missing finder detail`);
+    if (product.details) assert.ok(Array.isArray(product.details) && product.details.length && product.details.includes(product.detail) && product.details.every(detail=>['clean','chain','pearls'].includes(detail)), `${label}: invalid finder detail list`);
     assert.ok(Array.isArray(product.searchTerms) && product.searchTerms.some(term => /[א-ת]/.test(term)), `${label}: missing Hebrew search alias`);
     assert.ok(product.gallery?.includes(product.image), `${label}: primary image missing from gallery`);
   }

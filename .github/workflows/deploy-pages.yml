@@ -37,6 +37,7 @@ jobs:
           npm run build
           npm run check:images
           npm run check:site
+          npm run check:a11y
           npm run check:security
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -35,5 +35,6 @@ jobs:
         run: |
           npm run check:images
           npm run check:site
+          npm run check:a11y
       - name: Check dependency advisories
         run: npm run check:security
