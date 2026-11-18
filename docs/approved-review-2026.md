@@ -1,6 +1,6 @@
 # ROMIC approved design integration — 18 November 2026
 
-Review branch: `ux/approved-black-friday-review`. This branch does not replace the production deployment. Final iPhone review precedes publication to romic.co.il.
+Production release approved by Amir on 18 November 2026. Review branch `ux/approved-black-friday-review` merged through PR #4 and deployed to romic.co.il. Physical iPhone Safari acceptance remains unverified.
 
 ## Changes
 
@@ -26,7 +26,7 @@ Review branch: `ux/approved-black-friday-review`. This branch does not replace t
 
 ## Remaining acceptance
 
-Physical iPhone Safari: scroll while its browser bars expand/collapse; switch all three gallery photos and colours; check touch swipe and safe-area purchase bar. Desktop responsive Chrome does not certify these device behaviours. Final visual review by Amir and Romi and deployment to romic.co.il remain pending.
+Physical iPhone Safari: scroll while its browser bars expand/collapse; switch all three gallery photos and colours; check touch swipe and safe-area purchase bar. Desktop responsive Chrome does not certify these device behaviours. Amir approved the visual design and explicitly authorized publication with the physical-device verification limit disclosed. Production deployment is complete.
 
 The separate review hosting disables analytics and search indexing. Production analytics configuration and source photographs remain unchanged.
 
@@ -37,3 +37,11 @@ The original model portrait now sits on one continuous photographic surface with
 Product galleries keep their stable 4:5 geometry. The build now samples the corners of each reviewed master to supply the reserved frame background, so portrait photographs receive a related backdrop instead of unrelated beige side bars. A pipeline regression assertion checks this palette against a known scene and continues to verify untouched original files.
 
 Follow-up QA: all 15 CLOUD NINE colour/photo states retain 4:5 geometry, use an opaque photo-derived frame background, and have no horizontal overflow. Changing the simulated mobile viewport height 812 → 640 → 812 leaves the gallery exactly 335 × 418.75 px at the tested width. Hebrew and English hero checks at 320/375/390/430 retain the original photograph's aspect ratio and keep the campaign action within an 812px content viewport. These are responsive Chrome checks; physical Safari acceptance remains pending.
+
+## Production release
+
+- Merge commit: `f3bb8e11fb23d588885d46a24d70a82a8073123e`.
+- GitHub Pages run [44259985555](https://github.com/tc4tvrzmtc-coder/Romic/actions/runs/44259985555) completed successfully, including all 28 tests, image build/validation, site resource checks and dependency audit.
+- Verified at https://romic.co.il/he/: approved blended model hero, current asset version `romic-9c011d6422ce`, all five CLOUD NINE colour cards, real-photo colour selectors, ₪280 campaign price and stable frame dimensions before/after a gallery change.
+- Live cart: pink + white total ₪560; BLACK20 preserves that total; delivery is free. The generated WhatsApp URL includes both correct colours, coupon and matching total. Test selections removed; no order, payment or WhatsApp message submitted.
+- Live English switching preserved the selected white variant and showed correct 23 × 14 × 8 cm dimensions, translated description and ₪280 price.
