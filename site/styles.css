@@ -812,8 +812,9 @@ html[lang=en] .collection .product-card-color{direction:ltr}
 .product-gallery .cloud-colors{margin:0 0 16px;padding:0;min-width:0}
 .product-gallery .cloud-colors legend{font-size:15px;margin-bottom:10px;line-height:1.5}
 .product-gallery .cloud-colors>div{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:12px;max-width:none}
-.product-gallery .cloud-colors .cloud-swatch{flex:0 0 54px;width:54px;height:54px;max-width:none;min-width:44px;min-height:44px}
-.product-gallery .cloud-swatch img{width:100%;height:100%;object-fit:contain}
+.product-gallery .cloud-colors .cloud-swatch{flex:0 0 54px;width:54px;height:54px;max-width:none;min-width:44px;min-height:44px;aspect-ratio:1;border-radius:50%;border:3px solid #fff;padding:3px;background:#fff;box-shadow:0 0 0 1px #b6aaa0;overflow:hidden}
+.product-gallery .cloud-swatch img{width:100%;height:100%;object-fit:contain;object-position:center;border-radius:50%;background:#fff}
+.product-gallery .cloud-colors .cloud-swatch[aria-pressed=true]{border:3px solid #fff;padding:3px;background:#fff;box-shadow:0 0 0 2px var(--campaign-accent)}
 .product-thumbnails{flex-wrap:wrap;min-width:0}
 @media(max-width:900px){.collection .section-head{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 12px}.collection .section-title{grid-column:1/-1}.collection .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){
@@ -824,5 +825,5 @@ html[lang=en] .collection .product-card-color{direction:ltr}
  .collection .product-meta .price{font-size:16px;gap:4px 7px}.collection .product-meta .price-offer{flex-basis:100%;font-size:13px}
  .collection .product-card-size{font-size:12px}.collection .save-pick{top:8px;right:8px}
  .product-gallery .cloud-colors{position:sticky;top:0;z-index:25;background:var(--paper);padding-block:8px;border-bottom:1px solid var(--line)}
- .product-gallery .cloud-colors>div{gap:9px}.product-gallery .cloud-colors .cloud-swatch{flex-basis:44px;width:44px;height:44px}
+ .product-gallery .cloud-colors>div{gap:6px}.product-gallery .cloud-colors .cloud-swatch{flex-basis:48px;width:48px;height:48px}
 }
