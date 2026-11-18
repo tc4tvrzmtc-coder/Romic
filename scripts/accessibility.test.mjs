@@ -15,7 +15,7 @@ function bannerRuntime(he=true,reduced=false){
  return{nodes,attrs,timers,motion,listeners,html};
 }
 test('rotating announcements can be paused and manually browsed in both languages',()=>{
- for(const he of [true,false]){const b=bannerRuntime(he);assert.equal(b.timers.size,1);assert.match(b.html,/data-banner-pause/);b.nodes.pause.onclick();assert.equal(b.timers.size,0);assert.equal(b.attrs['pause:aria-pressed'],'true');assert.equal(b.attrs['message:aria-live'],'polite');b.nodes.next.onclick();assert.match(b.nodes.message.textContent,/500/);b.nodes.pause.onclick();assert.equal(b.timers.size,1);assert.equal(b.attrs['message:aria-live'],'off');}
+ for(const he of [true,false]){const b=bannerRuntime(he);assert.equal(b.timers.size,1);assert.match(b.nodes.pause.innerHTML,/<svg/);assert.match(b.html,/data-banner-pause/);b.nodes.pause.onclick();assert.equal(b.timers.size,0);assert.equal(b.attrs['pause:aria-pressed'],'true');assert.equal(b.attrs['message:aria-live'],'polite');b.nodes.next.onclick();assert.match(b.nodes.message.textContent,/500/);b.nodes.pause.onclick();assert.equal(b.timers.size,1);assert.equal(b.attrs['message:aria-live'],'off');}
 });
 test('reduced motion stops automatic announcements until explicitly resumed',()=>{
  const b=bannerRuntime(true,true);assert.equal(b.timers.size,0);assert.equal(b.attrs['pause:aria-pressed'],'true');b.nodes.pause.onclick();assert.equal(b.timers.size,1);

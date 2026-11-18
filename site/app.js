@@ -152,7 +152,7 @@ function renderSaleBanner() {
       const paused = bannerPaused ?? Boolean(motion?.matches);
       pause.setAttribute('aria-pressed', String(paused));
       pause.setAttribute('aria-label', isHebrew ? 'עצירת החלפת הודעות' : 'Pause rotating announcements');
-      pause.innerHTML = `<span aria-hidden="true">${paused ? '▶' : 'Ⅱ'}</span>`;
+      pause.innerHTML = `<svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="14" height="14" style="display:block;margin:auto;fill:currentColor">${paused ? '<path d="M4 2 14 8 4 14Z"/>' : '<path d="M3 2H6V14H3ZM10 2H13V14H10Z"/>'}</svg>`;
       banner.querySelector('[data-banner-message]').setAttribute('aria-live', paused ? 'polite' : 'off');
       if (!paused) window.romicBannerTimer = window.setInterval(() => { if (!banner.matches(':hover, :focus-within')) show(1); },6000);
     };
