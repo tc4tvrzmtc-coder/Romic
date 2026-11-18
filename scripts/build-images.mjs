@@ -155,6 +155,16 @@ for (const product of products) for (const [folder, width] of Object.entries(pol
   await canvas.webp({ quality: 84, effort: 4 }).toFile(derivative);
   await validate(derivative, width, width * 5 / 4);
 }
+// Publish information pages before JavaScript loads, including the accessibility statement.
+const documentSource = await fs.readFile(path.join(site,'documents.js'),'utf8').catch(()=>null);
+if (documentSource) for (const language of ['he','en']) {
+  const documents = vm.runInNewContext(documentSource + `;getDocuments('${language}')`);
+  for (const type of ['privacy','accessibility','terms']) {
+    const file = path.join(output,language,`${type}.html`);
+    let html;try { html=await fs.readFile(file,'utf8'); } catch(error) { if(error.code==='ENOENT')continue;throw error; }
+    await fs.writeFile(file,html.replace(/(<main\b[^>]*data-doc-content[^>]*>)[\s\S]*?(<\/main>)/,(_,open,close)=>open+documents[type]+close));
+  }
+}
 // Version all image requests so returning browsers load the current assets.
 const versionHash = crypto.createHash('sha256').update(JSON.stringify(reviews)).update(JSON.stringify(policy));
 // Rendering changes must invalidate image caches even when source photos are unchanged.

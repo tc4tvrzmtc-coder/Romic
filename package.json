@@ -8,7 +8,8 @@
     "review:images": "node scripts/build-images.mjs --review",
     "prepare:images": "python3 scripts/prepare-image-masks.py",
     "check:site": "node scripts/check-site.mjs",
-    "check:security": "npm audit --omit=dev --audit-level=high"
+    "check:security": "npm audit --omit=dev --audit-level=high",
+    "check:a11y": "python3 scripts/check-accessibility.py"
   },
   "dependencies": {
     "sharp": "0.35.5"
