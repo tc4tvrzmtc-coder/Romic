@@ -29,3 +29,11 @@ Review branch: `ux/approved-black-friday-review`. This branch does not replace t
 Physical iPhone Safari: scroll while its browser bars expand/collapse; switch all three gallery photos and colours; check touch swipe and safe-area purchase bar. Desktop responsive Chrome does not certify these device behaviours. Final visual review by Amir and Romi and deployment to romic.co.il remain pending.
 
 The separate review hosting disables analytics and search indexing. Production analytics configuration and source photographs remain unchanged.
+
+## Follow-up: natural campaign imagery
+
+The original model portrait now sits on one continuous photographic surface with the campaign copy. Backdrop tones follow the photograph; narrow edge masks blend its background into the surrounding page without cropping the face or bag or altering the source file. The bottom transition joins the paper background of the collection rather than ending at a separate rectangular tile. The editorial caption inside the photograph was removed.
+
+Product galleries keep their stable 4:5 geometry. The build now samples the corners of each reviewed master to supply the reserved frame background, so portrait photographs receive a related backdrop instead of unrelated beige side bars. A pipeline regression assertion checks this palette against a known scene and continues to verify untouched original files.
+
+Follow-up QA: all 15 CLOUD NINE colour/photo states retain 4:5 geometry, use an opaque photo-derived frame background, and have no horizontal overflow. Changing the simulated mobile viewport height 812 → 640 → 812 leaves the gallery exactly 335 × 418.75 px at the tested width. Hebrew and English hero checks at 320/375/390/430 retain the original photograph's aspect ratio and keep the campaign action within an 812px content viewport. These are responsive Chrome checks; physical Safari acceptance remains pending.

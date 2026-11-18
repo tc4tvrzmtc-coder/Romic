@@ -46,6 +46,10 @@ test('publication gate converts source formats, preserves originals and rejects 
     const firstBuild = run();
     assert.equal(firstBuild.status, 0, firstBuild.stderr);
     assert.match(await fs.readFile(path.join(root,'_site/data.js'),'utf8'), /"image":"test\.webp\?v=romic-/);
+    const palette = JSON.parse((await fs.readFile(path.join(root,'_site/data.js'),'utf8')).match(/const ROMIC_IMAGE_BACKDROPS = (.+);/)[1]);
+    assert.match(palette['model.webp'], /^#[0-9a-f]{6}$/);
+    const sceneRgb = palette['model.webp'].slice(1).match(/../g).map(v=>parseInt(v,16));
+    [51,102,153].forEach((value,i)=>assert.ok(Math.abs(sceneRgb[i]-value)<5,'Reserved frame should use the original scene backdrop'));
     const sharePage = await fs.readFile(path.join(root, '_site/he/product-bag.html'), 'utf8');
     assert.match(sharePage, /property="og:title" content="bag \| ROMIC"/);
     assert.match(sharePage, /property="og:image" content="https:\/\/romic\.co\.il\/assets\/products\/model\.webp\?v=romic-/);

@@ -1534,9 +1534,10 @@ function renderProduct() {
   document.body.style.setProperty('--product-bg', (productDesign[product.id] || ['stone', '#e5ded5'])[1]);
   let gallery = product.gallery || [product.image];
   const imageSize = image => typeof ROMIC_IMAGE_SIZES !== 'undefined' ? ROMIC_IMAGE_SIZES[image.split('?')[0]] || [1200,1500] : [1200,1500];
+  const imageBackdrop = image => typeof ROMIC_IMAGE_BACKDROPS !== 'undefined' ? ROMIC_IMAGE_BACKDROPS[image.split('?')[0]] || '#e4d8d3' : '#e4d8d3';
   const [initialWidth, initialHeight] = imageSize(gallery[0]);
   const galleryMarkup = `<div class="product-gallery" data-product-gallery>
-    <div class="product-hero-image" style="aspect-ratio:4/5"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"><span class="gallery-count" aria-live="polite">1 / ${gallery.length}</span><button class="gallery-control gallery-prev" type="button" data-gallery-step="-1" aria-label="${isHebrew ? 'תמונה קודמת' : 'Previous image'}">‹</button><button class="gallery-control gallery-next" type="button" data-gallery-step="1" aria-label="${isHebrew ? 'תמונה הבאה' : 'Next image'}">›</button><button class="gallery-control gallery-zoom" type="button" data-gallery-zoom aria-label="${isHebrew ? 'הגדלת התמונה' : 'Enlarge image'}">＋</button></div>
+    <div class="product-hero-image" style="aspect-ratio:4/5;--gallery-surface:${imageBackdrop(gallery[0])}"><img data-gallery-main src="../assets/products/${gallery[0]}" alt="${product.name} — ${isHebrew ? product.he : product.en}" fetchpriority="high" decoding="async" width="${initialWidth}" height="${initialHeight}"><span class="gallery-count" aria-live="polite">1 / ${gallery.length}</span><button class="gallery-control gallery-prev" type="button" data-gallery-step="-1" aria-label="${isHebrew ? 'תמונה קודמת' : 'Previous image'}">‹</button><button class="gallery-control gallery-next" type="button" data-gallery-step="1" aria-label="${isHebrew ? 'תמונה הבאה' : 'Next image'}">›</button><button class="gallery-control gallery-zoom" type="button" data-gallery-zoom aria-label="${isHebrew ? 'הגדלת התמונה' : 'Enlarge image'}">＋</button></div>
     ${gallery.length > 1 ? `<div class="product-thumbnails" aria-label="${isHebrew ? `גלריית תמונות של ${product.name}` : `${product.name} image gallery`}">${gallery.map((image, index) => `<button type="button" class="product-thumbnail" data-gallery-image="${image}" data-gallery-index="${index}" aria-label="${copy.viewImage} ${index + 1} / ${gallery.length}" aria-pressed="${index === 0}"><img src="../assets/gallery-thumbs/${image}" data-fallback-src="../assets/products/${image}" alt="" loading="lazy" decoding="async" width="240" height="300"></button>`).join('')}</div>` : ''}
   </div>`;
   main.innerHTML = `<div class="product-page"><a class="back-link" href="./#collection">${icon('arrow')} ${copy.back}</a><div class="product-layout">
@@ -1560,6 +1561,7 @@ function renderProduct() {
     galleryIndex = (index + gallery.length) % gallery.length;
     const [width,height] = imageSize(gallery[galleryIndex]);
     mainImage.width=width; mainImage.height=height;
+    mainImage.parentElement.style.setProperty('--gallery-surface',imageBackdrop(gallery[galleryIndex]));
     mainImage.src=`../assets/products/${gallery[galleryIndex]}`;
     mainImage.alt=`${product.name}${selected ? ' · '+(isHebrew ? selected.he : selected.en) : ''} — ${galleryIndex+1} / ${gallery.length}`;
     main.querySelector('.gallery-count').textContent=`${galleryIndex+1} / ${gallery.length}`;
