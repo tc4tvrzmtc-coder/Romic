@@ -167,11 +167,17 @@ for (const name of ['app.js', 'styles.css', 'documents.js', 'data.js']) {
 }
 const assetVersion = 'romic-' + versionHash.digest('hex').slice(0,12);
 const imageSizes = {};
+const imageBackdrops = {};
 for (const entry of prepared) {
   const meta = await sharp(path.join(output, entry.target)).metadata();
   imageSizes[path.basename(entry.target)] = [meta.width, meta.height];
+  // Match only the reserved frame to the photo's own backdrop; source pixels stay unchanged.
+  const {data,info} = await sharp(path.join(output,entry.target)).resize(24,24,{fit:'fill'}).removeAlpha().raw().toBuffer({resolveWithObject:true});
+  const corners = [[0,0],[23,0],[0,23],[23,23]];
+  const rgb = [0,1,2].map(channel=>Math.round(corners.reduce((sum,[x,y])=>sum+data[(y*info.width+x)*info.channels+channel],0)/corners.length));
+  imageBackdrops[path.basename(entry.target)] = '#' + rgb.map(n=>n.toString(16).padStart(2,'0')).join('');
 }
-let compiledData = code + '\nconst ROMIC_IMAGE_SIZES = ' + JSON.stringify(imageSizes) + ';\n';
+let compiledData = code + '\nconst ROMIC_IMAGE_SIZES = ' + JSON.stringify(imageSizes) + ';\nconst ROMIC_IMAGE_BACKDROPS = ' + JSON.stringify(imageBackdrops) + ';\n';
 for (const p of products) for (const name of new Set([p.image, ...p.gallery])) {
   for (const quote of ["'", '"']) compiledData = compiledData.replaceAll(`${quote}${name}${quote}`, `${quote}${webpName(name)}?v=${assetVersion}${quote}`);
 }
@@ -256,7 +262,7 @@ if (heroId) for (const language of ['he','en']) {
   const file = path.join(output,language,'index.html');
   try {
     const html = await fs.readFile(file,'utf8');
-    const preload = html.includes('class="hero cloud-hero"') ? `<link rel="preload" as="image" href="../assets/products/cloud-nine-black-worn.webp?v=${assetVersion}" fetchpriority="high">` : `<link rel="preload" as="image" href="../assets/conveyor/480/${heroId}.webp?v=${assetVersion}" imagesrcset="../assets/conveyor/480/${heroId}.webp?v=${assetVersion} 480w, ../assets/conveyor/720/${heroId}.webp?v=${assetVersion} 720w" imagesizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" fetchpriority="high">`;
+    const preload = html.includes('class="hero cloud-hero"') ? `<link rel="preload" as="image" href="../assets/products/cloud-nine-pink-worn.webp?v=${assetVersion}" fetchpriority="high">` : `<link rel="preload" as="image" href="../assets/conveyor/480/${heroId}.webp?v=${assetVersion}" imagesrcset="../assets/conveyor/480/${heroId}.webp?v=${assetVersion} 480w, ../assets/conveyor/720/${heroId}.webp?v=${assetVersion} 720w" imagesizes="(max-width:600px) 64vw, (max-width:1200px) 27vw, 360px" fetchpriority="high">`;
     await fs.writeFile(file,html.replace('</head>',preload+'</head>'));
   } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
